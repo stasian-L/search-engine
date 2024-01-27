@@ -1,1 +1,9 @@
-<input matInput [formControl]="searchControl" placeholder="please enter a value">
+<div class="search-container">
+    <input
+        class="search-input"
+        type="search"
+        matInput
+        [formControl]="searchControl"
+        placeholder="Search..." />
+</div>
+<mat-icon class="search-icon">search</mat-icon>
