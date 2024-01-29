@@ -1,9 +1,14 @@
 <div class="search-container">
     <input
+        #input
         class="search-input"
-        type="search"
         matInput
         [formControl]="searchControl"
-        placeholder="Search..." />
+        placeholder="Search..."
+        (focus)="focused = true"
+        (blur)="focused = false" />
+  <mat-icon
+    [style.visibility]="searchControl.value ? 'visible' : 'hidden'"
+    (click)="searchControl.setValue(''); input.focus()">clear</mat-icon>
 </div>
 <mat-icon class="search-icon">search</mat-icon>

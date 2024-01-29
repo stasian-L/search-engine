@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
     templateUrl: './shortcuts.component.html',
     styleUrl: './shortcuts.component.scss'
 })
-export class ShortcutsComponent {}
+export class ShortcutsComponent {
+    items: unknown[] |  undefined;
+}
