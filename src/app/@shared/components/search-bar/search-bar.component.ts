@@ -14,5 +14,5 @@ import { MatInputModule } from '@angular/material/input';
 export class SearchBarComponent {
     @HostBinding('class.focused') focused: boolean = false;
 
-    searchControl = new FormControl('hi');
+    searchControl = new FormControl('');
 }

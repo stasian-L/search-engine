@@ -1,0 +1,12 @@
+:host {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.shortcut {
+    padding: 10px;
+
+    img {
+        width: 200px;
+    }
+}

@@ -2,9 +2,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 50px;
 }
 
 .spacer {
-    height: 50vh;
+    height: 20vh;
     position: relative;
+}
+
+.snail {
+    width: 126px;
 }
