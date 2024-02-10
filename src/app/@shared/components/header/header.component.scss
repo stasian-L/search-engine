@@ -1,0 +1,15 @@
+:host {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    height: 2.2rem;
+    width: 100%;
+    padding: 1.4rem 1.7rem 0 1.6rem;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 50px;
+}
