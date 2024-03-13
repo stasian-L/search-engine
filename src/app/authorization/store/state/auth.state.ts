@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
-import { User } from '../../interfaces/user.interface';
-import { Login } from './auth.actions';
+import { tap } from 'rxjs';
+import { LocalStoreService } from '../../../@core/services/local-store.service';
+import { LoginUser } from '../../interfaces/login-user.interface';
+import { AuthService } from './../../services/auth.service';
+import { Login, Register } from './auth.actions';
 
 export class AuthStateModel {
-    currentUser: User | null = null;
+    currentUser: LoginUser | null = null;
 }
 
 const defaults = {
@@ -17,9 +20,16 @@ const defaults = {
 })
 @Injectable()
 export class AuthState {
+    constructor(private authService: AuthService, private localStore: LocalStoreService) {}
+
     @Action(Login)
-    add({ getState, setState }: StateContext<AuthStateModel>, { user }: Login) {
-        const state = getState();
-        setState({  ...state, currentUser: user });
+    onLogin({ patchState }: StateContext<AuthStateModel>, { user }: Login) {
+        this.authService.login(user).pipe(tap(result => this.localStore.saveData('access_token', result.token as string)));
+        patchState({ currentUser: user });
+    }
+
+    @Action(Register)
+    onRegister({ user }: Register) {
+        this.authService.register(user)
     }
 }

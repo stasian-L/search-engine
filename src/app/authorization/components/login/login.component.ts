@@ -1,6 +1,7 @@
+import { Login } from './../../store/state/auth.actions';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { Store } from '@ngxs/store';
 
 @Component({
     selector: 'app-login',
@@ -12,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginComponent {
     form: FormGroup;
 
-    constructor(fb: FormBuilder, private authService: AuthService) {
+    constructor(fb: FormBuilder, protected store: Store) {
         this.form = fb.nonNullable.group({
             email: ['', Validators.required],
             password: ['', Validators.required]
@@ -20,6 +21,6 @@ export class LoginComponent {
     }
 
     onSubmit(): void {
-        this.authService.login(this.form.getRawValue())
+        this.store.dispatch(new Login(this.form.getRawValue()));
     }
 }
