@@ -1,1 +1,46 @@
-<p>login works!</p>
+<form
+    class="login-form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()">
+    <h1 class="title">Welcome Back!</h1>
+    <div class="content">
+        <mat-form-field appearance="outline">
+            <input
+                type="text"
+                matInput
+                placeholder="Username"
+                formControlName="username" />
+            <mat-error *ngIf="form.controls['username'].errors?.['required']">Name is required</mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <input
+                type="password"
+                matInput
+                placeholder="Password"
+                formControlName="password" />
+            <mat-error *ngIf="form.controls['password'].errors?.['required']">Password is required</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="actions">
+        <button
+            mat-raised-button
+            color="primary">
+            Login
+        </button>
+        <a
+            mat-raised-button
+            color="primary"
+            href="http://localhost:8080/auth/to-facebook">
+            Log in with Facebook
+            <mat-icon>facebook</mat-icon>
+        </a>
+        <a
+            mat-raised-button
+            color="accent"
+            href="http://localhost:8080/auth/to-github">
+            Log in with GitHub
+            <mat-icon>github</mat-icon>
+        </a>
+    </div>
+</form>

@@ -1,4 +1,7 @@
+import { importProvidersFrom } from '@angular/core';
 import { Routes } from '@angular/router';
+import { NgxsModule } from '@ngxs/store';
+import { AuthState } from './authorization/store/state/auth.state';
 
 export const routes: Routes = [
     {
@@ -7,7 +10,12 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        loadComponent: () => import('./authorization/components/login/login.component').then(c => c.LoginComponent)
+        loadComponent: () => import('./authorization/components/login/login.component').then(c => c.LoginComponent),
+        providers: [
+            importProvidersFrom(
+              NgxsModule.forFeature([AuthState])
+            )
+          ]
     },
     {
         path: 'register',

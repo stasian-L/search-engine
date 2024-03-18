@@ -10,3 +10,7 @@ export class Register {
     static readonly type = '[Auth] Register user';
     constructor(public user: RegisterUser) {}
 }
+
+export class Logout {
+    static readonly type = '[Auth] Logout user';
+}

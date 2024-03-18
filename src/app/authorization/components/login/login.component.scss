@@ -1,0 +1,52 @@
+:host{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    top: 30vh;
+    height: 100%;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 400px;
+        flex: 1 1 auto;
+
+        .title {
+            padding: 0 20px;
+        }
+
+        .content mat-form-field,
+        .actions a {
+            width: 100%;
+            margin: 5px;
+        }
+
+        .title,
+        .content,
+        .actions {
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: end;
+        }
+
+        .actions button {
+            width: 50%;
+            margin: 5px 5px 20px;
+        }
+
+        a {
+            margin: 5px;
+        }
+    }
+}
+
+.button-flex-container {
+    display: flex;
+    justify-content: space-between;
+}
