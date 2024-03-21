@@ -8,7 +8,7 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./home/components/home/home.component').then(m => m.HomeComponent),
-        canActivate: [authGuard]
+        canMatch: [authGuard]
     },
     {
         path: 'login',
@@ -23,6 +23,6 @@ export const routes: Routes = [
     {
         path: 'search',
         loadComponent: () => import('./serp/components/serp/serp.component').then(m => m.SerpComponent),
-        canActivate: [authGuard]
+        canMatch: [authGuard]
     }
 ];

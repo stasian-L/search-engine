@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LoginUser } from '../../interfaces/login-user.interface';
 import { AuthService } from './../../services/auth.service';
 import { Login, Logout, Register } from './auth.actions';
 
 export class AuthStateModel {
-    currentUser: LoginUser | null = null; // maybe User class/interface
+    currentUser: LoginUser | null = null;
     token: string | null = null;
 }
 
@@ -36,24 +36,24 @@ export class AuthState {
         return !!state.token;
     }
 
-    readonly authService =  inject(AuthService);
+    readonly authService = inject(AuthService);
 
     @Action(Login)
-    onLogin({ patchState }: StateContext<AuthStateModel>, { user }: Login) {
+    onLogin({ patchState }: StateContext<AuthStateModel>, { user }: Login): Observable<LoginUser> {
         return this.authService.login(user).pipe(
             tap(result => {
-                patchState({ currentUser: user, token: result.token });
+                patchState({ currentUser: user, token: result.email });
             })
         );
     }
 
     @Action(Register)
-    onRegister({ user }: Register) {
+    onRegister({ user }: Register): void {
         this.authService.register(user);
     }
 
     @Action(Logout)
-    onLogout({ patchState }: StateContext<AuthStateModel>) {
+    onLogout({ patchState }: StateContext<AuthStateModel>): void {
         patchState({ currentUser: null, token: null });
     }
 }
