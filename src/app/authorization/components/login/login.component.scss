@@ -4,8 +4,7 @@
     align-items: center;
     flex-direction: column;
     position: relative;
-    top: 30vh;
-    height: 100%;
+    top: 25vh;
 
     form {
         display: flex;
@@ -38,10 +37,6 @@
         .actions button {
             width: 50%;
             margin: 5px 5px 20px;
-        }
-
-        a {
-            margin: 5px;
         }
     }
 }

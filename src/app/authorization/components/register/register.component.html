@@ -1,1 +1,48 @@
-<p>register works!</p>
+<div>
+    <img
+        class="snail"
+        src="../../../../assets/images/snail.png"
+        width="180" />
+</div>
+<form
+    class="login-form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()">
+    <h1 class="title">Create account</h1>
+    <div class="content">
+        <mat-form-field appearance="outline">
+            <input
+                type="text"
+                matInput
+                placeholder="Username"
+                formControlName="username" />
+            <mat-error *ngIf="form.controls['username'].errors?.['required']">Name is required</mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <input
+                type="email"
+                matInput
+                placeholder="Email"
+                formControlName="email" />
+            <mat-error *ngIf="form.controls['email'].errors?.['email']">Field is incorrect</mat-error>
+            <mat-error *ngIf="form.controls['email'].errors?.['required']">Name is required</mat-error>
+        </mat-form-field>
+        <br />
+        <mat-form-field appearance="outline">
+            <input
+                type="password"
+                matInput
+                placeholder="Password"
+                formControlName="password" />
+            <mat-error *ngIf="form.controls['password'].errors?.['required']">Password is required</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="actions">
+        <button
+            mat-raised-button
+            color="primary">
+            Register
+        </button>
+    </div>
+</form>

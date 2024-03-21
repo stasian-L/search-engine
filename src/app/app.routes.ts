@@ -11,15 +11,12 @@ export const routes: Routes = [
     {
         path: 'login',
         loadComponent: () => import('./authorization/components/login/login.component').then(c => c.LoginComponent),
-        providers: [
-            importProvidersFrom(
-              NgxsModule.forFeature([AuthState])
-            )
-          ]
+        providers: [importProvidersFrom(NgxsModule.forFeature([AuthState]))]
     },
     {
         path: 'register',
-        loadComponent: () => import('./authorization/components/register/register.component').then(c => c.RegisterComponent)
+        loadComponent: () => import('./authorization/components/register/register.component').then(c => c.RegisterComponent),
+        providers: [importProvidersFrom(NgxsModule.forFeature([AuthState]))]
     },
     {
         path: 'search',
