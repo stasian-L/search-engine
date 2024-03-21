@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { LoginUser } from '../interfaces/login-user.interface';
 import { RegisterUser } from '../interfaces/register-user.interface';
-import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -17,9 +17,15 @@ export class AuthService {
     }
 
     register(user: RegisterUser): Observable<any> {
+        return this.http.post<any>(this.baseUrl + 'user/', user, {
+            withCredentials: true
+        });
+    }
+
+    refreshToken(): Observable<unknown> {
         return this.http
-            .post<any>(this.baseUrl + '/registration/', user, {
-                withCredentials: true,
+            .get<unknown>(`${this.baseUrl}/auth/refresh`, {
+                withCredentials: true
             });
     }
 }
