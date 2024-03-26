@@ -1,14 +1,13 @@
-import { LoginUser } from '../../interfaces/login-user.interface';
-import { RegisterUser } from '../../interfaces/register-user.interface';
+import { LoginBodyRequest, RegisterBodyRequest } from '../../services/auth.service';
 
 export class Login {
     static readonly type = '[Auth] Login user';
-    constructor(public user: LoginUser) {}
+    constructor(public user: LoginBodyRequest) {}
 }
 
 export class Register {
     static readonly type = '[Auth] Register user';
-    constructor(public user: RegisterUser) {}
+    constructor(public user: RegisterBodyRequest) {}
 }
 
 export class Logout {

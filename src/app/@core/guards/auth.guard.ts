@@ -6,11 +6,11 @@ import { AuthState } from '../../authorization/store/state/auth.state';
 
 export const authGuard: CanActivateFn = () => {
     const store = inject(Store);
+
     const isAuthenticated = store.selectSnapshot(AuthState.isAuthenticated);
     if (!isAuthenticated) {
-        store.dispatch(new Navigate(['/login']));
-        return false;
+        store.dispatch(new Navigate(['login']));
     }
 
-    return true;
+    return isAuthenticated;
 };

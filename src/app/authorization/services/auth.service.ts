@@ -1,8 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginUser } from '../interfaces/login-user.interface';
-import { RegisterUser } from '../interfaces/register-user.interface';
+import { User, UserAPIResponse } from '../interfaces/user.interface';
+
+export type LoginBodyRequest = Pick<User, 'email'> & { password: string };
+
+export type RegisterBodyRequest = Pick<User, 'email' | 'username'> & {
+    password: string;
+};
+
+export type UpdateCurrentUserBodyRequest = Pick<User, 'email' | 'username' | 'bio' | 'image'> & { password: string };
 
 @Injectable({
     providedIn: 'root'
@@ -12,20 +19,23 @@ export class AuthService {
 
     constructor(private http: HttpClient) {}
 
-    login(user: LoginUser): Observable<any> {
-        return this.http.post<any>(this.baseUrl + 'users', { user: user });
+    login(user: LoginBodyRequest): Observable<any> {
+        return this.http.post<UserAPIResponse>(this.baseUrl + 'users/login', { user });
     }
 
-    register(user: RegisterUser): Observable<any> {
-        return this.http.post<any>(this.baseUrl + 'user/', user, {
-            withCredentials: true
-        });
+    register(user: RegisterBodyRequest): Observable<any> {
+        return this.http.post<any>(this.baseUrl + 'users', { user });
+    }
+
+    getCurrentUser(): Observable<UserAPIResponse> {
+        return this.http.get<UserAPIResponse>('/user');
+    }
+
+    updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
+        return this.http.put<UserAPIResponse>('/user', { user });
     }
 
     refreshToken(): Observable<unknown> {
-        return this.http
-            .get<unknown>(`${this.baseUrl}/auth/refresh`, {
-                withCredentials: true
-            });
+        return this.http.get<unknown>(`${this.baseUrl}/auth/refresh`);
     }
 }

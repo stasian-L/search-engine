@@ -14,9 +14,10 @@
             <input
                 type="text"
                 matInput
-                placeholder="Username"
-                formControlName="username" />
-            <mat-error *ngIf="form.controls['username'].errors?.['required']">Name is required</mat-error>
+                placeholder="Email"
+                formControlName="email" />
+            <mat-error *ngIf="form.controls['email'].errors?.['required']">Email is required</mat-error>
+            <mat-error *ngIf="form.controls['email'].errors?.['email']">Email is incorrect</mat-error>
         </mat-form-field>
         <br />
         <mat-form-field appearance="outline">

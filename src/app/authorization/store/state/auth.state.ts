@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
-import { LoginUser } from '../../interfaces/login-user.interface';
 import { AuthService } from './../../services/auth.service';
 import { Login, Logout, Register } from './auth.actions';
+import { Navigate } from '@ngxs/router-plugin';
+import { User } from '../../interfaces/user.interface';
 
 export class AuthStateModel {
-    currentUser: LoginUser | null = null;
+    currentUser: User | null = null;
     token: string | null = null;
 }
 
@@ -22,7 +23,7 @@ const defaults: AuthStateModel = {
 @Injectable()
 export class AuthState {
     @Selector()
-    static currentUser(state: AuthStateModel): LoginUser | null {
+    static currentUser(state: AuthStateModel): User | null {
         return state.currentUser;
     }
 
@@ -38,18 +39,22 @@ export class AuthState {
 
     readonly authService = inject(AuthService);
 
+    readonly store = inject(Store);
+
     @Action(Login)
-    onLogin({ patchState }: StateContext<AuthStateModel>, { user }: Login): Observable<LoginUser> {
+    onLogin({ patchState }: StateContext<AuthStateModel>, { user }: Login): Observable<User> {
         return this.authService.login(user).pipe(
-            tap(result => {
-                patchState({ currentUser: user, token: result.email });
+            tap(user => {
+                patchState({ currentUser: user, token: user.token });
             })
         );
     }
 
     @Action(Register)
-    onRegister({ user }: Register): void {
-        this.authService.register(user);
+    onRegister({}: StateContext<AuthStateModel>, { user }: Register): Observable<User> {
+        return this.authService.register(user).pipe(
+            tap(this.store.dispatch(new Navigate(['login'])))
+        );
     }
 
     @Action(Logout)

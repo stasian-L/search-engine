@@ -7,8 +7,8 @@ import { AuthState } from './authorization/store/state/auth.state';
 export const routes: Routes = [
     {
         path: '',
-        loadComponent: () => import('./home/components/home/home.component').then(m => m.HomeComponent),
-        canMatch: [authGuard]
+        loadComponent: () => import('./home/components/home/home.component').then(m => m.HomeComponent)
+        //canMatch: [authGuard]
     },
     {
         path: 'login',
