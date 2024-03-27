@@ -7,22 +7,30 @@ import { AuthState } from './authorization/store/state/auth.state';
 export const routes: Routes = [
     {
         path: '',
+        title: 'Home',
         loadComponent: () => import('./home/components/home/home.component').then(m => m.HomeComponent)
-        //canMatch: [authGuard]
     },
     {
         path: 'login',
+        title: 'Login',
         loadComponent: () => import('./authorization/components/login/login.component').then(c => c.LoginComponent),
         providers: [importProvidersFrom(NgxsModule.forFeature([AuthState]))]
     },
     {
         path: 'register',
+        title: 'Register',
         loadComponent: () => import('./authorization/components/register/register.component').then(c => c.RegisterComponent),
         providers: [importProvidersFrom(NgxsModule.forFeature([AuthState]))]
     },
     {
         path: 'search',
-        loadComponent: () => import('./serp/components/serp/serp.component').then(m => m.SerpComponent),
+        title: 'Search',
+        loadComponent: () => import('./serp/components/serp/serp.component').then(m => m.SerpComponent)
+    },
+    {
+        path: 'profile',
+        title: 'Profile',
+        redirectTo: '',
         canMatch: [authGuard]
     }
 ];

@@ -19,11 +19,11 @@ export class AuthService {
 
     constructor(private http: HttpClient) {}
 
-    login(user: LoginBodyRequest): Observable<any> {
+    login(user: LoginBodyRequest): Observable<UserAPIResponse> {
         return this.http.post<UserAPIResponse>(this.baseUrl + 'users/login', { user });
     }
 
-    register(user: RegisterBodyRequest): Observable<any> {
+    register(user: RegisterBodyRequest): Observable<UserAPIResponse> {
         return this.http.post<any>(this.baseUrl + 'users', { user });
     }
 
