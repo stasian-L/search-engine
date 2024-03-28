@@ -22,9 +22,9 @@ const defaults: AuthStateModel = {
 })
 @Injectable()
 export class AuthState {
-  readonly authService = inject(AuthService);
+    readonly authService = inject(AuthService);
 
-  readonly store = inject(Store);
+    readonly store = inject(Store);
 
     @Selector()
     static currentUser(state: AuthStateModel): User | null {

@@ -1,5 +1,18 @@
-<a href="" target="_self">
-    <img class="logo" src="../../../../assets/images/snail.png" alt="">
+<a
+    href=""
+    target="_self">
+    <img
+        class="logo"
+        src="../../../../assets/images/snail.png"
+        alt=""
+        width="50" />
 </a>
-<button mat-icon-button><mat-icon>menu</mat-icon></button>
-
+<div class="right-buttons">
+    <button
+        mat-raised-button
+        [routerLink]="['/login']"
+        routerLinkActive="router-link-active">
+        Login
+    </button>
+    <button mat-icon-button><mat-icon>menu</mat-icon></button>
+</div>
