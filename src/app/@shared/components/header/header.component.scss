@@ -10,7 +10,19 @@
     box-sizing: border-box;
 }
 
-.right-buttons {
+.right-buttons,
+.user-image {
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+
+    .name {
+        font-weight: bold;
+    }
 }

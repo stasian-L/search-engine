@@ -1,10 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { Navigate } from '@ngxs/router-plugin';
-import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, NgxsOnInit, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
 import { User, UserAPIResponse } from '../../interfaces/user.interface';
 import { AuthService } from './../../services/auth.service';
-import { Login, Logout, Register } from './auth.actions';
+import { GetCurrentUser, Login, Logout, Register } from './auth.actions';
 
 export class AuthStateModel {
     currentUser: User | null = null;
@@ -21,7 +21,7 @@ const defaults: AuthStateModel = {
     defaults
 })
 @Injectable()
-export class AuthState {
+export class AuthState implements NgxsOnInit {
     readonly authService = inject(AuthService);
 
     readonly store = inject(Store);
@@ -39,6 +39,10 @@ export class AuthState {
     @Selector()
     static isAuthenticated(state: AuthStateModel): boolean {
         return !!state.token;
+    }
+
+    ngxsOnInit(ctx: StateContext<any>): void {
+        ctx.dispatch(new GetCurrentUser());
     }
 
     @Action(Login)
@@ -59,5 +63,10 @@ export class AuthState {
     @Action(Logout)
     onLogout({ patchState }: StateContext<AuthStateModel>): void {
         patchState({ currentUser: null, token: null });
+    }
+
+    @Action(GetCurrentUser)
+    onLoadCurrentUser({ patchState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
+        return this.authService.getCurrentUser().pipe(tap(user => patchState({ currentUser: user.user })))
     }
 }

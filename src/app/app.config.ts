@@ -10,6 +10,7 @@ import { NgxsModule } from '@ngxs/store';
 import { authInterceptor } from './@core/intercepters/auth.interceptor';
 
 import { routes } from './app.routes';
+import { AuthState } from './authorization/store/state/auth.state';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
         provideAnimations(),
         importProvidersFrom([
             BrowserAnimationsModule,
-            NgxsModule.forRoot(),
+            NgxsModule.forRoot([AuthState]),
             NgxsRouterPluginModule.forRoot(),
             NgxsReduxDevtoolsPluginModule.forRoot(),
             NgxsLoggerPluginModule.forRoot(),

@@ -1,0 +1,32 @@
+<div class="container">
+    <form [formGroup]="form">
+        <div class="container-group">
+            <div class="text-center">
+                <div class="text-center">
+                    <img
+                        id="image"
+                        class="profile-image"
+                        src="{{ imageUrl }}" />
+                </div>
+                <label
+                    (click)="fileInput.click()"
+                    for="fileInput"
+                    type="button"
+                    class="brows-button cursor-pointer bg-white font-medium">
+                    <i class="fa-light fa-camera"></i>
+                    Browse Photo
+                </label>
+                <div class="brows-label text-center mt-1">Click to add profile picture</div>
+                <input
+                    formControlName="userPhoto"
+                    name="photo"
+                    id="imageUploadProfile"
+                    #fileInput
+                    accept="image/*"
+                    (change)="uploadFile($event)"
+                    class="hidden"
+                    type="file" />
+            </div>
+        </div>
+    </form>
+</div>

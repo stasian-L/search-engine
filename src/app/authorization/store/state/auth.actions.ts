@@ -13,3 +13,7 @@ export class Register {
 export class Logout {
     static readonly type = '[Auth] Logout user';
 }
+
+export class GetCurrentUser {
+    static readonly type = '[Auth] Get current user';
+}
