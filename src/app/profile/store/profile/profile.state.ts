@@ -22,7 +22,7 @@ export class ProfileState {
     readonly profileService = inject(ProfileService);
 
     @Selector()
-    profile(state: ProfileStateModel): Profile | null {
+    static profile(state: ProfileStateModel): Profile | null {
         return state.profile;
     }
 

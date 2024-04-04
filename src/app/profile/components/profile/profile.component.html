@@ -1,12 +1,12 @@
-<ng-container *ngIf="profile() as profile">
+<ng-container *ngIf="{ profile: profile$ | async } as data">
     <div class="banner">
         <div class="container">
             <div class="user-info">
                 <img
                     alt="avatar"
                     class="avatar"
-                    [src]="profile.image" />
-                <h4 class="username">{{ profile.username }}</h4>
+                    [src]="data.profile?.image" />
+                <h4 class="username">{{ data.profile?.username }}</h4>
             </div>
             <ng-template #editProfileBtn>
                 <button
@@ -20,7 +20,7 @@
     </div>
     <div class="content">
         <div class="offset-md-1">
-            <app-article-toggle></app-article-toggle>
+            <!-- <app-article-toggle></app-article-toggle> -->
             <router-outlet></router-outlet>
         </div>
     </div>
