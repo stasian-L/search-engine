@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { SearchHeaderComponent } from '../serp-header/search-header.component';
 import { ResultListComponent } from '../result-list/result-list.component';
+import { SearchHeaderComponent } from '../serp-header/search-header.component';
 
 @Component({
     selector: 'app-serp',

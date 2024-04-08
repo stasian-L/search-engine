@@ -1,0 +1,32 @@
+.main {
+    margin-left: 84px;
+    padding-top: 15px;
+    padding-left: 16px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-left: -100px;
+    padding-left: 100px;
+}
+
+.content-left {
+    width: 568px;
+}
+
+.content-right {
+    width: calc(100% - 716px);
+    min-width: 292px;
+    max-width: 1280px;
+    margin-left: 18px;
+}
+
+@media (min-width: 1560px) {
+    .content-right {
+        width: calc(100% - 837px);
+        max-width: 1280px;
+        margin-left: 68px;
+    }
+}

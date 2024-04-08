@@ -2,5 +2,30 @@
     padding: 12px;
     border-radius: 16px;
     box-shadow: 0 4px 12px 0#0d234308;
+    background-color:ghostwhite;
+    flex: 1;
 }
 
+.serp-item {
+    line-height: 16px;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.icon-size {
+    position: absolute;
+    top: 3px;
+    left: -44px;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    background-size: 16px
+}
+
+.link-text {
+    display: inline;
+}

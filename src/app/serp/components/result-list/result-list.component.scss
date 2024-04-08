@@ -1,0 +1,7 @@
+:host {
+    display: flex;
+}
+
+app-result-item:not(:last-child) {
+    margin-bottom: 10px;
+}

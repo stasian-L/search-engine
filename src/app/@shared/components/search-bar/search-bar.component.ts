@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, HostBinding, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -14,5 +15,11 @@ import { MatInputModule } from '@angular/material/input';
 export class SearchBarComponent {
     @HostBinding('class.focused') focused: boolean = false;
 
+    http = inject(HttpClient);
+
     searchControl = new FormControl('');
+
+    search(event: Event) {
+        this.http.get('https://serpapi.com/search.json?engine=google?api_key=AIzaSyC7qqfM66OIukhUGWBhOyPkcEVZyNfxBBw?q=' + event).subscribe(console.log);
+    }
 }
