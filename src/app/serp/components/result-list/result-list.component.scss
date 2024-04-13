@@ -1,5 +1,6 @@
 :host {
     display: flex;
+    flex-direction: column;
 }
 
 app-result-item:not(:last-child) {

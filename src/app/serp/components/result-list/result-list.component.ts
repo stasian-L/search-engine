@@ -9,5 +9,56 @@ import { ResultItemComponent } from '../result-item/result-item.component';
     styleUrl: './result-list.component.scss'
 })
 export class ResultListComponent {
-    @Input() results: any[] | undefined = [1];
+    @Input() results: any[] | undefined = [
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        },
+        {
+            title: 'blbllbblb',
+            url: 'https://ba.com',
+            description: 'hell yes hhaha ss hld fsdfl'
+        }
+    ];
 }

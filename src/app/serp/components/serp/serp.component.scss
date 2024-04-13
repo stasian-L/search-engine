@@ -1,4 +1,18 @@
+:host {
+
+}
+
 .main {
+    min-width: 600px;
+    min-height: 100%;
+    margin-top: -183px;
+    padding-top: 183px;
+    padding-bottom: 6px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.main-center {
     margin-left: 84px;
     padding-top: 15px;
     padding-left: 16px;

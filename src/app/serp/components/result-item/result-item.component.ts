@@ -1,16 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-result-item',
-  standalone: true,
-  imports: [],
-  templateUrl: './result-item.component.html',
-  styleUrl: './result-item.component.scss'
+    selector: 'app-result-item',
+    standalone: true,
+    imports: [],
+    templateUrl: './result-item.component.html',
+    styleUrl: './result-item.component.scss'
 })
 export class ResultItemComponent {
-    resultItem = {
-        title: 'blbllbblb',
-        url: 'https://ba.com',
-        description: 'hell yes hhaha ss hld fsdfl'
-    }
+    @Input({ required: true }) resultItem!: { title: string; url: string; description: string; };
 }
