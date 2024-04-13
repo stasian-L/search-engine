@@ -8,48 +8,5 @@
             alt=""
             width="50" />
     </a>
-    <div class="right-buttons">
-        @if (data.isAuthenticated) {
-        <button
-            mat-icon-button
-            [matMenuTriggerFor]="header_menu">
-            <mat-icon>menu</mat-icon>
-        </button>
-        } @else {
-        <button
-            mat-raised-button
-            [routerLink]="['/login']">
-            Login
-        </button>
-        }
-    </div>
+    <app-right-menu  [authenticated]="data.isAuthenticated ?? false"/>
 </ng-container>
-
-<mat-menu #header_menu>
-    <div class="user-image">
-        <img
-            [src]="imageUrl"
-            [width]="size"
-            [height]="size"
-            alt="" />
-    </div>
-    <div class="user-info">
-        <span class="name">Lobach Stanislau</span>
-        <span class="user-name">stosian</span>
-    </div>
-    <mat-divider />
-    @for (item of menuItems; track $index) {
-    <button
-        mat-menu-item
-        [routerLink]="[item.route]">
-        <mat-icon>{{ item.icon }}</mat-icon>
-        {{ item.label }}
-    </button>
-    }
-    <button
-        mat-menu-item
-        (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        Logout
-    </button>
-</mat-menu>

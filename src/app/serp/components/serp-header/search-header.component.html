@@ -13,7 +13,10 @@
         <form action="">
             <app-search-bar />
         </form>
-        <div class="login-actions"></div>
+        <div class="spacer"></div>
+        <div class="login-actions">
+            <app-right-menu  [authenticated]="(authenticated$ | async) ?? false"/>
+        </div>
     </header>
     <nav>
         <div class="navigation">

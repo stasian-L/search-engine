@@ -8,14 +8,15 @@ import { RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Logout } from '../../../authorization/store/state/auth.actions';
 import { AuthState } from '../../../authorization/store/state/auth.state';
+import { RightMenuComponent } from "../right-menu/right-menu.component";
 
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, MatMenuModule, RouterModule],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule, MatMenuModule, RouterModule, RightMenuComponent]
 })
 export class HeaderComponent {
     store = inject(Store);
@@ -23,23 +24,6 @@ export class HeaderComponent {
     isAuthenticated$ = this.store.select(AuthState.isAuthenticated);
 
     currentUser$ = this.store.select(AuthState.currentUser);
-
-    menuItems = [
-        {
-            icon: 'person',
-            label: 'Profile',
-            route: './profile'
-        },
-        {
-            icon: 'tune',
-            label: 'Appearance',
-            route: './appearance'
-        }
-    ];
-
-    size = 96;
-
-    imageUrl = 'assets/images/empty-profile.png';
 
     logout() {
         this.store.dispatch(new Logout());
