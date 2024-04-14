@@ -9,13 +9,15 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { authInterceptor } from './@core/intercepters/auth.interceptor';
 
+import { environment } from '../environments/environment.development';
+import { BASE_API_URL, baseUrlInterceptor } from './@core/intercepters/base-url.interceptor';
 import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes, withDebugTracing()),
-        provideHttpClient(withInterceptors([authInterceptor])),
+        provideHttpClient(withInterceptors([authInterceptor, baseUrlInterceptor])),
         provideAnimations(),
         importProvidersFrom([
             BrowserAnimationsModule,
@@ -26,6 +28,7 @@ export const appConfig: ApplicationConfig = {
             NgxsStoragePluginModule.forRoot({
                 key: 'auth.token'
             })
-        ])
+        ]),
+        { provide: BASE_API_URL, useValue: environment.apiUrl }
     ]
 };

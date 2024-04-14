@@ -8,5 +8,7 @@
             alt=""
             width="50" />
     </a>
-    <app-right-menu  [authenticated]="data.isAuthenticated ?? false"/>
+    <app-right-menu
+        [authenticated]="data.isAuthenticated ?? false"
+        (logout)="logout()" />
 </ng-container>

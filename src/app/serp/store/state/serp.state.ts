@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
-import { SerpAction } from './serp.actions';
+import { Search } from './serp.actions';
+import { SerpService } from '../../services/serp.service';
 
 export class SerpStateModel {
     public items: string[];
@@ -16,9 +17,10 @@ const defaults = {
 })
 @Injectable()
 export class SerpState {
-    @Action(SerpAction)
-    add({ getState, setState }: StateContext<SerpStateModel>, { payload }: SerpAction) {
-        const state = getState();
-        setState({ items: [...state.items, payload] });
+    serpService = inject(SerpService);
+
+    @Action(Search)
+    onSearch({}: StateContext<SerpStateModel>, { payload }: Search) {
+        return this.serpService.search(payload);
     }
 }
