@@ -25,12 +25,12 @@ export class RightMenuComponent {
         {
             icon: 'person',
             label: 'Profile',
-            route: './profile'
+            route: '/profile'
         },
         {
             icon: 'tune',
             label: 'Appearance',
-            route: './appearance'
+            route: '/appearance'
         }
     ];
 }

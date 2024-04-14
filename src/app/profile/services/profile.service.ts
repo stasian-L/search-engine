@@ -10,9 +10,7 @@ import { ProfileAPIResponse } from '../interfaces/profile.interface';
 export class ProfileService {
     readonly httpClient = inject(HttpClient);
 
-    private baseUrl = 'https://api.realworld.io/api/';
-
     getProfile(username: string): Observable<ProfileAPIResponse> {
-        return this.httpClient.get<ProfileAPIResponse>(`${this.baseUrl}/profiles/${username}`);
+        return this.httpClient.get<ProfileAPIResponse>(`profiles/${username}`);
     }
 }

@@ -8,9 +8,7 @@ import { Observable } from 'rxjs';
 export class SerpService {
     http = inject(HttpClient);
 
-    private baseUrl = 'https://api.realworld.io/api/';
-
     search(query: string): Observable<any> {
-        return this.http.get(`${this.baseUrl}search/documents?query=${query}`);
+        return this.http.get(`search/documents?query=${query}`);
     }
 }

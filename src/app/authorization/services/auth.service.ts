@@ -15,27 +15,25 @@ export type UpdateCurrentUserBodyRequest = Pick<User, 'email' | 'username' | 'bi
     providedIn: 'root'
 })
 export class AuthService {
-    private baseUrl = 'https://api.realworld.io/api/';
-
     constructor(private http: HttpClient) {}
 
     login(user: LoginBodyRequest): Observable<UserAPIResponse> {
-        return this.http.post<UserAPIResponse>(this.baseUrl + 'users/login', { user });
+        return this.http.post<UserAPIResponse>('users/login', { user });
     }
 
     register(user: RegisterBodyRequest): Observable<UserAPIResponse> {
-        return this.http.post<any>(this.baseUrl + 'users', { user });
+        return this.http.post<any>('users', { user });
     }
 
     getCurrentUser(): Observable<UserAPIResponse> {
-        return this.http.get<UserAPIResponse>('/user');
+        return this.http.get<UserAPIResponse>('user');
     }
 
     updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
-        return this.http.put<UserAPIResponse>('/user', { user });
+        return this.http.put<UserAPIResponse>('user', { user });
     }
 
     refreshToken(): Observable<unknown> {
-        return this.http.get<unknown>(`${this.baseUrl}/auth/refresh`);
+        return this.http.get<unknown>(`auth/refresh`);
     }
 }
