@@ -10,7 +10,8 @@ import { NgxsModule } from '@ngxs/store';
 import { authInterceptor } from './@core/intercepters/auth.interceptor';
 
 import { environment } from '../environments/environment.development';
-import { BASE_API_URL, baseUrlInterceptor } from './@core/intercepters/base-url.interceptor';
+import { baseUrlInterceptor } from './@core/intercepters/base-url.interceptor';
+import { BASE_API_URL } from './@core/tokens/tokens';
 import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
 

@@ -22,7 +22,7 @@ export class AuthService {
     }
 
     register(user: RegisterBodyRequest): Observable<UserAPIResponse> {
-        return this.http.post<any>('users', { user });
+        return this.http.post<UserAPIResponse>('users', { user });
     }
 
     getCurrentUser(): Observable<UserAPIResponse> {

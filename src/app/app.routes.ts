@@ -3,6 +3,8 @@ import { Routes } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { authGuard } from './@core/guards/auth.guard';
 import { AuthState } from './authorization/store/state/auth.state';
+import { ProfileState } from './profile/store/profile/profile.state';
+import { profileResolver } from './@core/resolvers/profile.resolver';
 
 export const routes: Routes = [
     {
@@ -32,6 +34,8 @@ export const routes: Routes = [
         path: 'profile',
         title: 'Profile',
         loadComponent: () => import('./profile/components/profile/profile.component').then(c => c.ProfileComponent),
+        providers: [importProvidersFrom(NgxsModule.forFeature([ProfileState]))],
+        resolve: [profileResolver],
         canMatch: [authGuard]
     }
 ];

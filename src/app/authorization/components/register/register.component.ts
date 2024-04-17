@@ -4,13 +4,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Register } from '../../store/state/auth.actions';
 
 @Component({
     selector: 'app-register',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, MatInputModule, MatIconModule, ReactiveFormsModule],
+    imports: [CommonModule, MatButtonModule, MatInputModule, MatIconModule, ReactiveFormsModule, RouterModule],
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss'
 })
