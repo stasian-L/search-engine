@@ -4,6 +4,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
+import { User } from '../../../authorization/interfaces/user.interface';
 
 @Component({
     selector: 'app-right-menu',
@@ -16,6 +17,8 @@ export class RightMenuComponent {
     @Output() logout = new EventEmitter();
 
     @Input() authenticated = false;
+
+    @Input() user: User | null = null;
 
     size = 96;
 

@@ -18,6 +18,8 @@ export class SearchHeaderComponent {
 
     authenticated$ = this.store.select(AuthState.isAuthenticated);
 
+    currentUser$ = this.store.select(AuthState.currentUser);
+
     logout(): void {
         this.store.dispatch(new Logout());
     }

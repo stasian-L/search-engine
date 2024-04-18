@@ -17,6 +17,7 @@
         <div class="login-actions">
             <app-right-menu
                 [authenticated]="(authenticated$ | async) ?? false"
+                [user]="currentUser$ | async"
                 (logout)="logout()" />
         </div>
     </header>

@@ -1,7 +1,14 @@
 @for (item of items; track $index) {
 <div class="shortcut">
     <a href="#">
-        <img [src]="item.url">
+        <img [src]="item.url" />
     </a>
 </div>
 }
+<div
+    class="shortcut add"
+    matRipple
+    (click)="addShortcut()">
+    <mat-icon>add</mat-icon>
+    Add new
+</div>

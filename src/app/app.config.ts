@@ -14,15 +14,16 @@ import { baseUrlInterceptor } from './@core/intercepters/base-url.interceptor';
 import { BASE_API_URL } from './@core/tokens/tokens';
 import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
+import { HomeState } from './home/store/state/home.state';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes, withDebugTracing()),
-        provideHttpClient(withInterceptors([authInterceptor, baseUrlInterceptor])),
+        provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
         provideAnimations(),
         importProvidersFrom([
             BrowserAnimationsModule,
-            NgxsModule.forRoot([AuthState]),
+            NgxsModule.forRoot([AuthState, HomeState]),
             NgxsRouterPluginModule.forRoot(),
             NgxsReduxDevtoolsPluginModule.forRoot(),
             NgxsLoggerPluginModule.forRoot(),

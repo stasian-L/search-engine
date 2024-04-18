@@ -17,14 +17,14 @@
 <mat-menu #header_menu>
     <div class="user-image">
         <img
-            [src]="imageUrl"
+            [src]="user?.image ?? imageUrl"
             [width]="size"
             [height]="size"
             alt="" />
     </div>
     <div class="user-info">
-        <span class="name">Lobach Stanislau</span>
-        <span class="user-name">stosian</span>
+        <span class="name">{{ user?.username }}</span>
+        <span class="user-name">{{ user?.email }}</span>
     </div>
     <mat-divider />
     @for (item of menuItems; track $index) {
@@ -35,6 +35,12 @@
         {{ item.label }}
     </button>
     }
+    <button
+        mat-menu-item
+        (click)="logout.emit()">
+        <mat-icon>bug_report</mat-icon>
+        Crawler
+    </button>
     <button
         mat-menu-item
         (click)="logout.emit()">

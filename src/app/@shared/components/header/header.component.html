@@ -1,4 +1,4 @@
-<ng-container *ngIf="{ isAuthenticated: isAuthenticated$ | async } as data">
+<ng-container *ngIf="{ isAuthenticated: isAuthenticated$ | async, user: currentUser$ | async } as data">
     <a
         href=""
         target="_self">
@@ -10,5 +10,6 @@
     </a>
     <app-right-menu
         [authenticated]="data.isAuthenticated ?? false"
+        [user]="data.user"
         (logout)="logout()" />
 </ng-container>

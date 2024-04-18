@@ -5,6 +5,17 @@
 
 .shortcut {
     padding: 10px;
+    border-radius: 8px;
+
+    &.add {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid;
+        font-weight: bold;
+        margin: 10px;
+        user-select: none;
+    }
 
     img {
         width: 200px;
