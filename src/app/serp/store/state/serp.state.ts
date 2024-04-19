@@ -1,14 +1,18 @@
 import { Injectable, inject } from '@angular/core';
-import { Action, State, StateContext } from '@ngxs/store';
-import { Search } from './serp.actions';
+import { Navigate } from '@ngxs/router-plugin';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
+import { map, mergeMap, tap, toArray } from 'rxjs';
 import { SerpService } from '../../services/serp.service';
+import { Search } from './serp.actions';
 
 export class SerpStateModel {
-    public items: string[];
+    query: string = '';
+    results: any[] = [];
 }
 
 const defaults = {
-    items: []
+    query: '',
+    results: []
 };
 
 @State<SerpStateModel>({
@@ -19,8 +23,33 @@ const defaults = {
 export class SerpState {
     serpService = inject(SerpService);
 
+    store = inject(Store);
+
+    @Selector()
+    static results(model: SerpStateModel): any[] {
+        return model.results;
+    }
+
+    @Selector()
+    static query(model: SerpStateModel): string {
+        return model.query;
+    }
+
     @Action(Search)
-    onSearch({}: StateContext<SerpStateModel>, { payload }: Search) {
-        return this.serpService.search(payload);
+    onSearch({ patchState }: StateContext<SerpStateModel>, { payload }: Search) {
+        patchState({ query: payload });
+        this.store.dispatch(new Navigate(['search']));
+        return this.serpService.search(payload).pipe(
+            mergeMap((x: any[]) => x),
+            map((x: any) => ({
+                title: x.title,
+                link: x.link,
+                snippet: x.snippet
+            })),
+            toArray(),
+            tap(x => {
+                patchState({ results: x });
+            })
+        );
     }
 }

@@ -3,7 +3,7 @@
     <div class="main-center">
         <div class="main-container">
             <div class="content-left">
-                <app-result-list />
+                <app-result-list [results]="results$ | async" />
             </div>
             <div class="content-right">
                 <!-- <app-result-list /> -->

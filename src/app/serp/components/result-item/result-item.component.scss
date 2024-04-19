@@ -10,6 +10,16 @@
     line-height: 16px;
 }
 
+.link-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
+
+.title {
+    position: relative;
+}
+
 .link {
     text-decoration: none;
 }

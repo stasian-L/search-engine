@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, HostBinding, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { Store } from '@ngxs/store';
+import { Search } from '../../../serp/store/state/serp.actions';
 
 @Component({
     selector: 'app-search-bar',
@@ -15,11 +16,15 @@ import { MatInputModule } from '@angular/material/input';
 export class SearchBarComponent {
     @HostBinding('class.focused') focused: boolean = false;
 
-    http = inject(HttpClient);
+    @Input() set query(value: string | null) {
+        this.searchControl.setValue(value);
+    }
+
+    store = inject(Store);
 
     searchControl = new FormControl('');
 
-    search(event: Event) {
-        this.http.get('https://serpapi.com/search.json?engine=google?api_key=AIzaSyC7qqfM66OIukhUGWBhOyPkcEVZyNfxBBw?q=' + event).subscribe(console.log);
+    search() {
+        this.store.dispatch(new Search(this.searchControl.value ?? ''));
     }
 }

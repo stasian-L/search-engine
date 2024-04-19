@@ -11,7 +11,7 @@
                 width="50" />
         </a>
         <form action="">
-            <app-search-bar />
+            <app-search-bar [query]="query$ | async"/>
         </form>
         <div class="spacer"></div>
         <div class="login-actions">
