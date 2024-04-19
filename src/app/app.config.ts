@@ -16,11 +16,12 @@ import { BASE_API_URL } from './@core/tokens/tokens';
 import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
 import { HomeState } from './home/store/state/home.state';
+import { loadingInterceptor } from './@core/intercepters/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes, withDebugTracing()),
-        provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
+        provideHttpClient(withInterceptors([loadingInterceptor, baseUrlInterceptor, authInterceptor])),
         provideAnimations(),
         importProvidersFrom([
             BrowserAnimationsModule,

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SkipLoading } from '../../@core/intercepters/loading.interceptor';
 import { User, UserAPIResponse } from '../interfaces/user.interface';
 
 export type LoginBodyRequest = Pick<User, 'email'> & { password: string };
@@ -26,7 +27,9 @@ export class AuthService {
     }
 
     getCurrentUser(): Observable<UserAPIResponse> {
-        return this.http.get<UserAPIResponse>('user');
+        return this.http.get<UserAPIResponse>('user', {
+            context: new HttpContext().set(SkipLoading, true)
+        });
     }
 
     updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
