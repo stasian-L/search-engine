@@ -1,5 +1,5 @@
 .right-buttons,
-.user-image {
+.user-image-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,4 +13,8 @@
     .name {
         font-weight: bold;
     }
+}
+
+.user-image {
+    border-radius: 100%;
 }

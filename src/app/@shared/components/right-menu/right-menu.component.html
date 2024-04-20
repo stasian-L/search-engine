@@ -15,8 +15,9 @@
 </div>
 
 <mat-menu #header_menu>
-    <div class="user-image">
+    <div class="user-image-container">
         <img
+            class="user-image"
             [src]="user?.image ?? imageUrl"
             [width]="size"
             [height]="size"

@@ -1,0 +1,40 @@
+:host {
+    margin: 50px 50px 0;
+}
+
+:host,
+.banner,
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner {
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.container {
+    width: 200px;
+    height: 200px;
+}
+
+.avatar {
+    border-radius: 100%;
+}
+
+.content {
+    flex-grow: 2.5;
+    flex-direction: column;
+    gap: 10px;
+
+    > * {
+        width: 100%;
+    }
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+}

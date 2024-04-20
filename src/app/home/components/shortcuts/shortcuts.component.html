@@ -1,7 +1,7 @@
 @for (item of items$ | async; track $index) {
 <div class="shortcut">
     <a [href]="item.url">
-        <img [src]="item.url" />
+        <img [src]="item.url | iconLink" />
     </a>
 </div>
 }
