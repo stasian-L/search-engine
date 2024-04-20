@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Action, State, StateContext } from '@ngxs/store';
-import { HomeAction } from './home.actions';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { append, patch } from '@ngxs/store/operators';
+import { AddShortcut } from './home.actions';
 
 export class HomeStateModel {
-    public items: string[] = [];
+    shortcuts: { url: string }[] = [];
 }
 
 const defaults = {
-    items: []
+    shortcuts: [{ url: 'https://www.youtube.com/' }]
 };
 
 @State<HomeStateModel>({
@@ -16,9 +17,17 @@ const defaults = {
 })
 @Injectable()
 export class HomeState {
-    @Action(HomeAction)
-    add({ getState, setState }: StateContext<HomeStateModel>, { payload }: HomeAction) {
-        const state = getState();
-        setState({ items: [...state.items, payload] });
+    @Selector()
+    static shortcuts(model: HomeStateModel): { url: string }[] {
+        return model.shortcuts;
+    }
+
+    @Action(AddShortcut)
+    onAddShortcut({ setState }: StateContext<HomeStateModel>, { payload }: AddShortcut) {
+        setState(
+            patch({
+                shortcuts: append([{ url: payload }])
+            })
+        );
     }
 }

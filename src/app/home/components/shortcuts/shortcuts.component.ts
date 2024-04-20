@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,38 +7,23 @@ import { Store } from '@ngxs/store';
 import { filter } from 'rxjs';
 import { AddShortcut } from '../../store/state/home.actions';
 import { AddShortcutDialogComponent } from '../add-shortcut-dialog/add-shortcut-dialog.component';
+import { HomeState } from '../../store/state/home.state';
 
 @Component({
     selector: 'app-shortcuts',
     standalone: true,
-    imports: [MatIconModule, MatRippleModule],
+    imports: [AsyncPipe, MatIconModule, MatRippleModule],
     templateUrl: './shortcuts.component.html',
     styleUrl: './shortcuts.component.scss'
 })
 export class ShortcutsComponent {
-    items: { url: string }[] = [
-        {
-            url: 'https://fashion4you.ua/images/commodities/3079/1520096647_%D1%84%D0%B5%D1%80%D0%B0%D1%80%D0%B8.jpg'
-        },
-        {
-            url: 'https://fashion4you.ua/images/commodities/3079/1520096647_%D1%84%D0%B5%D1%80%D0%B0%D1%80%D0%B8.jpg'
-        },
-        {
-            url: 'https://fashion4you.ua/images/commodities/3079/1520096647_%D1%84%D0%B5%D1%80%D0%B0%D1%80%D0%B8.jpg'
-        },
-        {
-            url: 'https://fashion4you.ua/images/commodities/3079/1520096647_%D1%84%D0%B5%D1%80%D0%B0%D1%80%D0%B8.jpg'
-        }
-    ];
+  store = inject(Store);
+    items$ = this.store.select(HomeState.shortcuts);
 
-    store = inject(Store);
     dialog = inject(MatDialog);
-
     addShortcut(): void {
         this.dialog
-            .open(AddShortcutDialogComponent, {
-                data: {}
-            })
+            .open(AddShortcutDialogComponent)
             .afterClosed()
             .pipe(filter(x => !!x))
             .subscribe(result => {

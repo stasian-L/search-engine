@@ -1,6 +1,6 @@
-@for (item of items; track $index) {
+@for (item of items$ | async; track $index) {
 <div class="shortcut">
-    <a href="#">
+    <a [href]="item.url">
         <img [src]="item.url" />
     </a>
 </div>

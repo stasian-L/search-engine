@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Add a website</h2>
+<mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>Url</mat-label>
+        <input
+            matInput
+            [(ngModel)]="url" />
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button
+        mat-button
+        (click)="dialogRef.close()">
+        Cancel
+    </button>
+    <button
+        mat-button
+        [mat-dialog-close]="url"
+        cdkFocusInitial>
+        Ok
+    </button>
+</mat-dialog-actions>
