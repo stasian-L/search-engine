@@ -1,5 +1,4 @@
-import { SerpState } from './serp/store/state/serp.state';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withDebugTracing } from '@angular/router';
@@ -8,20 +7,21 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { authInterceptor } from './@core/intercepters/auth.interceptor';
+import { AuthInterceptor } from './@core/intercepters/auth.interceptor';
+import { SerpState } from './serp/store/state/serp.state';
 
 import { environment } from '../environments/environment.development';
 import { baseUrlInterceptor } from './@core/intercepters/base-url.interceptor';
+import { loadingInterceptor } from './@core/intercepters/loading.interceptor';
 import { BASE_API_URL } from './@core/tokens/tokens';
 import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
 import { HomeState } from './home/store/state/home.state';
-import { loadingInterceptor } from './@core/intercepters/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes, withDebugTracing()),
-        provideHttpClient(withInterceptors([loadingInterceptor, baseUrlInterceptor, authInterceptor])),
+        provideHttpClient(withInterceptors([loadingInterceptor, baseUrlInterceptor]), withInterceptorsFromDi()),
         provideAnimations(),
         importProvidersFrom([
             BrowserAnimationsModule,
@@ -33,6 +33,11 @@ export const appConfig: ApplicationConfig = {
                 key: 'auth.token'
             })
         ]),
-        { provide: BASE_API_URL, useValue: environment.apiUrl }
+        { provide: BASE_API_URL, useValue: environment.apiUrl },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
     ]
 };

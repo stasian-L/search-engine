@@ -8,11 +8,12 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { ProfileState } from '../../store/profile/profile.state';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-profile',
     standalone: true,
-    imports: [CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+    imports: [CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss'
 })

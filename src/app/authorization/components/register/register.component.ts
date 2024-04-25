@@ -16,9 +16,9 @@ import { Register } from '../../store/state/auth.actions';
     styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-    fb = inject(FormBuilder);
+    private readonly fb = inject(FormBuilder);
 
-    store = inject(Store);
+    private readonly store = inject(Store);
 
     form: FormGroup = this.fb.nonNullable.group({
         username: ['', Validators.required],
@@ -27,6 +27,6 @@ export class RegisterComponent {
     });
 
     onSubmit(): void {
-        this.store.dispatch(new Register(this.form.getRawValue()));
+        this.store.dispatch(new Register({ ...this.form.getRawValue(), role: 'USER', enabled: true }));
     }
 }

@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://api.realworld.io/api'
+    apiUrl: 'http://localhost:9000/api/v1'
 };

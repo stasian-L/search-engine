@@ -14,6 +14,10 @@ export class Logout {
     static readonly type = '[Auth] Logout user';
 }
 
+export class RefreshToken {
+    static readonly type = '[Auth] Refresh token';
+}
+
 export class GetCurrentUser {
     static readonly type = '[Auth] Get current user';
 }

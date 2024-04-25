@@ -1,42 +1,47 @@
-import { HttpClient, HttpContext } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SkipLoading } from '../../@core/intercepters/loading.interceptor';
 import { User, UserAPIResponse } from '../interfaces/user.interface';
 
-export type LoginBodyRequest = Pick<User, 'email'> & { password: string };
+type Role = 'USER' | 'ADMIN';
 
-export type RegisterBodyRequest = Pick<User, 'email' | 'username'> & {
+type GrantType = 'password' | 'refresh_token';
+
+export type LoginBodyRequest = Pick<User, 'username'> & { password: string; grant_type: GrantType };
+
+export type RegisterBodyRequest = Pick<User, 'email'> & {
     password: string;
+    role: Role;
+    enabled: boolean;
 };
 
-export type UpdateCurrentUserBodyRequest = Pick<User, 'email' | 'username' | 'bio' | 'image'> & { password: string };
+//export type UpdateCurrentUserBodyRequest = Pick<User, 'email' | 'username' | 'bio' | 'image'> & { password: string };
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(private http: HttpClient) {}
+    private readonly http = inject(HttpClient);
 
     login(user: LoginBodyRequest): Observable<UserAPIResponse> {
-        return this.http.post<UserAPIResponse>('users/login', { user });
+        return this.http.post<UserAPIResponse>('oauth/token', user);
     }
 
-    register(user: RegisterBodyRequest): Observable<UserAPIResponse> {
-        return this.http.post<UserAPIResponse>('users', { user });
+    register(user: RegisterBodyRequest): Observable<void> {
+        return this.http.post<void>('register', user);
     }
 
-    getCurrentUser(): Observable<UserAPIResponse> {
-        return this.http.get<UserAPIResponse>('user', {
-            context: new HttpContext().set(SkipLoading, true)
-        });
+    refreshToken(user: LoginBodyRequest): Observable<UserAPIResponse> {
+        return this.http.post<UserAPIResponse>(`oauth/token`, user);
     }
 
-    updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
-        return this.http.put<UserAPIResponse>('user', { user });
-    }
+    // getCurrentUser(): Observable<UserAPIResponse> {
+    //     return this.http.get<UserAPIResponse>('user', {
+    //         context: new HttpContext().set(SkipLoading, true)
+    //     });
+    // }
 
-    refreshToken(): Observable<unknown> {
-        return this.http.get<unknown>(`auth/refresh`);
-    }
+    // updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
+    //     return this.http.put<UserAPIResponse>('user', { user });
+    // }
 }

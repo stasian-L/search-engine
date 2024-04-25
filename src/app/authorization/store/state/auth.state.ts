@@ -4,16 +4,18 @@ import { Action, NgxsOnInit, Selector, State, StateContext, Store } from '@ngxs/
 import { Observable, tap } from 'rxjs';
 import { User, UserAPIResponse } from '../../interfaces/user.interface';
 import { AuthService } from './../../services/auth.service';
-import { GetCurrentUser, Login, Logout, Register } from './auth.actions';
+import { Login, Logout, RefreshToken, Register } from './auth.actions';
 
 export class AuthStateModel {
     currentUser: User | null = null;
-    token: string | null = null;
+    accessToken: string | null = null;
+    refreshToken: string | null = null;
 }
 
 const defaults: AuthStateModel = {
     currentUser: null,
-    token: null
+    accessToken: null,
+    refreshToken: null
 };
 
 @State<AuthStateModel>({
@@ -22,9 +24,9 @@ const defaults: AuthStateModel = {
 })
 @Injectable()
 export class AuthState implements NgxsOnInit {
-    readonly authService = inject(AuthService);
+    private readonly authService = inject(AuthService);
 
-    readonly store = inject(Store);
+    private readonly store = inject(Store);
 
     @Selector()
     static currentUser(state: AuthStateModel): User | null {
@@ -33,40 +35,45 @@ export class AuthState implements NgxsOnInit {
 
     @Selector()
     static token(state: AuthStateModel): string | null {
-        return state.token;
+        return state.accessToken;
     }
 
     @Selector()
     static isAuthenticated(state: AuthStateModel): boolean {
-        return !!state.token;
+        return !!state.accessToken;
     }
 
-    ngxsOnInit(ctx: StateContext<any>): void {
-        ctx.dispatch(new GetCurrentUser());
+    ngxsOnInit(_ctx: StateContext<any>): void {
+        //ctx.dispatch(new GetCurrentUser());
     }
 
     @Action(Login)
     onLogin({ patchState }: StateContext<AuthStateModel>, { user }: Login): Observable<UserAPIResponse> {
         return this.authService.login(user).pipe(
             tap(user => {
-                patchState({ currentUser: user.user, token: user.user.token });
+                patchState({ accessToken: user.access_token, refreshToken: user.refresh_token });
                 this.store.dispatch(new Navigate(['']));
             })
         );
     }
 
     @Action(Register)
-    onRegister({}: StateContext<AuthStateModel>, { user }: Register): Observable<UserAPIResponse> {
+    onRegister({}: StateContext<AuthStateModel>, { user }: Register): Observable<void> {
         return this.authService.register(user).pipe(tap(this.store.dispatch(new Navigate(['login']))));
     }
 
     @Action(Logout)
     onLogout({ patchState }: StateContext<AuthStateModel>): void {
-        patchState({ currentUser: null, token: null });
+        patchState({ currentUser: null, accessToken: null, refreshToken: null });
     }
 
-    @Action(GetCurrentUser)
-    onLoadCurrentUser({ patchState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
-        return this.authService.getCurrentUser().pipe(tap(user => patchState({ currentUser: user.user })))
+    // @Action(GetCurrentUser)
+    // onLoadCurrentUser({ patchState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
+    //     return this.authService.getCurrentUser().pipe(tap(user => patchState({ currentUser: user.user })));
+    // }
+
+    @Action(RefreshToken)
+    onRefreshToken({ patchState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
+        return this.authService.refreshToken({} as any).pipe(tap(user => patchState({ accessToken: user.access_token })));
     }
 }

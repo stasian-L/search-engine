@@ -1,11 +1,9 @@
-export interface UserAPIResponse {
-    user: User;
-}
+export type UserAPIResponse = Pick<User, 'access_token' | 'refresh_token'>;
 
 export interface User {
     email: string;
-    token: string;
     username: string;
-    bio: string;
+    access_token: string;
+    refresh_token: string;
     image: string;
 }

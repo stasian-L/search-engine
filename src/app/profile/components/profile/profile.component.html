@@ -8,7 +8,9 @@
                 width="200" />
         </div>
         <div class="actions">
-            <button mat-raised-button (click)="editProfile()">
+            <button
+                mat-raised-button
+                (click)="editProfile()">
                 <mat-icon>edit</mat-icon>
                 Edit Profile
             </button>
@@ -21,13 +23,14 @@
                 <mat-label>First Name</mat-label>
                 <input
                     matInput
-                    placeholder="First Name" />
+                    placeholder="First Name"
+                    [ngModel]="data.profile?.username" />
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Last Name</mat-label>
-                <input
+                <textarea
                     matInput
-                    placeholder="Last Name" />
+                    placeholder="Last Name"></textarea>
             </mat-form-field>
         </div>
         <div class="bio">
@@ -35,7 +38,8 @@
                 <mat-label>Bio</mat-label>
                 <input
                     matInput
-                    placeholder="Bio" />
+                    placeholder="Bio"
+                    [ngModel]="data.profile?.bio" />
             </mat-form-field>
         </div>
         <div class="info">

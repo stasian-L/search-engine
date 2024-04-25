@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { Login } from './../../store/state/auth.actions';
+import { Login } from '../../store/state/auth.actions';
 
 @Component({
     selector: 'app-login',
@@ -21,11 +21,11 @@ export class LoginComponent {
     store = inject(Store);
 
     form: FormGroup = this.fb.nonNullable.group({
-        email: ['', [Validators.required, Validators.email]],
+        username: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required]
     });
 
     onSubmit(): void {
-        this.store.dispatch(new Login(this.form.getRawValue()));
+        this.store.dispatch(new Login({ ...this.form.getRawValue(), grant_type: 'password' }));
     }
 }
