@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { ModelFormGroup } from '../../../@shared/utils/utility-types';
+import { User } from '../../interfaces/user.interface';
 import { Login } from '../../store/state/auth.actions';
+
+type UserLoginFormGroup = ModelFormGroup<Pick<User, 'username'> & { password: string }>;
 
 @Component({
     selector: 'app-login',
@@ -20,7 +24,7 @@ export class LoginComponent {
 
     store = inject(Store);
 
-    form: FormGroup = this.fb.nonNullable.group({
+    form: UserLoginFormGroup = this.fb.nonNullable.group({
         username: ['', [Validators.required, Validators.email]],
         password: ['', Validators.required]
     });

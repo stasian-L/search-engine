@@ -24,22 +24,22 @@
                 <input
                     matInput
                     placeholder="First Name"
-                    [ngModel]="data.profile?.username" />
+                    [ngModel]="data.profile?.firstName" />
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Last Name</mat-label>
-                <textarea
+                <input
                     matInput
-                    placeholder="Last Name"></textarea>
+                    placeholder="Last Name" />
             </mat-form-field>
         </div>
         <div class="bio">
             <mat-form-field appearance="outline">
                 <mat-label>Bio</mat-label>
-                <input
+                <textarea
                     matInput
                     placeholder="Bio"
-                    [ngModel]="data.profile?.bio" />
+                    [ngModel]="data.profile?.bio"></textarea>
             </mat-form-field>
         </div>
         <div class="info">

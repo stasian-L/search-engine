@@ -25,7 +25,9 @@ export class ShortcutsComponent {
 
     addShortcut(): void {
         this.dialog
-            .open(AddShortcutDialogComponent)
+            .open(AddShortcutDialogComponent, {
+                width: '440px'
+            })
             .afterClosed()
             .pipe(filter(x => !!x))
             .subscribe(result => {

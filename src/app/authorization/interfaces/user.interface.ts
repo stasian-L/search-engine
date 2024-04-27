@@ -6,4 +6,6 @@ export interface User {
     access_token: string;
     refresh_token: string;
     image: string;
+    firstName: string;
+    lastName: string;
 }

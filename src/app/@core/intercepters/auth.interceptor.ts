@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, Observable, catchError, filter, switchMap, take, throwError } from 'rxjs';
-import { RefreshToken } from '../../authorization/store/state/auth.actions';
+import { BehaviorSubject, EMPTY, Observable, catchError, filter, finalize, switchMap, take } from 'rxjs';
+import { Logout, RefreshToken } from '../../authorization/store/state/auth.actions';
 import { AuthState } from '../../authorization/store/state/auth.state';
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = this.store.selectSnapshot(AuthState.token);
         if (token) {
-            this.addToken(req, token);
+            req = this.addToken(req, token);
         }
 
         req = req.clone({
@@ -25,21 +25,24 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError(error => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
-                    return this.handle401Error(req, next);
+                    return this.handleUnauthorized(req, next);
                 } else {
                     console.log(error.error);
-                    return throwError(() => error);
+                    return EMPTY;
                 }
             })
         );
     }
 
-    addToken(req: HttpRequest<any>, token: string | null): void {
-        req.headers.append('Authorization', `Barear ${token}`);
-        req.headers.append('Access-Token', `${token}`);
+    addToken(req: HttpRequest<any>, token: string | null): HttpRequest<any> {
+        return req.clone({
+            setHeaders: {
+                Authorization: `Bearer ${token}`
+            }
+        });
     }
 
-    handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    handleUnauthorized(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
@@ -48,19 +51,21 @@ export class AuthInterceptor implements HttpInterceptor {
                 switchMap(() => {
                     this.isRefreshing = false;
                     const token = this.store.selectSnapshot(AuthState.token);
-                    this.refreshTokenSubject.next(token);
-                    return next.handle(request);
-                })
+                    if (token) {
+                        this.refreshTokenSubject.next(token);
+                        return next.handle(this.addToken(request, token));
+                    }
+
+                    return this.store.dispatch(new Logout());
+                }),
+                catchError(() => this.store.dispatch(new Logout())),
+                finalize(() => (this.isRefreshing = false))
             );
         } else {
             return this.refreshTokenSubject.pipe(
                 filter(token => token != null),
                 take(1),
-                switchMap(token => {
-                    console.log('get token', token);
-                    this.addToken(request, token);
-                    return next.handle(request);
-                })
+                switchMap(token => next.handle(this.addToken(request, token)))
             );
         }
     }

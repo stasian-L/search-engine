@@ -4,7 +4,7 @@ import { Action, NgxsOnInit, Selector, State, StateContext, Store } from '@ngxs/
 import { Observable, tap } from 'rxjs';
 import { User, UserAPIResponse } from '../../interfaces/user.interface';
 import { AuthService } from './../../services/auth.service';
-import { Login, Logout, RefreshToken, Register } from './auth.actions';
+import { GetCurrentUser, Login, Logout, RefreshToken, Register } from './auth.actions';
 
 export class AuthStateModel {
     currentUser: User | null = null;
@@ -43,8 +43,10 @@ export class AuthState implements NgxsOnInit {
         return !!state.accessToken;
     }
 
-    ngxsOnInit(_ctx: StateContext<any>): void {
-        //ctx.dispatch(new GetCurrentUser());
+    ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
+        //if (ctx.getState().accessToken) {
+        ctx.dispatch(new GetCurrentUser());
+        //}
     }
 
     @Action(Login)
@@ -67,13 +69,16 @@ export class AuthState implements NgxsOnInit {
         patchState({ currentUser: null, accessToken: null, refreshToken: null });
     }
 
-    // @Action(GetCurrentUser)
-    // onLoadCurrentUser({ patchState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
-    //     return this.authService.getCurrentUser().pipe(tap(user => patchState({ currentUser: user.user })));
-    // }
+    @Action(GetCurrentUser)
+    onLoadCurrentUser({ patchState }: StateContext<AuthStateModel>): Observable<User> {
+        return this.authService.getCurrentUser().pipe(tap(user => patchState({ currentUser: user })));
+    }
 
     @Action(RefreshToken)
-    onRefreshToken({ patchState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
-        return this.authService.refreshToken({} as any).pipe(tap(user => patchState({ accessToken: user.access_token })));
+    onRefreshToken({ patchState, getState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
+        const { refreshToken } = getState();
+        return this.authService
+            .refreshToken({ refresh_token: refreshToken ?? '', grant_type: 'refresh_token', client_id: 'gigy', client_secret: 'secret' })
+            .pipe(tap(user => patchState({ accessToken: user.access_token })));
     }
 }

@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SkipLoading } from '../../@core/intercepters/loading.interceptor';
 import { User, UserAPIResponse } from '../interfaces/user.interface';
 
 type Role = 'USER' | 'ADMIN';
@@ -8,11 +9,11 @@ type Role = 'USER' | 'ADMIN';
 type GrantType = 'password' | 'refresh_token';
 
 export type LoginBodyRequest = Pick<User, 'username'> & { password: string; grant_type: GrantType };
+export type RefreshTokenBodyRequest = Pick<User, 'refresh_token'> & { client_id: 'gigy'; client_secret: 'secret'; grant_type: GrantType };
 
-export type RegisterBodyRequest = Pick<User, 'email'> & {
+export type RegisterBodyRequest = Pick<User, 'firstName' | 'lastName' | 'email'> & {
     password: string;
     role: Role;
-    enabled: boolean;
 };
 
 //export type UpdateCurrentUserBodyRequest = Pick<User, 'email' | 'username' | 'bio' | 'image'> & { password: string };
@@ -24,22 +25,34 @@ export class AuthService {
     private readonly http = inject(HttpClient);
 
     login(user: LoginBodyRequest): Observable<UserAPIResponse> {
-        return this.http.post<UserAPIResponse>('oauth/token', user);
+      const body = `grant_type=${user.grant_type}&username=${user.username}&password=${user.password}`;
+        return this.http.post<UserAPIResponse>('oauth/token', body, {
+            headers: {
+                'Authorization': 'Basic Z2lneTpzZWNyZXQ=',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
     }
 
     register(user: RegisterBodyRequest): Observable<void> {
         return this.http.post<void>('register', user);
     }
 
-    refreshToken(user: LoginBodyRequest): Observable<UserAPIResponse> {
-        return this.http.post<UserAPIResponse>(`oauth/token`, user);
+    refreshToken(user: RefreshTokenBodyRequest): Observable<UserAPIResponse> {
+        const body = `grant_type=${user.grant_type}&client_id=${user.client_id}&client_secret=${user.client_secret}&refresh_token=${user.refresh_token}`;
+        return this.http.post<UserAPIResponse>('oauth/token', body, {
+            headers: {
+                'Authorization': 'Basic Z2lneTpzZWNyZXQ=',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
     }
 
-    // getCurrentUser(): Observable<UserAPIResponse> {
-    //     return this.http.get<UserAPIResponse>('user', {
-    //         context: new HttpContext().set(SkipLoading, true)
-    //     });
-    // }
+    getCurrentUser(): Observable<User> {
+        return this.http.get<User>('user', {
+            context: new HttpContext().set(SkipLoading, true)
+        });
+    }
 
     // updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
     //     return this.http.put<UserAPIResponse>('user', { user });
