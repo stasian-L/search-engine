@@ -3,7 +3,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
 import { Profile } from '../../interfaces/profile.interface';
 import { ProfileService } from '../../services/profile.service';
-import { GetProfile } from './profile.actions';
+import { GetProfile, UpdateProfile } from './profile.actions';
 
 export class ProfileStateModel {
     public profile: Profile | null = null;
@@ -27,8 +27,17 @@ export class ProfileState {
     }
 
     @Action(GetProfile)
-    onGetProfile({ patchState }: StateContext<ProfileStateModel>, { payload }: GetProfile): Observable<Profile> {
-        return this.profileService.getProfile(payload).pipe(
+    onGetProfile({ patchState }: StateContext<ProfileStateModel>): Observable<Profile> {
+        return this.profileService.getProfile().pipe(
+            tap(profile => {
+                patchState({ profile: profile });
+            })
+        );
+    }
+
+    @Action(UpdateProfile)
+    onUpdateProfile({ patchState }: StateContext<ProfileStateModel>, { payload }: UpdateProfile): Observable<Profile> {
+        return this.profileService.updateProfile(payload).pipe(
             tap(profile => {
                 patchState({ profile: profile });
             })

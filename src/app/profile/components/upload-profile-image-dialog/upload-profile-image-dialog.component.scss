@@ -1,0 +1,22 @@
+.file-input {
+    display: none;
+}
+
+.file-upload {
+    position: relative;
+    top: 10px;
+}
+
+.mat-mdc-dialog-content {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.mat-mdc-form-field {
+    width: 90%;
+}
+
+.image-preview {
+    object-fit: cover;
+}

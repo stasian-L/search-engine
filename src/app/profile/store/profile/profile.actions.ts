@@ -1,4 +1,8 @@
 export class GetProfile {
     static readonly type = '[Profile] Get user profile';
-    constructor(public payload: string) {}
+}
+
+export class UpdateProfile {
+    static readonly type = '[Profile] Update user profile';
+    constructor(public payload: any) {}
 }

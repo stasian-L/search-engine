@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Navigate } from '@ngxs/router-plugin';
-import { Action, NgxsOnInit, Selector, State, StateContext, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
 import { User, UserAPIResponse } from '../../interfaces/user.interface';
 import { AuthService } from './../../services/auth.service';
@@ -23,7 +23,7 @@ const defaults: AuthStateModel = {
     defaults
 })
 @Injectable()
-export class AuthState implements NgxsOnInit {
+export class AuthState {
     private readonly authService = inject(AuthService);
 
     private readonly store = inject(Store);
@@ -41,12 +41,6 @@ export class AuthState implements NgxsOnInit {
     @Selector()
     static isAuthenticated(state: AuthStateModel): boolean {
         return !!state.accessToken;
-    }
-
-    ngxsOnInit(ctx: StateContext<AuthStateModel>): void {
-        //if (ctx.getState().accessToken) {
-        ctx.dispatch(new GetCurrentUser());
-        //}
     }
 
     @Action(Login)
@@ -77,6 +71,7 @@ export class AuthState implements NgxsOnInit {
     @Action(RefreshToken)
     onRefreshToken({ patchState, getState }: StateContext<AuthStateModel>): Observable<UserAPIResponse> {
         const { refreshToken } = getState();
+        patchState({ accessToken: null });
         return this.authService
             .refreshToken({ refresh_token: refreshToken ?? '', grant_type: 'refresh_token', client_id: 'gigy', client_secret: 'secret' })
             .pipe(tap(user => patchState({ accessToken: user.access_token })));

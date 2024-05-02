@@ -1,18 +1,19 @@
-<ng-container *ngIf="{ profile: profile$ | async } as data">
+<form [formGroup]="profileForm">
     <div class="banner">
         <div class="container">
             <img
                 alt="avatar"
                 class="avatar"
-                [src]="data.profile?.image"
-                width="200" />
+                [src]="profileImage"
+                width="200"
+                height="200" />
         </div>
         <div class="actions">
             <button
                 mat-raised-button
-                routerLink="./edit">
+                (click)="onOpenUploadDialog()">
                 <mat-icon>edit</mat-icon>
-                Edit Profile
+                @if (profileForm.controls.profileImage) { Edit Profile Image } @else { Add Profile Image }
             </button>
         </div>
     </div>
@@ -24,13 +25,14 @@
                 <input
                     matInput
                     placeholder="First Name"
-                    [ngModel]="data.profile?.firstName" />
+                    formControlName="firstName" />
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Last Name</mat-label>
                 <input
                     matInput
-                    placeholder="Last Name" />
+                    placeholder="Last Name"
+                    formControlName="lastName" />
             </mat-form-field>
         </div>
         <div class="bio">
@@ -39,7 +41,7 @@
                 <textarea
                     matInput
                     placeholder="Bio"
-                    [ngModel]="data.profile?.bio"></textarea>
+                    formControlName="bio"></textarea>
             </mat-form-field>
         </div>
         <div class="info">
@@ -47,14 +49,19 @@
                 <mat-label>Email</mat-label>
                 <input
                     matInput
-                    placeholder="Email" />
+                    placeholder="Email"
+                    formControlName="email" />
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Phone</mat-label>
                 <input
                     matInput
-                    placeholder="Phone" />
+                    placeholder="Phone"
+                    formControlName="phone" />
             </mat-form-field>
         </div>
     </div>
-</ng-container>
+    <div class="actions">
+        <button mat-raised-button (submit)="saveChanges()">Save</button>
+    </div>
+</form>

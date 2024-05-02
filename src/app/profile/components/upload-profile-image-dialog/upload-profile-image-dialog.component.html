@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Add a link to file</h2>
+<mat-dialog-content>
+    <div class="image-container">
+        <img class="image-preview" [src]="imageUrl" alt="" width="450" height="450">
+    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>No file chosen...</mat-label>
+        <input
+            matInput
+            [(ngModel)]="imagePath" />
+    </mat-form-field>
+    <input
+        type="file"
+        class="file-input"
+        (change)="onFileSelected($event)"
+        #fileUpload />
+
+    <div class="file-upload">
+        <button
+            mat-mini-fab
+            color="primary"
+            class="upload-btn"
+            (click)="fileUpload.click()">
+            <mat-icon>attach_file</mat-icon>
+        </button>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button
+        mat-button
+        (click)="dialogRef.close()">
+        Cancel
+    </button>
+    <button
+        mat-button
+        [mat-dialog-close]="imageUrl"
+        cdkFocusInitial>
+        Ok
+    </button>
+</mat-dialog-actions>

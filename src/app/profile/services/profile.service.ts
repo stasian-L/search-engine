@@ -1,6 +1,6 @@
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { SkipLoading } from '../../@core/intercepters/loading.interceptor';
 import { Profile } from '../interfaces/profile.interface';
 
@@ -10,9 +10,13 @@ import { Profile } from '../interfaces/profile.interface';
 export class ProfileService {
     readonly httpClient = inject(HttpClient);
 
-    getProfile(username: string): Observable<Profile> {
-        return this.httpClient.get<Profile>(`profiles/${username}`, {
+    getProfile(): Observable<Profile> {
+        return this.httpClient.get<Profile>(`profile`, {
             context: new HttpContext().set(SkipLoading, true)
         });
+    }
+
+    updateProfile(_profile: any): Observable<any> {
+        return EMPTY;
     }
 }
