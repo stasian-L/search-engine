@@ -7,7 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
+import { Store } from '@ngxs/store';
 import { filter } from 'rxjs';
+import { UpdateProfile } from '../../store/profile/profile.actions';
 import { UploadProfileImageDialogComponent } from '../upload-profile-image-dialog/upload-profile-image-dialog.component';
 
 @Component({
@@ -27,6 +29,7 @@ import { UploadProfileImageDialogComponent } from '../upload-profile-image-dialo
     styleUrl: '../styles/profile.scss'
 })
 export class EditProfileComponent {
+    store = inject(Store);
     uploadImageDialog = inject(MatDialog);
     fb = inject(FormBuilder);
 
@@ -35,10 +38,10 @@ export class EditProfileComponent {
     profileForm = this.fb.nonNullable.group({
         firstName: ['', Validators.required],
         lastName: ['', Validators.required],
+        username: ['', Validators.required],
         bio: [''],
-        profileImage: '',
+        image: '',
         email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.minLength(6)],
         phone: ['']
     });
 
@@ -47,20 +50,26 @@ export class EditProfileComponent {
     onOpenUploadDialog(): void {
         this.uploadImageDialog
             .open(UploadProfileImageDialogComponent, {
-                width: '500px'
+                width: '500px',
+                data: {
+                    imageUrl: this.profileImage
+                }
             })
             .afterClosed()
             .pipe(filter(x => !!x))
             .subscribe(result => {
-                console.log(result);
-
-                this.profileForm.controls.profileImage = result;
+                this.profileForm.controls.image.setValue(result);
                 this.profileImage = result;
                 this.cdr.markForCheck();
             });
     }
 
-    saveChanges() {
-        throw new Error('Method not implemented.');
+    saveChanges(): void {
+        if (this.profileForm.invalid) {
+            return;
+        }
+
+        const payload = this.profileForm.getRawValue();
+        this.store.dispatch(new UpdateProfile(payload));
     }
 }

@@ -1,10 +1,10 @@
 <ng-container *ngIf="{ profile: profile$ | async } as data">
     <div class="banner">
-        <div class="container">
+        <div class="image-container">
             <img
-                alt="avatar"
                 class="avatar"
-                [src]="data.profile?.image"
+                [src]="data.profile?.image ?? defaultPhoto"
+                height="200"
                 width="200" />
         </div>
         <div class="actions">
@@ -30,7 +30,15 @@
                 <mat-label>Last Name</mat-label>
                 <input
                     matInput
-                    placeholder="Last Name" />
+                    placeholder="Last Name"
+                    [ngModel]="data.profile?.lastName" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input
+                    matInput
+                    placeholder="Username"
+                    [ngModel]="data.profile?.username" />
             </mat-form-field>
         </div>
         <div class="bio">
@@ -47,7 +55,8 @@
                 <mat-label>Email</mat-label>
                 <input
                     matInput
-                    placeholder="Email" />
+                    placeholder="Email"
+                    [ngModel]="data.profile?.email" />
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Phone</mat-label>

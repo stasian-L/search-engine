@@ -31,6 +31,8 @@ export class RegisterComponent {
         password: ['', Validators.required]
     });
 
+    passwordHide = true;
+
     onSubmit(): void {
         this.store.dispatch(new Register({ ...this.form.getRawValue(), role: 'USER' }));
     }

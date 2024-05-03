@@ -1,8 +1,9 @@
-<form [formGroup]="profileForm">
+<form
+    [formGroup]="profileForm"
+    (ngSubmit)="saveChanges()">
     <div class="banner">
-        <div class="container">
+        <div class="image-container">
             <img
-                alt="avatar"
                 class="avatar"
                 [src]="profileImage"
                 width="200"
@@ -13,7 +14,7 @@
                 mat-raised-button
                 (click)="onOpenUploadDialog()">
                 <mat-icon>edit</mat-icon>
-                @if (profileForm.controls.profileImage) { Edit Profile Image } @else { Add Profile Image }
+                @if (profileForm.controls.image) { Edit Profile Image } @else { Add Profile Image }
             </button>
         </div>
     </div>
@@ -33,6 +34,13 @@
                     matInput
                     placeholder="Last Name"
                     formControlName="lastName" />
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input
+                    matInput
+                    placeholder="Username"
+                    formControlName="username" />
             </mat-form-field>
         </div>
         <div class="bio">
@@ -62,6 +70,10 @@
         </div>
     </div>
     <div class="actions">
-        <button mat-raised-button (submit)="saveChanges()">Save</button>
+        <button
+            mat-raised-button
+            type="submit">
+            Save
+        </button>
     </div>
 </form>

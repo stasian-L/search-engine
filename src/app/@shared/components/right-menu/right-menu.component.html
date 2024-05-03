@@ -18,7 +18,7 @@
     <div class="user-image-container">
         <img
             class="user-image"
-            [src]="user?.image ?? imageUrl"
+            [src]="imageUrl"
             [width]="size"
             [height]="size"
             alt="" />
@@ -38,7 +38,7 @@
     }
     <button
         mat-menu-item
-        (click)="logout.emit()">
+        (click)="onOpenCrawlerDialog()">
         <mat-icon>bug_report</mat-icon>
         Crawler
     </button>

@@ -29,6 +29,8 @@ export class LoginComponent {
         password: ['', Validators.required]
     });
 
+    passwordHide = true;
+
     onSubmit(): void {
         this.store.dispatch(new Login({ ...this.form.getRawValue(), grant_type: 'password' }));
     }

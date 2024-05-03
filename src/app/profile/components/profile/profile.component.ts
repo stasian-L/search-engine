@@ -26,4 +26,6 @@ export class ProfileComponent {
     readonly profileDialog = inject(MatDialog);
 
     readonly profile$ = this.store.select(ProfileState.profile);
+
+    readonly defaultPhoto = 'assets/images/empty-profile.png';
 }

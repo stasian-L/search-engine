@@ -20,9 +20,17 @@ export class RightMenuComponent {
 
     @Input() user: User | null = null;
 
-    size = 96;
+    @Input() set imageUrl(value: string | null | undefined) {
+        if (!value) {
+            this._imageUrl = 'assets/images/empty-profile.png';
+        }
+    }
+    get imageUrl() {
+        return this._imageUrl;
+    }
+    private _imageUrl = '';
 
-    imageUrl = 'assets/images/empty-profile.png';
+    size = 96;
 
     menuItems = [
         {
@@ -36,4 +44,8 @@ export class RightMenuComponent {
             route: '/appearance'
         }
     ];
+
+    onOpenCrawlerDialog() {
+        throw new Error('Method not implemented.');
+    }
 }

@@ -1,10 +1,21 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import {
+    MAT_DIALOG_DATA,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogRef,
+    MatDialogTitle
+} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+
+export interface UploadProfileImageData {
+    imageUrl: string;
+}
 
 @Component({
     selector: 'app-upload-profile-image-dialog',
@@ -24,12 +35,20 @@ import { MatInputModule } from '@angular/material/input';
     styleUrl: './upload-profile-image-dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UploadProfileImageDialogComponent {
-    imageUrl = '';
-    imagePath = '';
+export class UploadProfileImageDialogComponent implements OnInit {
     dialogRef = inject(MatDialogRef<UploadProfileImageDialogComponent>);
 
+    matDialogData: UploadProfileImageData = inject(MAT_DIALOG_DATA);
+
+    imageUrl = '';
+
+    imagePath = '';
+
     cdr = inject(ChangeDetectorRef);
+
+    ngOnInit(): void {
+        this.imageUrl = this.matDialogData.imageUrl;
+    }
 
     onFileSelected(event: any) {
         console.log(event.target.value);
