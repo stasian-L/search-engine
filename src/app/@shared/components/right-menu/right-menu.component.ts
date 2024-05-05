@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, Input, Output, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { User } from '../../../authorization/interfaces/user.interface';
+import { CrawlerDialogComponent } from '../../../crawler/components/crawler-dialog/crawler-dialog.component';
 
 @Component({
     selector: 'app-right-menu',
@@ -25,6 +27,11 @@ export class RightMenuComponent {
             this._imageUrl = 'assets/images/empty-profile.png';
         }
     }
+
+    matDialog = inject(MatDialog);
+
+    destroyRef = inject(DestroyRef);
+
     get imageUrl() {
         return this._imageUrl;
     }
@@ -46,6 +53,11 @@ export class RightMenuComponent {
     ];
 
     onOpenCrawlerDialog() {
-        throw new Error('Method not implemented.');
+        this.matDialog
+            .open(CrawlerDialogComponent, {
+                width: '500px'
+            })
+            .afterClosed()
+            .subscribe();
     }
 }
