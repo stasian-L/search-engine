@@ -25,24 +25,26 @@ export class AuthService {
     private readonly http = inject(HttpClient);
 
     login(user: LoginBodyRequest): Observable<UserAPIResponse> {
-      const body = `grant_type=${user.grant_type}&username=${user.username}&password=${user.password}`;
+        const body = `grant_type=${user.grant_type}&username=${user.username}&password=${user.password}`;
         return this.http.post<UserAPIResponse>('oauth/token', body, {
             headers: {
-                'Authorization': 'Basic Z2lneTpzZWNyZXQ=',
+                Authorization: 'Basic Z2lneTpzZWNyZXQ=',
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
     }
 
     register(user: RegisterBodyRequest): Observable<void> {
-        return this.http.post<void>('register', user);
+        return this.http.post<void>('register', user, {
+            context: new HttpContext().set(SkipLoading, true)
+        });
     }
 
     refreshToken(user: RefreshTokenBodyRequest): Observable<UserAPIResponse> {
         const body = `grant_type=${user.grant_type}&client_id=${user.client_id}&client_secret=${user.client_secret}&refresh_token=${user.refresh_token}`;
         return this.http.post<UserAPIResponse>('oauth/token', body, {
             headers: {
-                'Authorization': 'Basic Z2lneTpzZWNyZXQ=',
+                Authorization: 'Basic Z2lneTpzZWNyZXQ=',
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
@@ -53,8 +55,4 @@ export class AuthService {
             context: new HttpContext().set(SkipLoading, true)
         });
     }
-
-    // updateCurrentUser(user: UpdateCurrentUserBodyRequest): Observable<UserAPIResponse> {
-    //     return this.http.put<UserAPIResponse>('user', { user });
-    // }
 }

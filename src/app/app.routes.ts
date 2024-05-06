@@ -1,6 +1,7 @@
 import { importProvidersFrom } from '@angular/core';
 import { Routes } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
+import { authGuard } from './@core/guards/auth.guard';
 import { profileResolver } from './@core/resolvers/profile.resolver';
 import { userResolver } from './@core/resolvers/user.resolver';
 import { AuthState } from './authorization/store/state/auth.state';
@@ -36,7 +37,13 @@ export const routes: Routes = [
         title: 'Profile',
         loadChildren: () => import('./profile/profile.routes').then(r => r.routes),
         providers: [importProvidersFrom(NgxsModule.forFeature([ProfileState]))],
-        resolve: [profileResolver]
-        //canMatch: [authGuard]
+        resolve: [profileResolver],
+        canMatch: [authGuard]
+    },
+    {
+        path: 'confirm-email',
+        title: 'Email Confirmation',
+        loadComponent: () =>
+            import('./authorization/components/confirm-email-page/confirm-email-page.component').then(c => c.ConfirmEmailPageComponent)
     }
 ];
