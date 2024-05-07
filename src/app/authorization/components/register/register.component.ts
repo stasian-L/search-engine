@@ -34,6 +34,10 @@ export class RegisterComponent {
     passwordHide = true;
 
     onSubmit(): void {
+        if (this.form.invalid) {
+            return;
+        }
+
         this.store.dispatch(new Register({ ...this.form.getRawValue(), role: 'USER' }));
     }
 }

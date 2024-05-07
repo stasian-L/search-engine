@@ -32,6 +32,10 @@ export class LoginComponent {
     passwordHide = true;
 
     onSubmit(): void {
+        if (this.form.invalid) {
+            return;
+        }
+
         this.store.dispatch(new Login({ ...this.form.getRawValue(), grant_type: 'password' }));
     }
 }
