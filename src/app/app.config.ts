@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
             NgxsReduxDevtoolsPluginModule.forRoot(),
             NgxsLoggerPluginModule.forRoot(),
             NgxsStoragePluginModule.forRoot({
-                key: ['auth.accessToken', 'auth.refreshToken']
+                key: ['auth.accessToken', 'auth.refreshToken', 'serp.query']
             })
         ]),
         { provide: BASE_API_URL, useValue: environment.apiUrl },

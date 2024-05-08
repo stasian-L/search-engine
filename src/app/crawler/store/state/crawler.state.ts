@@ -6,7 +6,7 @@ import { CrawlerService } from '../../services/crawler.service';
 import { CreateJob, GetAllJobs, GetJob } from './crawler.actions';
 
 export class CrawlerStateModel {
-    public jobs: Job[] | null = null;
+    public jobs: Job[] = [];
 }
 
 const defaults: CrawlerStateModel = {
@@ -22,13 +22,8 @@ export class CrawlerState {
     crawlerService = inject(CrawlerService);
 
     @Action(CreateJob)
-    onCreateJob({ getState, setState }: StateContext<CrawlerStateModel>, { payload }: CreateJob) {
-        return this.crawlerService.createJob(payload).pipe(
-            tap(() => {
-                const state = getState();
-                setState({ jobs: [...state.jobs, payload] });
-            })
-        );
+    onCreateJob({}: StateContext<CrawlerStateModel>, { payload }: CreateJob): Observable<void> {
+        return this.crawlerService.createJob(payload).pipe();
     }
 
     @Action(GetAllJobs)

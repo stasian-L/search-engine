@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { NgxsModule } from '@ngxs/store';
 import { authGuard } from './@core/guards/auth.guard';
 import { profileResolver } from './@core/resolvers/profile.resolver';
+import { searchResultsResolver } from './@core/resolvers/search-results.resolver';
 import { userResolver } from './@core/resolvers/user.resolver';
 import { AuthState } from './authorization/store/state/auth.state';
 import { ProfileState } from './profile/store/profile/profile.state';
@@ -30,7 +31,8 @@ export const routes: Routes = [
         path: 'search',
         title: 'Search',
         loadComponent: () => import('./serp/components/serp/serp.component').then(c => c.SerpComponent),
-        providers: [importProvidersFrom(NgxsModule.forFeature([AuthState]))]
+        providers: [importProvidersFrom(NgxsModule.forFeature([AuthState]))],
+        resolve: [searchResultsResolver]
     },
     {
         path: 'profile',

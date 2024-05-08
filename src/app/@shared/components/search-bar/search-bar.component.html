@@ -1,21 +1,25 @@
-<div class="search-container">
-    <input
-        #input
-        class="search-input"
-        matInput
-        autofocus
-        [formControl]="searchControl"
-        placeholder="Search..."
-        (focus)="focused = true"
-        (blur)="focused = false" />
+<form
+    [formGroup]="searchForm"
+    (ngSubmit)="search()">
+    <div class="search-container">
+        <input
+            #input
+            class="search-input"
+            matInput
+            autofocus
+            [formControl]="searchControl"
+            placeholder="Search..."
+            (focus)="focused = true"
+            (blur)="focused = false" />
+        <mat-icon
+            [style.visibility]="searchControl.value ? 'visible' : 'hidden'"
+            (click)="searchControl.setValue(''); input.focus()">
+            clear
+        </mat-icon>
+    </div>
     <mat-icon
-        [style.visibility]="searchControl.value ? 'visible' : 'hidden'"
-        (click)="searchControl.setValue(''); input.focus()">
-        clear
+        class="search-icon"
+        (click)="search()">
+        search
     </mat-icon>
-</div>
-<mat-icon
-    class="search-icon"
-    (click)="search()">
-    search
-</mat-icon>
+</form>

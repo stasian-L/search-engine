@@ -1,20 +1,64 @@
 <h2 mat-dialog-title>Add a domain to crawl</h2>
-<mat-dialog-content>
-    <mat-form-field appearance="outline">
-        <mat-label>Url</mat-label>
-        <input matInput />
-    </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
+<form
+    [formGroup]="urlsForm"
+    (ngSubmit)="onSubmit()">
+    <div>
+        <mat-checkbox
+            class=""
+            formControlName="useSameDomain">
+            Use same domain
+        </mat-checkbox>
+        <mat-checkbox
+            class=""
+            formControlName="useDepth">
+            Use depth
+        </mat-checkbox>
+        <mat-form-field appearance="outline">
+            <input
+                type="number"
+                matInput
+                placeholder="URL"
+                formControlName="crawlDepth"
+                min="0"
+                [attr.disabled]="!urlsForm.get('useDepth')?.value ? '' : null" />
+        </mat-form-field>
+    </div>
     <button
         mat-button
-        (click)="dialogRef.close()">
-        Cancel
+        color="primary"
+        type="button"
+        (click)="addUrl()">
+        Add Url
+        <mat-icon>add</mat-icon>
     </button>
-    <button
-        mat-button
-        [mat-dialog-close]=""
-        cdkFocusInitial>
-        Crawl
-    </button>
-</mat-dialog-actions>
+    <div
+        formArrayName="urls"
+        class="urls">
+        @for (urlControl of urlControls; track urlControl; let i = $index) {
+        <div class="url-field">
+            <mat-form-field appearance="outline">
+                <input
+                    matInput
+                    placeholder="URL"
+                    [formControlName]="i" />
+            </mat-form-field>
+            <button mat-icon-button>
+                <mat-icon (click)="removeUrl(i)">delete</mat-icon>
+            </button>
+        </div>
+        }
+    </div>
+    <div class="actions">
+        <button
+            mat-button
+            (click)="dialogRef.close()">
+            Cancel
+        </button>
+        <button
+            mat-button
+            cdkFocusInitial
+            type="submit">
+            Crawl
+        </button>
+    </div>
+</form>

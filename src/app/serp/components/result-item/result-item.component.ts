@@ -9,10 +9,14 @@ import { Component, Input, OnInit } from '@angular/core';
     styleUrl: './result-item.component.scss'
 })
 export class ResultItemComponent implements OnInit {
-    @Input({ required: true }) resultItem!: { title: string; link: string; snippet: string };
+    @Input({ required: true }) resultItem!: { title: string; url: string; snippet: string };
 
     ngOnInit() {
-        const domain = new URL(this.resultItem?.link ?? '');
+        if (!this.resultItem?.url) {
+            return;
+        }
+
+        const domain = new URL(this.resultItem.url);
         this.imageUrl = `https://www.google.com/s2/favicons?domain=${domain}`;
     }
 
