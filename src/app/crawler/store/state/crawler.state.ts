@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Action, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
-import { Job, JobAPIResponse } from '../../../authorization/interfaces/job.interface';
+import { Job, JobAPIResponse } from '../../interfaces/job.interface';
 import { CrawlerService } from '../../services/crawler.service';
 import { CreateJob, GetAllJobs, GetJob } from './crawler.actions';
 
@@ -21,9 +21,14 @@ const defaults: CrawlerStateModel = {
 export class CrawlerState {
     crawlerService = inject(CrawlerService);
 
+    @Selector()
+    static jobs(model: CrawlerStateModel): Job[] {
+        return model.jobs;
+    }
+
     @Action(CreateJob)
     onCreateJob({}: StateContext<CrawlerStateModel>, { payload }: CreateJob): Observable<void> {
-        return this.crawlerService.createJob(payload).pipe();
+        return this.crawlerService.createJob({ ...payload, crawlType: 'URL_WITH_DEPTH' }).pipe();
     }
 
     @Action(GetAllJobs)

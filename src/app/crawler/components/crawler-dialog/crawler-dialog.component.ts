@@ -35,20 +35,20 @@ export class CrawlerDialogComponent {
         useDepth: this.fb.control(false),
         useSameDomain: this.fb.control(false),
         crawlDepth: this.fb.control(1),
-        urls: this.fb.nonNullable.array([this.fb.nonNullable.control('', Validators.required)])
+        seedUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('', Validators.required)])
     });
 
     get urlControls() {
-        return (this.urlsForm.get('urls') as FormArray).controls;
+        return (this.urlsForm.get('seedUrls') as FormArray).controls;
     }
 
     addUrl(): void {
         const control = this.fb.control('', Validators.required);
-        (this.urlsForm.get('urls') as FormArray).push(control);
+        (this.urlsForm.get('seedUrls') as FormArray).push(control);
     }
 
     removeUrl(index: number) {
-        (this.urlsForm.get('urls') as FormArray).removeAt(index);
+        (this.urlsForm.get('seedUrls') as FormArray).removeAt(index);
     }
 
     onSameUrlValueChanged() {
@@ -68,7 +68,8 @@ export class CrawlerDialogComponent {
 
         if (this.urlsForm.controls.useSameDomain) {
         }
+        console.log({ urls: this.urlsForm.controls.seedUrls.value, crawlDepth: this.urlsForm.controls.crawlDepth.value });
 
-        this.dialogRef.close({ urls: this.urlsForm.controls.urls, crawlDepth: this.urlsForm.controls.crawlDepth });
+        this.dialogRef.close({ seedUrls: this.urlsForm.controls.seedUrls.value, crawlDepth: 2 });
     }
 }

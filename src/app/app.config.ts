@@ -16,6 +16,7 @@ import { loadingInterceptor } from './@core/intercepters/loading.interceptor';
 import { BASE_API_URL } from './@core/tokens/tokens';
 import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
+import { CrawlerState } from './crawler/store/state/crawler.state';
 import { HomeState } from './home/store/state/home.state';
 
 export const appConfig: ApplicationConfig = {
@@ -25,7 +26,7 @@ export const appConfig: ApplicationConfig = {
         provideAnimations(),
         importProvidersFrom([
             BrowserAnimationsModule,
-            NgxsModule.forRoot([AuthState, HomeState, SerpState]),
+            NgxsModule.forRoot([AuthState, HomeState, SerpState, CrawlerState]),
             NgxsRouterPluginModule.forRoot(),
             NgxsReduxDevtoolsPluginModule.forRoot(),
             NgxsLoggerPluginModule.forRoot(),

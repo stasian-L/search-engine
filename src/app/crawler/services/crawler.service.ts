@@ -2,7 +2,7 @@ import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SkipLoading } from '../../@core/intercepters/loading.interceptor';
-import { Job, JobAPIResponse } from '../../authorization/interfaces/job.interface';
+import { Job, JobAPIResponse } from '../interfaces/job.interface';
 
 export type CreateJobRequest = Pick<Job, 'crawlDepth' | 'crawlType' | 'seedUrls'>;
 
@@ -13,7 +13,7 @@ export class CrawlerService {
     private readonly http = inject(HttpClient);
 
     createJob(job: CreateJobRequest): Observable<void> {
-        return this.http.post<void>('crawl-job', job, {
+        return this.http.post<void>('crawl-jobs', job, {
             context: new HttpContext().set(SkipLoading, true)
         });
     }

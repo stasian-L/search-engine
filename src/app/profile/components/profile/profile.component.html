@@ -1,69 +1,15 @@
-<ng-container *ngIf="{ profile: profile$ | async } as data">
-    <div class="banner">
-        <div class="image-container">
-            <img
-                class="avatar"
-                [src]="data.profile?.image ?? defaultPhoto"
-                height="200"
-                width="200" />
-        </div>
-        <div class="actions">
-            <button
-                mat-raised-button
-                routerLink="./edit">
-                <mat-icon>edit</mat-icon>
-                Edit Profile
-            </button>
-        </div>
-    </div>
-    <div class="content">
-        <div class="name">
-            <div class="label">Personal Information:</div>
-            <mat-form-field appearance="outline">
-                <mat-label>First Name</mat-label>
-                <input
-                    matInput
-                    placeholder="First Name"
-                    [ngModel]="data.profile?.firstName" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Last Name</mat-label>
-                <input
-                    matInput
-                    placeholder="Last Name"
-                    [ngModel]="data.profile?.lastName" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Username</mat-label>
-                <input
-                    matInput
-                    placeholder="Username"
-                    [ngModel]="data.profile?.username" />
-            </mat-form-field>
-        </div>
-        <div class="bio">
-            <mat-form-field appearance="outline">
-                <mat-label>Bio</mat-label>
-                <textarea
-                    matInput
-                    placeholder="Bio"
-                    [ngModel]="data.profile?.bio"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="info">
-            <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
-                <input
-                    matInput
-                    placeholder="Email"
-                    [ngModel]="data.profile?.email" />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Phone</mat-label>
-                <input
-                    matInput
-                    placeholder="Phone" />
-            </mat-form-field>
-        </div>
-    </div>
-</ng-container>
+<div>
+    <a
+        mat-list-item
+        routerLink="./view">
+        <!-- <mat-icon>home</mat-icon> -->
+        <span class="nav-caption">General</span>
+    </a>
+    <a
+        mat-list-item
+        routerLink="./jobs">
+        <!-- <mat-icon>account_balance</mat-icon> -->
+        <span class="nav-caption">Jobs Info</span>
+    </a>
+</div>
+<router-outlet></router-outlet>
