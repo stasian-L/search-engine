@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -14,7 +15,17 @@ import { ProfileState } from '../../store/profile/profile.state';
 @Component({
     selector: 'app-profile-view',
     standalone: true,
-    imports: [CommonModule, RouterModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, FormsModule, MatTabsModule],
+    imports: [
+        CommonModule,
+        RouterModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        FormsModule,
+        MatTabsModule,
+        MatDividerModule
+    ],
     templateUrl: './profile-view.component.html',
     styleUrl: '../styles/profile.scss'
 })

@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -23,7 +24,8 @@ import { UploadProfileImageDialogComponent } from '../upload-profile-image-dialo
         MatButtonModule,
         MatIconModule,
         MatInputModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDividerModule
     ],
     templateUrl: './edit-profile.component.html',
     styleUrl: '../styles/profile.scss'

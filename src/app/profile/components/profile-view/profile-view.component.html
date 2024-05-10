@@ -1,5 +1,6 @@
 <ng-container *ngIf="{ profile: profile$ | async } as data">
     <div class="banner">
+        <div class="label">Your Profile</div>
         <div class="image-container">
             <img
                 class="avatar"
@@ -16,6 +17,9 @@
             </button>
         </div>
     </div>
+    <mat-divider
+        vertical
+        [ngStyle]="{ height: '550px' }"></mat-divider>
     <div class="content">
         <div class="name">
             <div class="label">Personal Information:</div>

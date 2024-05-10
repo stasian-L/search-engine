@@ -58,7 +58,7 @@ export class RightMenuComponent {
     onOpenCrawlerDialog() {
         this.matDialog
             .open(CrawlerDialogComponent, {
-                width: '500px'
+                width: '520px'
             })
             .afterClosed()
             .pipe(filter(x => !!x))

@@ -5,11 +5,12 @@ import { SetError, SetSuccess } from './toastr.actions';
 
 export class ToastrStateModel {}
 
-@State<ToastrStateModel>({
-    name: 'toastState'
+@State<any>({
+    name: 'toast',
+    defaults: []
 })
 @Injectable()
-export class ToastState {
+export class ToastrState {
     private toastService = inject(ToastrService);
 
     @Action(SetSuccess)

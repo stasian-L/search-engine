@@ -6,7 +6,7 @@
         <mat-checkbox
             class=""
             formControlName="useSameDomain">
-            Use same domain
+            Crawl same domain
         </mat-checkbox>
         <mat-checkbox
             class=""
@@ -42,9 +42,11 @@
                     placeholder="URL"
                     [formControlName]="i" />
             </mat-form-field>
+            @if (urlControls.length > 1) {
             <button mat-icon-button>
                 <mat-icon (click)="removeUrl(i)">delete</mat-icon>
             </button>
+            }
         </div>
         }
     </div>
@@ -58,7 +60,7 @@
             mat-button
             cdkFocusInitial
             type="submit">
-            Crawl
+            Submit
         </button>
     </div>
 </form>

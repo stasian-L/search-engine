@@ -32,7 +32,7 @@ export const routes: Routes = [
         title: 'Search',
         loadComponent: () => import('./serp/components/serp/serp.component').then(c => c.SerpComponent),
         providers: [importProvidersFrom(NgxsModule.forFeature([AuthState]))],
-        resolve: [searchResultsResolver]
+        resolve: [searchResultsResolver, userResolver]
     },
     {
         path: 'profile',

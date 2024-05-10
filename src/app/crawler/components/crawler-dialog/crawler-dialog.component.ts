@@ -6,6 +6,7 @@ import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDi
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { URL_REGEXP } from '../../../@core/constants/regex.const';
 
 @Component({
     selector: 'app-crawler-dialog',
@@ -27,15 +28,15 @@ import { MatInputModule } from '@angular/material/input';
     styleUrl: './crawler-dialog.component.scss'
 })
 export class CrawlerDialogComponent {
-    dialogRef = inject(MatDialogRef);
+    readonly dialogRef = inject(MatDialogRef);
 
-    fb = inject(FormBuilder);
+    private readonly fb = inject(FormBuilder);
 
     urlsForm = this.fb.nonNullable.group({
         useDepth: this.fb.control(false),
         useSameDomain: this.fb.control(false),
         crawlDepth: this.fb.control(1),
-        seedUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('', Validators.required)])
+        seedUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('', [Validators.required, Validators.pattern(URL_REGEXP)])])
     });
 
     get urlControls() {
@@ -43,17 +44,19 @@ export class CrawlerDialogComponent {
     }
 
     addUrl(): void {
-        const control = this.fb.control('', Validators.required);
+        const control = this.fb.control('', [Validators.required, Validators.pattern(URL_REGEXP)]);
         (this.urlsForm.get('seedUrls') as FormArray).push(control);
     }
 
     removeUrl(index: number) {
-        (this.urlsForm.get('seedUrls') as FormArray).removeAt(index);
+        if (this.urlsForm.controls.seedUrls.length > 1) {
+            (this.urlsForm.get('seedUrls') as FormArray).removeAt(index);
+        }
     }
 
     onSameUrlValueChanged() {
         if (this.urlsForm.controls.useSameDomain) {
-            //this.urlsForm.controls.urls.addValidators(Validators)
+            //this.urlsForm.controls.seedUrls.addValidators(Validators)
         }
     }
 

@@ -10,10 +10,12 @@ import { NgxsModule } from '@ngxs/store';
 import { AuthInterceptor } from './@core/intercepters/auth.interceptor';
 import { SerpState } from './serp/store/state/serp.state';
 
+import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment.development';
 import { baseUrlInterceptor } from './@core/intercepters/base-url.interceptor';
 import { loadingInterceptor } from './@core/intercepters/loading.interceptor';
 import { BASE_API_URL } from './@core/tokens/tokens';
+import { ToastrState } from './@shared/store/state/toastr.state';
 import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
 import { CrawlerState } from './crawler/store/state/crawler.state';
@@ -26,12 +28,15 @@ export const appConfig: ApplicationConfig = {
         provideAnimations(),
         importProvidersFrom([
             BrowserAnimationsModule,
-            NgxsModule.forRoot([AuthState, HomeState, SerpState, CrawlerState]),
+            NgxsModule.forRoot([AuthState, HomeState, SerpState, CrawlerState, ToastrState]),
             NgxsRouterPluginModule.forRoot(),
             NgxsReduxDevtoolsPluginModule.forRoot(),
             NgxsLoggerPluginModule.forRoot(),
             NgxsStoragePluginModule.forRoot({
                 key: ['auth.accessToken', 'auth.refreshToken', 'serp.query']
+            }),
+            ToastrModule.forRoot({
+                positionClass: 'toast-bottom-right'
             })
         ]),
         { provide: BASE_API_URL, useValue: environment.apiUrl },

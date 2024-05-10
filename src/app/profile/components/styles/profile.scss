@@ -1,26 +1,29 @@
 :host,
-form {
-    margin: 0 50px;
-    gap: 80px;
-    height: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-:host,
 form,
 .banner,
 .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:host,
+form {
+    margin: 0 50px;
+    gap: 80px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+:host {
+    margin-top: 50px;
 }
 
 .banner {
     flex-direction: column;
     justify-content: start;
     gap: 50px;
-    padding-top: 30px;
     max-width: 400px;
 }
 
@@ -53,4 +56,9 @@ form,
 
 .actions {
     flex-basis: 100%;
+}
+
+.label {
+    font-size: 24px;
+    line-height: 40px;
 }

@@ -1,15 +1,23 @@
-<div>
+<app-header />
+<nav
+    mat-tab-nav-bar
+    ngClass="tabs"
+    [tabPanel]="tabPanel">
     <a
-        mat-list-item
-        routerLink="./view">
+        mat-tab-link
+        routerLink="./view"
+        routerLinkActive="active-link">
         <!-- <mat-icon>home</mat-icon> -->
         <span class="nav-caption">General</span>
     </a>
     <a
-        mat-list-item
-        routerLink="./jobs">
+        mat-tab-link
+        routerLink="./jobs"
+        routerLinkActive="active-link">
         <!-- <mat-icon>account_balance</mat-icon> -->
         <span class="nav-caption">Jobs Info</span>
     </a>
-</div>
-<router-outlet></router-outlet>
+</nav>
+<mat-tab-nav-panel #tabPanel>
+    <router-outlet></router-outlet>
+</mat-tab-nav-panel>

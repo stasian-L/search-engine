@@ -2,6 +2,7 @@
     [formGroup]="profileForm"
     (ngSubmit)="saveChanges()">
     <div class="banner">
+        <div class="label">Edit Profile</div>
         <div class="image-container">
             <img
                 class="avatar"
@@ -18,6 +19,9 @@
             </button>
         </div>
     </div>
+    <mat-divider
+        vertical
+        [ngStyle]="{ height: '550px' }"></mat-divider>
     <div class="content">
         <div class="name">
             <div class="label">Personal Information:</div>
@@ -71,6 +75,7 @@
     </div>
     <div class="actions">
         <button
+            color="primary"
             mat-raised-button
             type="submit">
             Save
