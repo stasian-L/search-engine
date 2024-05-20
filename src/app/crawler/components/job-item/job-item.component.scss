@@ -1,0 +1,55 @@
+:host {
+    display: flex;
+    padding: 12px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px 0#0d234308;
+    background-color:ghostwhite;
+    flex: 1;
+}
+
+.job-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.info {
+    flex: 3;
+}
+
+.url {
+    font-size: 22px;
+    line-height: 40px;
+    font-weight: bold;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-progress {
+    font-size: 16px;
+}
+
+.progress-circle {
+    width: 100px;
+}
+
+.status-wrapper {
+    flex: 1;
+}
+
+.status {
+    background-color: lavenderblush;
+    padding: 6px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.in-progress {
+    background-color: cornflowerblue;
+}
+
+.completed {
+    background-color: limegreen;
+}

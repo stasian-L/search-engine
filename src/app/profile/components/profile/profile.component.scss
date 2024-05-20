@@ -14,12 +14,10 @@
 }
 
 mat-tab-nav-panel {
-    max-width: 1200px;
+    max-width: 1500px;
     width: 100%;
 }
 
-app-header {
-    border-bottom: 1px solid #cccccc;
-    padding: 0.5rem 1.7rem 0 1.6rem;
-    height: 4.2rem;
+nav {
+    margin-top: 10px;
 }

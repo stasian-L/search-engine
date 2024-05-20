@@ -1,0 +1,16 @@
+<div class="job-item">
+    <div class="progress-circle"></div>
+    <div class="info">
+        <div class="url">{{ job?.seedUrls ?? [] | join : ' · ' }}</div>
+        <span class="info-progress">Crawled: {{ job?.processedUrls }} of {{ job?.totalUrls }}</span>
+    </div>
+    <div class="status-wrapper"><span class="status">Status</span></div>
+    <div class="action">
+        <button
+            mat-raised-button
+            (click)="cancelJob()">
+            Cancel
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </div>
+</div>

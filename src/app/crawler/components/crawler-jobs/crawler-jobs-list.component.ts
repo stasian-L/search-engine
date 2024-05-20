@@ -1,5 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,47 +6,43 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
 import { Store } from '@ngxs/store';
 import { filter } from 'rxjs';
 import { SearchFilterPipe } from '../../../@shared/pipes/search-filter.pipe';
 import { CreateJob, GetAllJobs } from '../../store/state/crawler.actions';
 import { CrawlerState } from '../../store/state/crawler.state';
 import { CrawlerDialogComponent } from '../crawler-dialog/crawler-dialog.component';
+import { JobItemComponent } from '../job-item/job-item.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
-    selector: 'app-crawler-jobs',
+    selector: 'app-crawler-jobs-list',
     standalone: true,
+    templateUrl: './crawler-jobs-list.component.html',
+    styleUrl: './crawler-jobs-list.component.scss',
     imports: [
-        MatTableModule,
         AsyncPipe,
+        NgIf,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
         MatButtonModule,
         FormsModule,
         SearchFilterPipe,
-        MatSortModule
-    ],
-    templateUrl: './crawler-jobs.component.html',
-    styleUrl: './crawler-jobs.component.scss',
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed', style({ height: '0px', minHeight: '0' })),
-            state('expanded', style({ height: '*' })),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-        ])
+        JobItemComponent,
+        MatDividerModule,
+        MatTabsModule
     ]
 })
-export class CrawlerJobsComponent {
+export class CrawlerJobsListComponent {
     store = inject(Store);
 
     matDialog = inject(MatDialog);
 
     displayedColumns = ['jobId', 'url', 'info'];
 
-    dataSource$ = this.store.select(CrawlerState.jobs);
+    jobs$ = this.store.select(CrawlerState.jobs);
 
     searchTerm = '';
 
@@ -55,10 +50,11 @@ export class CrawlerJobsComponent {
         this.store.dispatch(new GetAllJobs());
     }
 
-    createJob() {
+    createJob(): void {
         this.matDialog
             .open(CrawlerDialogComponent, {
-                width: '520px'
+                width: '800px',
+                height: '850px'
             })
             .afterClosed()
             .pipe(filter(x => !!x))

@@ -1,0 +1,60 @@
+<div class="title-header">
+    <div class="title">Jobs List</div>
+    <div class="right-actions">
+        <button
+            mat-button
+            (click)="refresh()">
+            Refresh
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <button
+            color="primary"
+            mat-raised-button
+            (click)="createJob()">
+            Create job
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</div>
+<div class="job-list-header">
+    <div class="filters">
+        <mat-tab-group animationDuration="0ms">
+            <mat-tab label="All Jobs"></mat-tab>
+            <mat-tab label="Pending"></mat-tab>
+            <mat-tab label="In Progress"></mat-tab>
+            <mat-tab label="Completed"></mat-tab>
+            <mat-tab label="Error"></mat-tab>
+        </mat-tab-group>
+        <mat-form-field appearance="fill">
+            <mat-label>Search jobs by url</mat-label>
+            <input
+                matInput
+                [(ngModel)]="searchTerm" />
+            <mat-icon
+                class="search-icon"
+                color="primary"
+                matSuffix>
+                search
+            </mat-icon>
+        </mat-form-field>
+    </div>
+    <div class="column-header-names">
+        <div class="header-column progress">Progress</div>
+        <mat-divider vertical />
+        <div class="header-column info">Information</div>
+        <mat-divider vertical />
+        <div class="header-column status">Status</div>
+        <mat-divider vertical />
+        <div class="header-column action">Action</div>
+    </div>
+</div>
+<div class="jobs-list-container">
+    <div class="jobs-list">
+        @if (jobs$ | async; as jobs) { @for (job of jobs; track job) {
+        <app-job-item [job]="job" />
+        } @empty {
+        <p>There are no jobs</p>
+        <span>Click Add new to add the job</span>
+        } }
+    </div>
+</div>

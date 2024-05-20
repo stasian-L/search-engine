@@ -1,63 +1,72 @@
-<h2 mat-dialog-title>Add a domain to crawl</h2>
+<div class="header">
+    <div class="header-title">
+        <h1 class="title-main">Crawl Your Site</h1>
+        <span class="subtitle">Easily index your websites' content.</span>
+    </div>
+    <button
+        mat-icon-button
+        (click)="dialogRef.close()">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
 <form
     [formGroup]="urlsForm"
     (ngSubmit)="onSubmit()">
-    <div>
-        <mat-checkbox
-            class=""
-            formControlName="useSameDomain">
-            Crawl same domain
-        </mat-checkbox>
-        <mat-checkbox
-            class=""
-            formControlName="useDepth">
-            Use depth
-        </mat-checkbox>
-        <mat-form-field appearance="outline">
-            <input
-                type="number"
-                matInput
-                placeholder="URL"
-                formControlName="crawlDepth"
-                min="0"
-                [attr.disabled]="!urlsForm.get('useDepth')?.value ? '' : null" />
-        </mat-form-field>
+    <span class="label">Enter domain urls</span>
+    <div
+        formArrayName="seedUrls"
+        class="urls">
+        @for (urlControl of urlControls; track urlControl; let i = $index) {
+        <div class="url-field">
+            <mat-form-field
+                appearance="outline"
+                color="primary">
+                <input
+                    matInput
+                    placeholder="Domain name"
+                    [formControlName]="i" />
+            </mat-form-field>
+            <button
+                mat-icon-button
+                [ngStyle]="{ visibility: urlControls.length > 1 ? 'visible' : 'hidden' }">
+                <mat-icon (click)="removeUrl(i)">delete</mat-icon>
+            </button>
+        </div>
+        }
     </div>
     <button
-        mat-button
+        class="add-button"
+        mat-raised-button
         color="primary"
         type="button"
         (click)="addUrl()">
         Add Url
         <mat-icon>add</mat-icon>
     </button>
-    <div
-        formArrayName="seedUrls"
-        class="urls">
-        @for (urlControl of urlControls; track urlControl; let i = $index) {
-        <div class="url-field">
-            <mat-form-field appearance="outline">
-                <input
-                    matInput
-                    placeholder="URL"
-                    [formControlName]="i" />
-            </mat-form-field>
-            @if (urlControls.length > 1) {
-            <button mat-icon-button>
-                <mat-icon (click)="removeUrl(i)">delete</mat-icon>
-            </button>
-            }
-        </div>
-        }
+    <mat-checkbox formControlName="useDepth" (change)="toggleFormControl('crawlDepth', $event.checked)">
+        <span class="subtitle">Use another crawler depth</span>
+    </mat-checkbox>
+    <div>
+        <!-- <mat-checkbox
+            class=""
+            formControlName="useSameDomain">
+            Crawl same domain
+        </mat-checkbox> -->
+        <span class="label">Crawler depth</span>
+        <mat-form-field appearance="outline">
+            <input
+                type="number"
+                matInput
+                placeholder="URL"
+                formControlName="crawlDepth"
+                min="1"
+                [attr.disabled]="urlsForm.get('useDepth')?.value === false" />
+        </mat-form-field>
     </div>
     <div class="actions">
         <button
-            mat-button
-            (click)="dialogRef.close()">
-            Cancel
-        </button>
-        <button
-            mat-button
+            color="accent"
+            mat-raised-button
             cdkFocusInitial
             type="submit">
             Submit

@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { NgStyle } from '@angular/common';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -12,6 +13,7 @@ import { URL_REGEXP } from '../../../@core/constants/regex.const';
     selector: 'app-crawler-dialog',
     standalone: true,
     imports: [
+        NgStyle,
         MatFormFieldModule,
         MatInputModule,
         FormsModule,
@@ -27,7 +29,7 @@ import { URL_REGEXP } from '../../../@core/constants/regex.const';
     templateUrl: './crawler-dialog.component.html',
     styleUrl: './crawler-dialog.component.scss'
 })
-export class CrawlerDialogComponent {
+export class CrawlerDialogComponent implements AfterViewInit {
     readonly dialogRef = inject(MatDialogRef);
 
     private readonly fb = inject(FormBuilder);
@@ -35,12 +37,16 @@ export class CrawlerDialogComponent {
     urlsForm = this.fb.nonNullable.group({
         useDepth: this.fb.control(false),
         useSameDomain: this.fb.control(false),
-        crawlDepth: this.fb.control(1),
+        crawlDepth: this.fb.control({ value: 1, disabled: true }),
         seedUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('', [Validators.required, Validators.pattern(URL_REGEXP)])])
     });
 
     get urlControls() {
         return (this.urlsForm.get('seedUrls') as FormArray).controls;
+    }
+
+    ngAfterViewInit(): void {
+        this.urlsForm.controls.useDepth.setValue(false);
     }
 
     addUrl(): void {
@@ -57,6 +63,14 @@ export class CrawlerDialogComponent {
     onSameUrlValueChanged() {
         if (this.urlsForm.controls.useSameDomain) {
             //this.urlsForm.controls.seedUrls.addValidators(Validators)
+        }
+    }
+
+    toggleFormControl(controlName: string, value: boolean): void {
+        if (value) {
+            this.urlsForm.get(controlName)?.enable();
+        } else {
+            this.urlsForm.get(controlName)?.disable();
         }
     }
 

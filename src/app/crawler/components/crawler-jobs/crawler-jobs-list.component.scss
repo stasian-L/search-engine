@@ -1,0 +1,78 @@
+:host {
+    margin-top: 50px;
+
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}
+
+.title-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.right-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.column-header-names {
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    align-items: center;
+    padding: 0 24px;
+    border-bottom: 1px solid rgb(0 0 0 / 12%);
+    border-top: 1px solid rgb(0 0 0 / 12%);
+}
+
+.header-column {
+    align-content: center;
+    padding: 5px 8px;
+    font-size: 16px;
+
+    &.progress,
+    &.action {
+        width: 100px;
+    }
+    &.info {
+        flex: 3;
+    }
+
+    &.status {
+        flex: 1;
+    }
+}
+
+.jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 98%;
+    margin: 0 auto;
+    padding-top: 10px;
+}
+
+.jobs-list-container {
+    height: 600px;
+    overflow-y: auto;
+}
+
+.mat-mdc-form-field {
+    height: 50px;
+}
+

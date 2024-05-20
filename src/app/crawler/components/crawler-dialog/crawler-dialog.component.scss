@@ -7,30 +7,76 @@
     form {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         gap: 5px;
+        padding: 0 20px;
     }
+}
+
+.mat-mdc-form-field {
+    width: 100%;
+    flex: 1;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 20px 40px;
+}
+
+.header-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-main {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 18px;
 }
 
 .urls {
     display: flex;
     align-items: center;
     flex-direction: column;
-    max-height: 300px;
-    height: 300px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    max-height: 400px;
+    height: 400px;
     overflow-x: auto;
-    overflow-y: scroll;
-    padding-top: 5px;
+    padding: 5px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
 }
 
 .url-field {
     display: flex;
     flex-direction: row;
+    gap: 10px;
+    width: 100%;
+
+    .mat-mdc-form-field {
+        width: 90%;
+        flex: 1;
+    }
+
+    ::ng-deep .mat-mdc-text-field-wrapper {
+        background-color: white;
+    }
+}
+
+.add-button {
+    width: 20%;
+    margin-bottom: 20px;
+}
+
+.actions .mat-mdc-button-base {
     width: 100%;
 }
 
-.mat-mdc-form-field {
-    width: 90%;
-    flex: 1;
+.label {
+    font-size: 16px;
+    font-weight: bold;
 }
