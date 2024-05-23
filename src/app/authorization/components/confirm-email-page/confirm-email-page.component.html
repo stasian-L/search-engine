@@ -2,18 +2,21 @@
     <div class="email-image">
         <img
             src="assets/images/email-sent.png"
+            width="200"
             alt="" />
     </div>
-    <h1 class="main-text">Confirm your email!</h1>
-    <span class="description-text">
-        Your account has been successfully registered. To complete the process please check your email for a validation request.
-        <!-- <a href="https://lobach.stanislav@inbox.ru">click</a> -->
-    </span>
+    <div class="title">
+        Check your email
+        <span class="subtitle">
+            Your account has been successfully registered. We sent a verification link to
+            <b>{{ email }}</b>
+        </span>
+    </div>
     <button
         class="btn-cont"
         color="primary"
         mat-raised-button
         [routerLink]="['/login']">
-        Continue
+        Back to login
     </button>
 </div>

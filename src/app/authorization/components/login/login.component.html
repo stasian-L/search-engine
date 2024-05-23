@@ -8,23 +8,28 @@
     class="login-form"
     [formGroup]="form"
     (ngSubmit)="onSubmit()">
-    <h1 class="title">Welcome Back!</h1>
+    <div class="title">
+        Login in to your account
+        <span class="subtitle">Welcome back! Please enter your details.</span>
+    </div>
     <div class="content">
+        <span class="label">Email*</span>
         <mat-form-field appearance="outline">
             <input
                 type="text"
                 matInput
-                placeholder="Email"
+                placeholder="Enter your email"
                 formControlName="username" />
             <mat-error *ngIf="form.controls['username'].errors?.['required']">Email is required</mat-error>
             <mat-error *ngIf="form.controls['username'].errors?.['email']">Email is incorrect</mat-error>
         </mat-form-field>
         <br />
+        <span class="label">Password*</span>
         <mat-form-field appearance="outline">
             <input
                 [type]="passwordHide ? 'password' : 'text'"
                 matInput
-                placeholder="Password"
+                placeholder="Enter your password"
                 formControlName="password" />
             <mat-icon
                 matSuffix
@@ -36,23 +41,30 @@
     </div>
     <div class="actions">
         <button
+            class="login"
+            type="submit"
             mat-raised-button
             color="primary">
             Login
         </button>
-        <a
-            class="rel-link"
-            routerLink="/register">
-            I don't have an account
-        </a>
+        <button mat-stroked-button>
+            <a
+                class="facebook"
+                color="black"
+                href="http://localhost:8080/auth/to-facebook">
+                <mat-icon>facebook</mat-icon>
+                Log in with Facebook
+            </a>
+        </button>
+        <div class="subtitle">
+            Don’t have account?
+            <a
+                class="rel-link"
+                routerLink="/register">
+                <span>Sing up</span>
+            </a>
+        </div>
         <!-- <a
-            mat-raised-button
-            color="primary"
-            href="http://localhost:8080/auth/to-facebook">
-            Log in with Facebook
-            <mat-icon>facebook</mat-icon>
-        </a>
-        <a
             mat-raised-button
             color="accent"
             href="http://localhost:8080/auth/to-github">

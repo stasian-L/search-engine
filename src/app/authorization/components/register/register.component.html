@@ -1,68 +1,104 @@
-<div>
-    <img
-        class="snail"
-        src="../../../../assets/images/snail.png"
-        width="180" />
-</div>
 <form
     class="login-form"
     [formGroup]="form"
     (ngSubmit)="onSubmit()">
-    <h1 class="title">Create account</h1>
+    <div class="title">
+        Create an account
+        <span class="subtitle">Welcome! Please enter your details.</span>
+    </div>
     <div class="content">
+        <span class="label">First name*</span>
         <mat-form-field appearance="outline">
             <input
                 type="text"
                 matInput
-                placeholder="First Name"
+                placeholder="Enter your name"
                 formControlName="firstName" />
-            <mat-error *ngIf="form.controls['firstName'].errors?.['required']">Name is required</mat-error>
+            <mat-error *ngIf="form.controls['firstName'].errors?.['required']">First name is required</mat-error>
         </mat-form-field>
-        <br />
+        <span class="label">Last name*</span>
         <mat-form-field appearance="outline">
             <input
                 type="text"
                 matInput
-                placeholder="Last Name"
+                placeholder="Enter your name"
                 formControlName="lastName" />
-            <mat-error *ngIf="form.controls['lastName'].errors?.['required']">Name is required</mat-error>
+            <mat-error *ngIf="form.controls['lastName'].errors?.['required']">Last name is required</mat-error>
         </mat-form-field>
-        <br />
-        <br />
+        <span class="label">Email*</span>
         <mat-form-field appearance="outline">
             <input
-                type="email"
+                type="text"
                 matInput
-                placeholder="Email"
+                placeholder="Enter your email"
                 formControlName="email" />
-            <mat-error *ngIf="form.controls['email'].errors?.['email']">Field is incorrect</mat-error>
-            <mat-error *ngIf="form.controls['email'].errors?.['required']">Name is required</mat-error>
+            <mat-error *ngIf="form.controls['email'].errors?.['required']">Email is required</mat-error>
+            <mat-error *ngIf="form.controls['email'].errors?.['email']">Email is incorrect</mat-error>
         </mat-form-field>
-        <br />
+        <span class="label">Password*</span>
         <mat-form-field appearance="outline">
             <input
                 [type]="passwordHide ? 'password' : 'text'"
                 matInput
-                placeholder="Password"
+                placeholder="Enter your password"
                 formControlName="password" />
             <mat-icon
                 matSuffix
                 (click)="passwordHide = !passwordHide">
                 {{ passwordHide ? 'visibility_off' : 'visibility' }}
             </mat-icon>
+            <mat-hint>Must contain at least 8 characters</mat-hint>
             <mat-error *ngIf="form.controls['password'].errors?.['required']">Password is required</mat-error>
+            <mat-error *ngIf="form.controls['password'].errors?.['minlength']">Password is short</mat-error>
+        </mat-form-field>
+        <br />
+        <br />
+        <span class="label">Confirm password*</span>
+        <mat-form-field appearance="outline">
+            <input
+                [type]="passwordHide ? 'password' : 'text'"
+                matInput
+                placeholder="Confirm your password"
+                [formControl]="confirmPassword" />
+            <mat-icon
+                matSuffix
+                (click)="passwordHide = !passwordHide">
+                {{ passwordHide ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+            <mat-error *ngIf="confirmPassword.errors?.['matching']">Password does not match</mat-error>
         </mat-form-field>
     </div>
     <div class="actions">
         <button
+            class="login"
+            type="submit"
             mat-raised-button
             color="primary">
-            Register
+            Sign up
         </button>
-        <a
-            class="rel-link"
-            routerLink="/login">
-            I have an account
-        </a>
+        <button mat-stroked-button>
+            <a
+                class="facebook"
+                color="black"
+                href="http://localhost:8080/auth/to-facebook">
+                <mat-icon>facebook</mat-icon>
+                Log in with Facebook
+            </a>
+        </button>
+        <div class="subtitle">
+            Already have an account?
+            <a
+                class="rel-link"
+                routerLink="/login">
+                <span>Sing in</span>
+            </a>
+        </div>
+        <!-- <a
+            mat-raised-button
+            color="accent"
+            href="http://localhost:8080/auth/to-github">
+            Log in with GitHub
+            <mat-icon>github</mat-icon>
+        </a> -->
     </div>
 </form>

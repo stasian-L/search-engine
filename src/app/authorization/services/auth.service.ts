@@ -34,8 +34,8 @@ export class AuthService {
         });
     }
 
-    register(user: RegisterBodyRequest): Observable<void> {
-        return this.http.post<void>('register', user, {
+    register(user: RegisterBodyRequest): Observable<string> {
+        return this.http.post<string>('register', user, {
             context: new HttpContext().set(SkipLoading, true)
         });
     }

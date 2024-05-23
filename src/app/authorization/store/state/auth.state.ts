@@ -54,8 +54,8 @@ export class AuthState {
     }
 
     @Action(Register)
-    onRegister({}: StateContext<AuthStateModel>, { user }: Register): Observable<void> {
-        return this.authService.register(user).pipe(tap(this.store.dispatch(new Navigate(['confirm-email']))));
+    onRegister({}: StateContext<AuthStateModel>, { user }: Register): Observable<string> {
+        return this.authService.register(user).pipe(tap(this.store.dispatch(new Navigate(['confirm-email'], { email: user.email }))));
     }
 
     @Action(Logout)

@@ -17,7 +17,7 @@ type UserLoginFormGroup = ModelFormGroup<Pick<User, 'username'> & { password: st
     standalone: true,
     imports: [CommonModule, MatButtonModule, MatInputModule, MatIconModule, ReactiveFormsModule, RouterModule],
     templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+    styleUrl: '../../styles/auth-form.scss'
 })
 export class LoginComponent {
     fb = inject(FormBuilder);

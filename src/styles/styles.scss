@@ -11,6 +11,11 @@ body {
     box-sizing: border-box;
 }
 
+// Material form field border radius
+.mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 12px;
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 }
