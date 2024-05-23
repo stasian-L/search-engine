@@ -1,36 +1,39 @@
-:host,
-.search-container {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 50vh;
-    position: relative;
-
-    &.focused {
-        border: 2px solid #000;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    }
-}
+$height: 42px;
 
 form {
     display: flex;
     align-items: center;
+    gap: 4px;
 }
 
-
-.search-container {
-    padding: 8px 16px;
-    background-color: #c1c5d0;
-}
-
-.search-input {
-    all: initial;
-    font-size: 20px;
+.mat-mdc-form-field {
+    height: $height;
     width: 600px;
-    border: none;
-    background-color: transparent;
+
+    ::ng-deep {
+        .mat-mdc-text-field-wrapper,
+        .mat-mdc-form-field-flex {
+            height: $height;
+        }
+
+        .mat-mdc-form-field-subscript-wrapper {
+            display: none;
+        }
+
+        .mat-mdc-form-field-infix {
+            padding-top: 10px;
+        }
+    }
 }
 
-.search-icon {
-    margin: 0 8px;
+.search-btn {
+    min-width: 80px;
+    height: $height;
+
+    .mat-icon {
+        width: unset;
+        height: unset;
+        margin: 0;
+        font-size: 24px;
+    }
 }
