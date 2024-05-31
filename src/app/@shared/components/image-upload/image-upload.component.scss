@@ -1,0 +1,6 @@
+@import '../../../../styles/mixins';
+
+upload-dropzone {
+    @include flex-center();
+}
+    

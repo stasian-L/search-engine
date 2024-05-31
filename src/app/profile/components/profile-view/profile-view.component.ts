@@ -10,11 +10,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { ImageUploadComponent } from '../../../@shared/components/image-upload/image-upload.component';
 import { ProfileState } from '../../store/profile/profile.state';
 
 @Component({
     selector: 'app-profile-view',
     standalone: true,
+    templateUrl: './profile-view.component.html',
+    styleUrl: '../styles/profile.scss',
     imports: [
         CommonModule,
         RouterModule,
@@ -24,10 +27,9 @@ import { ProfileState } from '../../store/profile/profile.state';
         MatIconModule,
         FormsModule,
         MatTabsModule,
-        MatDividerModule
-    ],
-    templateUrl: './profile-view.component.html',
-    styleUrl: '../styles/profile.scss'
+        MatDividerModule,
+        ImageUploadComponent
+    ]
 })
 export class ProfileViewComponent {
     readonly route = inject(ActivatedRoute);

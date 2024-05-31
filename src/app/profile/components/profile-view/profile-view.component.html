@@ -1,4 +1,77 @@
-<ng-container *ngIf="{ profile: profile$ | async } as data">
+@if ({ profile: profile$ | async }; as data) {
+<div class="cover"></div>
+<div class="content">
+    <div class="avatar">
+        <div class="container">
+            <div class="image-container">
+                <img
+                    [src]="data.profile?.image ?? defaultPhoto"
+                    height="200"
+                    width="200" />
+            </div>
+            <div class="name-container">
+                <div class="full-name">{{ data.profile?.firstName + ' ' + data.profile?.lastName }}</div>
+            </div>
+        </div>
+        <mat-divider />
+    </div>
+    <div class="wrapper">
+        <div class="wrapper">
+            <div class="wrapper-name">
+                <div class="label">First Name</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input
+                        matInput
+                        placeholder="First Name"
+                        [ngModel]="data.profile?.firstName"
+                        readonly />
+                </mat-form-field>
+            </div>
+            <div class="wrapper-name">
+                <div class="label">Last Name</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input
+                        matInput
+                        placeholder="Last Name"
+                        [ngModel]="data.profile?.lastName"
+                        readonly />
+                </mat-form-field>
+            </div>
+            <div class="wrapper-field">
+                <mat-divider />
+                <app-image-upload />
+                <mat-divider />
+            </div>
+            <div class="wrapper-field">
+                <div class="label">Email</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input
+                        matInput
+                        placeholder="Email"
+                        [ngModel]="data.profile?.email"
+                        readonly />
+                </mat-form-field>
+                <mat-divider />
+            </div>
+            <div class="wrapper-field">
+                <div class="label">Phone</div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Phone</mat-label>
+                    <input
+                        matInput
+                        placeholder="Phone"
+                        readonly />
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+<!-- <ng-container *ngIf="{ profile: profile$ | async } as data">
     <div class="banner">
         <div class="label">Your Profile</div>
         <div class="image-container">
@@ -39,14 +112,6 @@
                     [ngModel]="data.profile?.lastName"
                     readonly />
             </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Username</mat-label>
-                <input
-                    matInput
-                    placeholder="Username"
-                    [ngModel]="data.profile?.username"
-                    readonly />
-            </mat-form-field>
         </div>
         <div class="bio">
             <mat-form-field appearance="outline">
@@ -76,4 +141,4 @@
             </mat-form-field>
         </div>
     </div>
-</ng-container>
+</ng-container> -->
