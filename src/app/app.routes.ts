@@ -6,14 +6,12 @@ import { profileResolver } from './@core/resolvers/profile.resolver';
 import { searchResultsResolver } from './@core/resolvers/search-results.resolver';
 import { userResolver } from './@core/resolvers/user.resolver';
 import { AuthState } from './authorization/store/state/auth.state';
-import { ProfileState } from './profile/store/profile/profile.state';
 
 export const routes: Routes = [
     {
         path: '',
         title: 'Home',
-        loadComponent: () => import('./home/components/home/home.component').then(c => c.HomeComponent),
-        resolve: [userResolver]
+        loadComponent: () => import('./home/components/home/home.component').then(c => c.HomeComponent)
     },
     {
         path: 'login',
@@ -38,7 +36,6 @@ export const routes: Routes = [
         path: 'profile',
         title: 'Profile',
         loadChildren: () => import('./profile/profile.routes').then(r => r.routes),
-        providers: [importProvidersFrom(NgxsModule.forFeature([ProfileState]))],
         resolve: [profileResolver],
         canMatch: [authGuard]
     },

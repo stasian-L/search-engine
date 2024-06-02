@@ -4,7 +4,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
 import { User, UserAPIResponse } from '../../interfaces/user.interface';
 import { AuthService } from './../../services/auth.service';
-import { GetCurrentUser, Login, Logout, RefreshToken, Register } from './auth.actions';
+import { GetCurrentUser, Login, Logout, RefreshToken, Register, UpdateUser } from './auth.actions';
 
 export class AuthStateModel {
     currentUser: User | null = null;
@@ -66,6 +66,11 @@ export class AuthState {
     @Action(GetCurrentUser)
     onLoadCurrentUser({ patchState }: StateContext<AuthStateModel>): Observable<User> {
         return this.authService.getCurrentUser().pipe(tap(user => patchState({ currentUser: user })));
+    }
+
+    @Action(UpdateUser)
+    onUpdateUser({ patchState }: StateContext<AuthStateModel>, { user }: UpdateUser): Observable<User> {
+        return this.authService.updateUser(user).pipe(tap(user => patchState({ currentUser: user })));
     }
 
     @Action(RefreshToken)

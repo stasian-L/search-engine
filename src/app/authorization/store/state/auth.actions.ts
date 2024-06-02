@@ -1,4 +1,4 @@
-import { LoginBodyRequest, RegisterBodyRequest } from '../../services/auth.service';
+import { LoginBodyRequest, RegisterBodyRequest, UpdateUserBodyRequest } from '../../services/auth.service';
 
 export class Login {
     static readonly type = '[Auth] Login user';
@@ -20,4 +20,10 @@ export class RefreshToken {
 
 export class GetCurrentUser {
     static readonly type = '[Auth] Get current user';
+}
+
+export class UpdateUser {
+    static readonly type = '[Auth] Update user';
+
+    constructor(public user: UpdateUserBodyRequest) {}
 }

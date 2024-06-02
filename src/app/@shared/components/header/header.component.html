@@ -1,5 +1,5 @@
 <ng-container
-    *ngIf="{ isAuthenticated: isAuthenticated$ | async, user: currentUser$ | async, profileImage: profileImage$ | async } as data">
+    *ngIf="{ isAuthenticated: isAuthenticated$ | async, user: currentUser$ | async } as data">
     <a
         href=""
         target="_self">
@@ -12,6 +12,6 @@
     <app-right-menu
         [authenticated]="data.isAuthenticated ?? false"
         [user]="data.user"
-        [imageUrl]="data.profileImage"
+        [imageUrl]="data.user?.image"
         (logout)="logout()" />
 </ng-container>

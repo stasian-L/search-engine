@@ -4,7 +4,6 @@ import { Store } from '@ngxs/store';
 import { Logout } from '../../../authorization/store/state/auth.actions';
 import { AuthState } from '../../../authorization/store/state/auth.state';
 import { RightMenuComponent } from '../right-menu/right-menu.component';
-import { ProfileState } from '../../../profile/store/profile/profile.state';
 
 @Component({
     selector: 'app-header',
@@ -20,8 +19,6 @@ export class HeaderComponent {
     isAuthenticated$ = this.store.select(AuthState.isAuthenticated);
 
     currentUser$ = this.store.select(AuthState.currentUser);
-
-    profileImage$ = this.store.select(ProfileState.profileImage);
 
     logout(): void {
         this.store.dispatch(new Logout());

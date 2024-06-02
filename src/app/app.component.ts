@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoadingComponent } from './@shared/components/loading/loading.component';
+import { Store } from '@ngxs/store';
+import { GetCurrentUser } from './authorization/store/state/auth.actions';
 
 @Component({
     selector: 'app-root',
@@ -11,4 +13,10 @@ import { LoadingComponent } from './@shared/components/loading/loading.component
     imports: [CommonModule, RouterOutlet, LoadingComponent],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {}
+export class AppComponent implements OnInit {
+    store = inject(Store);
+
+    ngOnInit(): void {
+        this.store.dispatch(new GetCurrentUser());
+    }
+}

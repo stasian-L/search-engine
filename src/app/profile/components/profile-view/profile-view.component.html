@@ -1,16 +1,43 @@
 @if ({ profile: profile$ | async }; as data) {
 <div class="cover"></div>
-<div class="content">
+<form
+    class="content"
+    [formGroup]="profileForm"
+    (ngSubmit)="saveChanges()">
     <div class="avatar">
         <div class="container">
             <div class="image-container">
                 <img
-                    [src]="data.profile?.image ?? defaultPhoto"
+                    [src]="profileForm.controls.image.value"
                     height="200"
                     width="200" />
             </div>
             <div class="name-container">
                 <div class="full-name">{{ data.profile?.firstName + ' ' + data.profile?.lastName }}</div>
+            </div>
+            <div class="actions">
+                @if (!editMode) {
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="editMode = true">
+                    <mat-icon>edit</mat-icon>
+                    Edit Profile
+                </button>
+                } @else {
+                <button
+                    mat-raised-button
+                    (click)="cancel()">
+                    Cancel
+                </button>
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="saveChanges()">
+                    <mat-icon>edit</mat-icon>
+                    Save
+                </button>
+                }
             </div>
         </div>
         <mat-divider />
@@ -20,125 +47,50 @@
             <div class="wrapper-name">
                 <div class="label">First Name</div>
                 <mat-form-field appearance="outline">
-                    <mat-label>First Name</mat-label>
                     <input
                         matInput
                         placeholder="First Name"
-                        [ngModel]="data.profile?.firstName"
-                        readonly />
+                        formControlName="firstName"
+                        [readonly]="!editMode" />
                 </mat-form-field>
             </div>
             <div class="wrapper-name">
                 <div class="label">Last Name</div>
                 <mat-form-field appearance="outline">
-                    <mat-label>Last Name</mat-label>
                     <input
                         matInput
                         placeholder="Last Name"
-                        [ngModel]="data.profile?.lastName"
-                        readonly />
+                        formControlName="lastName"
+                        [readonly]="!editMode" />
                 </mat-form-field>
             </div>
             <div class="wrapper-field">
                 <mat-divider />
-                <app-image-upload />
+                <app-image-upload formControlName="image" />
                 <mat-divider />
             </div>
             <div class="wrapper-field">
                 <div class="label">Email</div>
                 <mat-form-field appearance="outline">
-                    <mat-label>Email</mat-label>
                     <input
                         matInput
                         placeholder="Email"
-                        [ngModel]="data.profile?.email"
-                        readonly />
+                        formControlName="email"
+                        [readonly]="!editMode" />
                 </mat-form-field>
                 <mat-divider />
             </div>
             <div class="wrapper-field">
                 <div class="label">Phone</div>
                 <mat-form-field appearance="outline">
-                    <mat-label>Phone</mat-label>
                     <input
                         matInput
                         placeholder="Phone"
-                        readonly />
+                        formControlName="phone"
+                        [readonly]="!editMode" />
                 </mat-form-field>
             </div>
         </div>
     </div>
-</div>
+</form>
 }
-
-<!-- <ng-container *ngIf="{ profile: profile$ | async } as data">
-    <div class="banner">
-        <div class="label">Your Profile</div>
-        <div class="image-container">
-            <img
-                class="avatar"
-                [src]="data.profile?.image ?? defaultPhoto"
-                height="200"
-                width="200" />
-        </div>
-        <div class="actions">
-            <button
-                mat-raised-button
-                routerLink="../edit">
-                <mat-icon>edit</mat-icon>
-                Edit Profile
-            </button>
-        </div>
-    </div>
-    <mat-divider
-        vertical
-        [ngStyle]="{ height: '550px' }"></mat-divider>
-    <div class="content">
-        <div class="name">
-            <div class="label">Personal Information:</div>
-            <mat-form-field appearance="outline">
-                <mat-label>First Name</mat-label>
-                <input
-                    matInput
-                    placeholder="First Name"
-                    [ngModel]="data.profile?.firstName"
-                    readonly />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Last Name</mat-label>
-                <input
-                    matInput
-                    placeholder="Last Name"
-                    [ngModel]="data.profile?.lastName"
-                    readonly />
-            </mat-form-field>
-        </div>
-        <div class="bio">
-            <mat-form-field appearance="outline">
-                <mat-label>Bio</mat-label>
-                <textarea
-                    matInput
-                    placeholder="Bio"
-                    [ngModel]="data.profile?.bio"
-                    readonly></textarea>
-            </mat-form-field>
-        </div>
-        <div class="info">
-            <mat-form-field appearance="outline">
-                <mat-label>Email</mat-label>
-                <input
-                    matInput
-                    placeholder="Email"
-                    [ngModel]="data.profile?.email"
-                    readonly />
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Phone</mat-label>
-                <input
-                    matInput
-                    placeholder="Phone"
-                    readonly />
-            </mat-form-field>
-        </div>
-    </div>
-</ng-container> -->

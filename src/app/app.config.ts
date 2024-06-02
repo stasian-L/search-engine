@@ -1,7 +1,7 @@
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, withDebugTracing } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
@@ -20,10 +20,11 @@ import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
 import { CrawlerState } from './crawler/store/state/crawler.state';
 import { HomeState } from './home/store/state/home.state';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideRouter(routes, withDebugTracing()),
+        provideRouter(routes),
         provideHttpClient(withInterceptors([loadingInterceptor, baseUrlInterceptor]), withInterceptorsFromDi()),
         provideAnimations(),
         importProvidersFrom([
@@ -37,7 +38,16 @@ export const appConfig: ApplicationConfig = {
             }),
             ToastrModule.forRoot({
                 positionClass: 'toast-bottom-right'
-            })
+            }),
+            NgCircleProgressModule.forRoot({
+                // set defaults here
+                maxPercent: 100,
+                radius: 40,
+                outerStrokeWidth: 8,
+                showInnerStroke: false,
+                outerStrokeColor: "#7270e6",
+                animationDuration: 300,
+              })
         ]),
         { provide: BASE_API_URL, useValue: environment.apiUrl },
         {

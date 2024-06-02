@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { Component, DestroyRef, HostBinding, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -10,8 +11,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { filter } from 'rxjs';
 import { ImageUploadComponent } from '../../../@shared/components/image-upload/image-upload.component';
-import { ProfileState } from '../../store/profile/profile.state';
+import { ModelFormGroup } from '../../../@shared/utils/utility-types';
+import { UpdateUserBodyRequest } from '../../../authorization/services/auth.service';
+import { UpdateUser } from '../../../authorization/store/state/auth.actions';
+import { AuthState } from '../../../authorization/store/state/auth.state';
+type UserFormGroup = ModelFormGroup<NonNullable<UpdateUserBodyRequest>>;
 
 @Component({
     selector: 'app-profile-view',
@@ -28,10 +34,13 @@ import { ProfileState } from '../../store/profile/profile.state';
         FormsModule,
         MatTabsModule,
         MatDividerModule,
+        ReactiveFormsModule,
         ImageUploadComponent
     ]
 })
-export class ProfileViewComponent {
+export class ProfileViewComponent implements OnInit {
+    destroyRef = inject(DestroyRef);
+
     readonly route = inject(ActivatedRoute);
 
     readonly store = inject(Store);
@@ -40,7 +49,63 @@ export class ProfileViewComponent {
 
     readonly profileDialog = inject(MatDialog);
 
-    readonly profile$ = this.store.select(ProfileState.profile);
+    readonly profile$ = this.store.select(AuthState.currentUser);
 
     readonly defaultPhoto = 'assets/images/empty-profile.png';
+
+    @HostBinding('class.edit-mode') editMode = false;
+
+    image?: string;
+
+    profileForm: UserFormGroup = this.fb.nonNullable.group({
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        username: ['', Validators.required],
+        image: [''],
+        email: ['', Validators.required],
+        phone: ['']
+    });
+
+    prevProfileForm: UserFormGroup = this.fb.group({ ...this.profileForm.controls });
+
+    ngOnInit(): void {
+        this.createForm();
+    }
+
+    saveChanges(): void {
+        if (this.profileForm.invalid) {
+            return;
+        }
+
+        this.store.dispatch(new UpdateUser(this.profileForm.getRawValue()));
+        this.editMode = false;
+    }
+
+    cancel(): void {
+        this.editMode = false;
+        this.profileForm.patchValue(this.prevProfileForm.getRawValue());
+    }
+
+    createForm(): void {
+        this.profile$
+            .pipe(
+                filter(user => user !== null),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(user => {
+                if (!user) {
+                    return;
+                }
+
+                this.profileForm = this.fb.nonNullable.group({
+                    firstName: [user.firstName, Validators.required],
+                    lastName: [user.lastName, Validators.required],
+                    username: [user.username, Validators.required],
+                    image: [user.image],
+                    email: [user.email, Validators.required],
+                    phone: [user.phone]
+                });
+                this.prevProfileForm = this.fb.group({ ...this.profileForm.controls });
+            });
+    }
 }

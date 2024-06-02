@@ -1,5 +1,15 @@
 <div class="job-item">
-    <div class="progress-circle"></div>
+    <div class="progress-circle">
+        <circle-progress
+            [percent]="progress()"
+            [radius]="30"
+            [outerStrokeWidth]="7"
+            [outerStrokeColor]="'#7270e6'"
+            [innerStrokeColor]="'#C7E596'"
+            [animation]="true"
+            [showSubtitle]="false"
+            [animationDuration]="300"></circle-progress>
+    </div>
     <div class="info">
         <div class="url">{{ job?.seedUrls ?? [] | join : ' · ' }}</div>
         <span class="info-progress">Crawled: {{ job?.processedUrls }} of {{ job?.totalUrls }}</span>

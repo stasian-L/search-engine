@@ -10,7 +10,6 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { filter } from 'rxjs';
-import { UpdateProfile } from '../../store/profile/profile.actions';
 import { UploadProfileImageDialogComponent } from '../upload-profile-image-dialog/upload-profile-image-dialog.component';
 
 @Component({
@@ -71,7 +70,5 @@ export class EditProfileComponent {
             return;
         }
 
-        const payload = this.profileForm.getRawValue();
-        this.store.dispatch(new UpdateProfile(payload));
     }
 }

@@ -16,7 +16,7 @@ export type RegisterBodyRequest = Pick<User, 'firstName' | 'lastName' | 'email'>
     role: Role;
 };
 
-//export type UpdateCurrentUserBodyRequest = Pick<User, 'email' | 'username' | 'bio' | 'image'> & { password: string };
+export type UpdateUserBodyRequest = Omit<User, 'access_token' | 'refresh_token'>;
 
 @Injectable({
     providedIn: 'root'
@@ -52,6 +52,12 @@ export class AuthService {
 
     getCurrentUser(): Observable<User> {
         return this.http.get<User>('user', {
+            context: new HttpContext().set(SkipLoading, true)
+        });
+    }
+
+    updateUser(user: UpdateUserBodyRequest): Observable<User> {
+        return this.http.put<User>('user', user, {
             context: new HttpContext().set(SkipLoading, true)
         });
     }

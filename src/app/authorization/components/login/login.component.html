@@ -18,6 +18,7 @@
             <input
                 type="text"
                 matInput
+                autocomplete="on"
                 placeholder="Enter your email"
                 formControlName="username" />
             <mat-error *ngIf="form.controls['username'].errors?.['required']">Email is required</mat-error>
