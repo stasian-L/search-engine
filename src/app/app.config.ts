@@ -40,13 +40,14 @@ export const appConfig: ApplicationConfig = {
                 positionClass: 'toast-bottom-right'
             }),
             NgCircleProgressModule.forRoot({
-                // set defaults here
                 maxPercent: 100,
                 radius: 40,
                 outerStrokeWidth: 8,
-                showInnerStroke: false,
                 outerStrokeColor: "#7270e6",
                 animationDuration: 300,
+                innerStrokeColor: '#e7e8ea',
+                innerStrokeWidth: 7,
+                space: -10
               })
         ]),
         { provide: BASE_API_URL, useValue: environment.apiUrl },

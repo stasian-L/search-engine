@@ -5,14 +5,16 @@
             [radius]="30"
             [outerStrokeWidth]="7"
             [outerStrokeColor]="'#7270e6'"
-            [innerStrokeColor]="'#C7E596'"
             [animation]="true"
             [showSubtitle]="false"
+            [innerStrokeColor]="'#e7e8ea'"
+            [innerStrokeWidth]="7"
+            [space]="-8"
             [animationDuration]="300"></circle-progress>
     </div>
     <div class="info">
-        <div class="url">{{ job?.seedUrls ?? [] | join : ' · ' }}</div>
-        <span class="info-progress">Crawled: {{ job?.processedUrls }} of {{ job?.totalUrls }}</span>
+        <div class="url">{{ job()?.seedUrls ?? [] | join : ' · ' }}</div>
+        <span class="info-progress">Crawled: {{ job()?.processedUrls }} of {{ job()?.totalUrls }}</span>
     </div>
     <div class="status-wrapper"><span class="status">Status</span></div>
     <div class="action">
