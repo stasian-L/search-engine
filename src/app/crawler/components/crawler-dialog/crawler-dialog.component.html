@@ -12,7 +12,7 @@
 <form
     [formGroup]="urlsForm"
     (ngSubmit)="onSubmit()">
-    <span class="label">Enter domain urls</span>
+    <span class="label">Url seeds</span>
     <div
         formArrayName="seedUrls"
         class="urls">
@@ -23,7 +23,7 @@
                 color="primary">
                 <input
                     matInput
-                    placeholder="Domain name"
+                    placeholder="Enter url"
                     [formControlName]="i" />
             </mat-form-field>
             <button

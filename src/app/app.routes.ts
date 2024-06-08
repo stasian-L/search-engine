@@ -44,5 +44,11 @@ export const routes: Routes = [
         title: 'Email Confirmation',
         loadComponent: () =>
             import('./authorization/components/confirm-email-page/confirm-email-page.component').then(c => c.ConfirmEmailPageComponent)
+    },
+    {
+        path: 'email-confirmed',
+        title: 'Email Confirmed',
+        loadComponent: () =>
+            import('./authorization/components/email-confirmed/email-confirmed.component').then(c => c.EmailConfirmedComponent)
     }
 ];

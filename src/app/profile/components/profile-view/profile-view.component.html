@@ -66,7 +66,9 @@
             </div>
             <div class="wrapper-field">
                 <mat-divider />
-                <app-image-upload formControlName="image" />
+                <app-image-upload
+                    formControlName="image"
+                    [readonly]="!editMode" />
                 <mat-divider />
             </div>
             <div class="wrapper-field">

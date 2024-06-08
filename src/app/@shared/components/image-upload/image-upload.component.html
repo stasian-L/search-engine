@@ -1,6 +1,10 @@
+@if (readonly) {
+<div class="upload-zone"></div>
+} @else {
 <upload-dropzone
     [options]="options"
     [onUpdate]="onUpdate"
     [onComplete]="onComplete"
     [width]="width"
     [height]="height"></upload-dropzone>
+}
