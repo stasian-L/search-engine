@@ -10,9 +10,7 @@
                 alt=""
                 width="50" />
         </a>
-        <form action="">
-            <app-search-bar [query]="query$ | async"/>
-        </form>
+        <app-search-bar [query]="query$ | async" />
         <div class="spacer"></div>
         <div class="login-actions">
             <app-right-menu

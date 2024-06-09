@@ -7,20 +7,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { Store } from '@ngxs/store';
-import { filter } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { SearchFilterPipe } from '../../../@shared/pipes/search-filter.pipe';
 import { CreateJob, GetAllJobs } from '../../store/state/crawler.actions';
 import { CrawlerState } from '../../store/state/crawler.state';
 import { CrawlerDialogComponent } from '../crawler-dialog/crawler-dialog.component';
 import { JobItemComponent } from '../job-item/job-item.component';
-
-export enum JobStatus {
-    IN_PROGRESS = 'IN_PROGRESS',
-    COMPLETED = 'COMPLETED',
-    ERROR = 'ERROR'
-}
 
 @Component({
     selector: 'app-crawler-jobs-list',
@@ -50,6 +44,8 @@ export class CrawlerJobsListComponent {
 
     jobs$ = this.store.select(CrawlerState.jobs);
 
+    filteredJobs$ = this.jobs$;
+
     searchTerm = '';
 
     refresh(): void {
@@ -67,5 +63,16 @@ export class CrawlerJobsListComponent {
             .subscribe(result => {
                 this.store.dispatch(new CreateJob(result));
             });
+    }
+
+    onJobsStatusChange(event: MatTabChangeEvent): void {
+        const selectedStatus = event.tab.textLabel.toLowerCase();
+        console.log(selectedStatus);
+        this.filteredJobs$ = this.jobs$;
+        if (selectedStatus === 'all jobs') {
+            return;
+        }
+
+        this.filteredJobs$ = this.jobs$.pipe(map(jobs => jobs.filter(job => job.crawlStatus === selectedStatus)));
     }
 }

@@ -18,6 +18,11 @@ mat-tab-nav-panel {
     width: 100%;
 }
 
+app-header {
+    position: fixed;
+    top: 0;
+}
+
 nav {
-    margin-top: 10px;
+    margin-top: 80px;
 }

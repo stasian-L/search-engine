@@ -4,8 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { ActivatedRoute } from '@angular/router';
 import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
+import { Search } from '../../../serp/store/state/serp.actions';
 
 @Component({
     selector: 'app-search-bar',
@@ -24,6 +26,8 @@ export class SearchBarComponent {
 
     store = inject(Store);
 
+    activatedRoute = inject(ActivatedRoute);
+
     searchControl = new FormControl('');
 
     searchForm = inject(FormBuilder).nonNullable.group(this.searchControl);
@@ -33,6 +37,15 @@ export class SearchBarComponent {
             return;
         }
 
+        if (this.activatedRoute.snapshot.url[0]?.path === 'search') {
+            this.store.dispatch(new Search(this.searchControl.value));
+        }
         this.store.dispatch(new Navigate(['search'], { searchTerm: this.searchControl.value }));
     }
+
+    handleKeyUp(e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+            this.search();
+        }
+     }
 }

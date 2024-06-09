@@ -16,7 +16,19 @@
         <div class="url">{{ job()?.seedUrls ?? [] | join : ' · ' }}</div>
         <span class="info-progress">Crawled: {{ job()?.processedUrls }} of {{ job()?.totalUrls }}</span>
     </div>
-    <div class="status-wrapper"><span class="status">Status</span></div>
+    <div class="status-wrapper">
+        @if (job()?.crawlStatus) {
+        <span
+            class="status"
+            [ngClass]="{
+                crawling: job()?.crawlStatus === 'crawling',
+                completed: job()?.crawlStatus === 'completed',
+                error: job()?.crawlStatus === 'error'
+            }">
+            {{ job()?.crawlStatus | titlecase }}
+        </span>
+        } @else { N/A }
+    </div>
     <div class="action">
         <button
             mat-raised-button

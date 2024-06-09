@@ -4,7 +4,7 @@ export type CrawlType = 'URL_WITH_DEPTH';
 
 const CrawlStatus = {
     Crawling: 'crawling',
-    Complete: 'complete',
+    Completed: 'completed',
     Error: 'error'
 } as const;
 

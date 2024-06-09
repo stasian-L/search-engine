@@ -1,4 +1,5 @@
-import { Component, computed, input } from '@angular/core';
+import { NgClass, TitleCasePipe } from '@angular/common';
+import { Component, OnInit, Signal, computed, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgCircleProgressModule } from 'ng-circle-progress';
@@ -10,18 +11,22 @@ import { Job } from '../../interfaces/job.interface';
     standalone: true,
     templateUrl: './job-item.component.html',
     styleUrl: './job-item.component.scss',
-    imports: [MatIconModule, MatButtonModule, JoinPipe, NgCircleProgressModule]
+    imports: [MatIconModule, MatButtonModule, JoinPipe, NgCircleProgressModule, TitleCasePipe, NgClass]
 })
-export class JobItemComponent {
+export class JobItemComponent implements OnInit {
     job = input.required<Job | null>();
 
-    progress = computed<number>(() => {
-        if (!this.job()?.totalUrls || !this.job()?.processedUrls) {
-            return 0;
-        }
+    progress!: Signal<number>;
 
-        return ((this.job()?.processedUrls ?? 0) / (this.job()?.totalUrls ?? 1)) * 100;
-    });
+    ngOnInit(): void {
+        this.progress = computed<number>(() => {
+            if (!this.job()?.totalUrls || !this.job()?.processedUrls) {
+                return 0;
+            }
+
+            return ((this.job()?.processedUrls ?? 0) / (this.job()?.totalUrls ?? 1)) * 100;
+        });
+    }
 
     cancelJob(): void {}
 }

@@ -10,7 +10,8 @@
             [formControl]="searchControl"
             placeholder="Search..."
             (focus)="focused = true"
-            (blur)="focused = false" />
+            (blur)="focused = false"
+            (keyup)="handleKeyUp($event)" />
         <button
             class="clear-btn"
             mat-icon-button

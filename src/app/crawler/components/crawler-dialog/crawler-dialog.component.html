@@ -13,6 +13,7 @@
     [formGroup]="urlsForm"
     (ngSubmit)="onSubmit()">
     <span class="label">Url seeds</span>
+    <mat-divider />
     <div
         formArrayName="seedUrls"
         class="urls">
@@ -34,6 +35,7 @@
         </div>
         }
     </div>
+    <mat-divider />
     <button
         class="add-button"
         mat-raised-button
@@ -43,7 +45,9 @@
         Add Url
         <mat-icon>add</mat-icon>
     </button>
-    <mat-checkbox formControlName="useDepth" (change)="toggleFormControl('crawlDepth', $event.checked)">
+    <mat-checkbox
+        formControlName="useDepth"
+        (change)="toggleFormControl('crawlDepth', $event.checked)">
         <span class="subtitle">Use another crawler depth</span>
     </mat-checkbox>
     <div>

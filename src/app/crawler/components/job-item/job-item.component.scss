@@ -3,7 +3,7 @@
     padding: 12px;
     border-radius: 16px;
     box-shadow: 0 4px 12px 0#0d234308;
-    background-color:ghostwhite;
+    background-color: ghostwhite;
     flex: 1;
 }
 
@@ -44,12 +44,16 @@
     padding: 6px;
     border-radius: 4px;
     font-size: 16px;
-}
 
-.in-progress {
-    background-color: cornflowerblue;
-}
+    &.crawling {
+        background-color: cornflowerblue;
+    }
 
-.completed {
-    background-color: limegreen;
+    &.completed {
+        background-color: limegreen;
+    }
+
+    &.error {
+        background-color: red;
+    }
 }

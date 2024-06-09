@@ -40,6 +40,7 @@ export class CrawlerState {
     onGetAllJobs({ patchState }: StateContext<CrawlerStateModel>): Observable<JobAPIResponse[]> {
         return this.crawlerService.getAllJobs().pipe(
             tap(jobs => {
+                jobs.forEach(job => this.calculateStatus(job));
                 patchState({ jobs });
             })
         );
@@ -53,5 +54,18 @@ export class CrawlerState {
                 setState({ jobs: [...state.jobs] });
             })
         );
+    }
+
+    private calculateStatus(job: Job): void {
+        if (job) {
+            const percentage = ((job.processedUrls ?? 0) / (job.totalUrls ?? 1)) * 100;
+            if (percentage === 100) {
+                job.crawlStatus = 'completed';
+            } else if (percentage < 100) {
+                job.crawlStatus = 'crawling';
+            } else {
+                job.crawlStatus = 'error';
+            }
+        }
     }
 }

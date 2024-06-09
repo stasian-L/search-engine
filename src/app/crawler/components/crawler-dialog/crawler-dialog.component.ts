@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { URL_REGEXP } from '../../../@core/constants/regex.const';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
     selector: 'app-crawler-dialog',
@@ -24,7 +25,8 @@ import { URL_REGEXP } from '../../../@core/constants/regex.const';
         MatDialogClose,
         MatIconModule,
         ReactiveFormsModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDividerModule
     ],
     templateUrl: './crawler-dialog.component.html',
     styleUrl: './crawler-dialog.component.scss'
