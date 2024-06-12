@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { Store } from '@ngxs/store';
 import { filter, map } from 'rxjs';
+import { SearchBarRotateComponent } from '../../../@shared/components/search-bar-rotate/app-search-bar-rotate.component';
 import { SearchFilterPipe } from '../../../@shared/pipes/search-filter.pipe';
 import { CreateJob, GetAllJobs } from '../../store/state/crawler.actions';
 import { CrawlerState } from '../../store/state/crawler.state';
@@ -23,7 +24,6 @@ import { JobItemComponent } from '../job-item/job-item.component';
     styleUrl: './crawler-jobs-list.component.scss',
     imports: [
         AsyncPipe,
-        NgIf,
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
@@ -32,7 +32,8 @@ import { JobItemComponent } from '../job-item/job-item.component';
         SearchFilterPipe,
         JobItemComponent,
         MatDividerModule,
-        MatTabsModule
+        MatTabsModule,
+        SearchBarRotateComponent
     ]
 })
 export class CrawlerJobsListComponent {

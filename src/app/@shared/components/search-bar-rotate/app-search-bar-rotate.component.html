@@ -1,0 +1,24 @@
+<mat-form-field
+    class="primary"
+    [appearance]="appearance"
+    [@slideInOut]="isOpened">
+    <input
+        #input
+        matInput
+        placeholder="Search"
+        [formControl]="searchControl" />
+</mat-form-field>
+<span [class.active]="isOpened">
+    <mat-icon
+        class="mat-close-icon"
+        (click)="onClose()"
+        matRipple>
+        close
+    </mat-icon>
+    <mat-icon
+        class="mat-search-icon"
+        (click)="onOpen()"
+        matRipple>
+        search
+    </mat-icon>
+</span>
