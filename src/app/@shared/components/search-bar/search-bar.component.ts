@@ -42,10 +42,4 @@ export class SearchBarComponent {
         }
         this.store.dispatch(new Navigate(['search'], { searchTerm: this.searchControl.value }));
     }
-
-    handleKeyUp(e: KeyboardEvent) {
-        if (e.key === 'Enter') {
-            this.search();
-        }
-     }
 }

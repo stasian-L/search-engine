@@ -26,7 +26,7 @@
             <mat-tab label="Completed"></mat-tab>
             <mat-tab label="Error"></mat-tab>
         </mat-tab-group>
-        <app-search-bar-rotate />
+        <app-search-bar-rotate (searchChange)="searchTerm$.next($event)" />
     </div>
     <div class="column-header-names">
         <div class="header-column progress">Progress</div>

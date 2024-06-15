@@ -1,13 +1,24 @@
 <app-search-header />
-<main class="main">
-    <div class="main-center">
-        <div class="main-container">
-            <div class="content-left">
-                <app-result-list [results]="results$ | async" />
-            </div>
-            <div class="content-right">
-                <!-- <app-result-list /> -->
+<div
+    #elements
+    class="serp">
+    <main class="main">
+        <div class="main-center">
+            <div class="main-container">
+                <div class="content-left">
+                    <app-result-list [results]="results$ | async" />
+                    @if (loadingIndicator$.value) {
+                    <div class="loading">
+                        <mat-spinner
+                            [diameter]="50"
+                            strokeWidth="3" />
+                    </div>
+                    }
+                </div>
+                <div class="content-right">
+                    <!-- <app-result-list /> -->
+                </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>

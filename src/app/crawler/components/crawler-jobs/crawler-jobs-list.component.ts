@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { Store } from '@ngxs/store';
-import { filter, map } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, filter, map } from 'rxjs';
 import { SearchBarRotateComponent } from '../../../@shared/components/search-bar-rotate/app-search-bar-rotate.component';
 import { SearchFilterPipe } from '../../../@shared/pipes/search-filter.pipe';
 import { CreateJob, GetAllJobs } from '../../store/state/crawler.actions';
@@ -34,20 +34,28 @@ import { JobItemComponent } from '../job-item/job-item.component';
         MatDividerModule,
         MatTabsModule,
         SearchBarRotateComponent
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CrawlerJobsListComponent {
     store = inject(Store);
 
     matDialog = inject(MatDialog);
 
+    cdr = inject(ChangeDetectorRef);
+
     displayedColumns = ['jobId', 'url', 'info'];
+
+    searchTerm$ = new BehaviorSubject<string | null>('');
 
     jobs$ = this.store.select(CrawlerState.jobs);
 
-    filteredJobs$ = this.jobs$;
-
-    searchTerm = '';
+    filteredJobs$ = this.jobs$.pipe(
+        combineLatestWith(this.searchTerm$),
+        map(([jobs, searchTerm]) => {
+            return jobs.filter(job => job.seedUrls[0].toLowerCase().includes(searchTerm?.toLowerCase() ?? ''));
+        })
+    );
 
     refresh(): void {
         this.store.dispatch(new GetAllJobs());

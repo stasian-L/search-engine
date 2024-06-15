@@ -10,7 +10,8 @@
             [innerStrokeColor]="'#e7e8ea'"
             [innerStrokeWidth]="7"
             [space]="-8"
-            [animationDuration]="300"></circle-progress>
+            [animationDuration]="300"
+            [lazy]="true"></circle-progress>
     </div>
     <div class="info">
         <div class="url">{{ job()?.seedUrls ?? [] | join : ' · ' }}</div>

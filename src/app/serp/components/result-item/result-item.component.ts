@@ -9,7 +9,7 @@ import { Component, Input, OnInit } from '@angular/core';
     styleUrl: './result-item.component.scss'
 })
 export class ResultItemComponent implements OnInit {
-    @Input({ required: true }) resultItem!: { title: string; url: string; snippet: string };
+    @Input({ required: true }) resultItem!: { title: string; url: string; description: string };
 
     ngOnInit() {
         if (!this.resultItem?.url) {

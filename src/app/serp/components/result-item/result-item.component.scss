@@ -2,7 +2,7 @@
     padding: 12px;
     border-radius: 16px;
     box-shadow: 0 4px 12px 0#0d234308;
-    background-color:ghostwhite;
+    background-color: ghostwhite;
     flex: 1;
 }
 
@@ -33,9 +33,19 @@
 .icon {
     width: 16px;
     height: 16px;
-    background-size: 16px
+    background-size: 16px;
 }
 
 .link-text {
     display: inline;
+}
+
+.description {
+    hyphens: auto;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }

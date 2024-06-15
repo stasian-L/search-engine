@@ -1,5 +1,10 @@
 :host {
+}
 
+.serp {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: calc(100vh - 183px);
 }
 
 .main {
@@ -43,4 +48,9 @@
         max-width: 1280px;
         margin-left: 68px;
     }
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
 }

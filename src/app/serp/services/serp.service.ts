@@ -36,8 +36,8 @@ export class SerpService {
     //         .pipe(tap(console.warn), map(x => x.results.results.organic));
     // }
 
-    search(query: string): Observable<any> {
-        return this.http.get(`search?searchTerm=${query}`, {
+    search(query: string, page: number = 0): Observable<any> {
+        return this.http.get(`search?searchTerm=${query}&page=${page}`, {
             context: new HttpContext().set(SkipLoading, true)
         });
     }

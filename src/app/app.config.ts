@@ -10,6 +10,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AuthInterceptor } from './@core/intercepters/auth.interceptor';
 import { SerpState } from './serp/store/state/serp.state';
 
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment.development';
 import { baseUrlInterceptor } from './@core/intercepters/base-url.interceptor';
@@ -20,7 +21,6 @@ import { routes } from './app.routes';
 import { AuthState } from './authorization/store/state/auth.state';
 import { CrawlerState } from './crawler/store/state/crawler.state';
 import { HomeState } from './home/store/state/home.state';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -43,12 +43,12 @@ export const appConfig: ApplicationConfig = {
                 maxPercent: 100,
                 radius: 40,
                 outerStrokeWidth: 8,
-                outerStrokeColor: "#7270e6",
+                outerStrokeColor: '#7270e6',
                 animationDuration: 300,
                 innerStrokeColor: '#e7e8ea',
                 innerStrokeWidth: 7,
                 space: -10
-              })
+            })
         ]),
         { provide: BASE_API_URL, useValue: environment.apiUrl },
         {

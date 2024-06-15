@@ -1,17 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { SerpService } from '../../services/serp.service';
-import { Search } from './serp.actions';
+import { PageChange, Search } from './serp.actions';
 
 export class SerpStateModel {
     query: string = '';
     results: any[] = [];
+    end: boolean = false;
 }
 
 const defaults = {
     query: '',
-    results: []
+    results: [],
+    end: false
 };
 
 @State<SerpStateModel>({
@@ -34,12 +36,35 @@ export class SerpState {
         return model.query;
     }
 
+    @Selector()
+    static end(model: SerpStateModel): boolean {
+        return model.end;
+    }
+
     @Action(Search)
-    onSearch({ patchState }: StateContext<SerpStateModel>, { payload }: Search) {
+    onSearch({ patchState }: StateContext<SerpStateModel>, { payload }: Search): Observable<any> {
         patchState({ query: payload });
         return this.serpService.search(payload).pipe(
             tap(x => {
+                if (x.length === 0) {
+                    patchState({ end: true });
+                } else {
+                    patchState({ end: false });
+                }
                 patchState({ results: x });
+            })
+        );
+    }
+
+    @Action(PageChange)
+    onPageChange({ getState, patchState }: StateContext<SerpStateModel>, { page }: PageChange): Observable<any> {
+        const { query, results } = getState();
+        return this.serpService.search(query, page).pipe(
+            tap(x => {
+                if (x.length === 0) {
+                    patchState({ end: true });
+                }
+                patchState({ results: [...results, ...x] });
             })
         );
     }
