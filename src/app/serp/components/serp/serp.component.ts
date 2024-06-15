@@ -3,7 +3,6 @@ import { AfterViewInit, Component, DestroyRef, ElementRef, inject, OnInit, ViewC
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { BehaviorSubject, finalize, map, Observable, takeWhile } from 'rxjs';
 import { infinityScroll } from '../../../@shared/infinity-scroll/infinity-scroll';
 import { PageChange, Search } from '../../store/state/serp.actions';
@@ -13,7 +12,7 @@ import { SearchHeaderComponent } from '../serp-header/search-header.component';
 @Component({
     selector: 'app-serp',
     standalone: true,
-    imports: [AsyncPipe, ResultListComponent, SearchHeaderComponent, NgxPaginationModule, MatProgressSpinnerModule],
+    imports: [AsyncPipe, ResultListComponent, SearchHeaderComponent, MatProgressSpinnerModule],
     templateUrl: './serp.component.html',
     styleUrl: './serp.component.scss'
 })
