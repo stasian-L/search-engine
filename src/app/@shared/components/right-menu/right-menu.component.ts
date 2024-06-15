@@ -28,7 +28,10 @@ export class RightMenuComponent {
     @Input() set imageUrl(value: string | null | undefined) {
         if (!value) {
             this._imageUrl = 'assets/images/empty-profile.png';
+            return;
         }
+
+        this._imageUrl = value;
     }
 
     matDialog = inject(MatDialog);

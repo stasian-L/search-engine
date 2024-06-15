@@ -1,6 +1,12 @@
 @if (readonly) {
 <div class="upload-zone"></div>
 } @else {
+<div class="image-container">
+    <img
+        [src]="path ? path : defaultPhoto"
+        height="100"
+        width="100" />
+</div>
 <upload-dropzone
     [options]="options"
     [onUpdate]="onUpdate"

@@ -1,12 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { UploadWidgetOnUpdateEvent, UploadWidgetResult } from '@bytescale/upload-widget';
 import { UploadWidgetModule } from '@bytescale/upload-widget-angular';
 
 @Component({
     selector: 'app-image-upload',
     standalone: true,
-    imports: [UploadWidgetModule],
+    imports: [UploadWidgetModule, MatIconModule, MatButtonModule],
     templateUrl: './image-upload.component.html',
     styleUrl: './image-upload.component.scss',
     providers: [
@@ -15,9 +17,12 @@ import { UploadWidgetModule } from '@bytescale/upload-widget-angular';
             multi: true,
             useExisting: ImageUploadComponent
         }
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageUploadComponent implements ControlValueAccessor {
+    cdr = inject(ChangeDetectorRef);
+
     @Input() readonly = false;
 
     path = '';
@@ -38,16 +43,22 @@ export class ImageUploadComponent implements ControlValueAccessor {
             colors: {
                 primary: '#3f51b5'
             }
+        },
+        locale: {
+            uploadFileBtn: 'Upload an Image'
         }
     };
 
+    readonly defaultPhoto = 'assets/images/empty-profile.png';
+
     onUpdate = (event: UploadWidgetOnUpdateEvent) => {
-        this.markAsTouched();
         if (!this.disabled) {
             this.path = event?.uploadedFiles[0]?.fileUrl;
-            this.onChange(this.path);
+            this.onChange(event?.uploadedFiles[0]?.fileUrl);
         }
         console.log(JSON.stringify(event?.uploadedFiles));
+        this.markAsTouched();
+        this.cdr.detectChanges();
     };
 
     onComplete = (files: UploadWidgetResult[]) => {
@@ -56,7 +67,9 @@ export class ImageUploadComponent implements ControlValueAccessor {
     width = '550px';
     height = '130px';
 
-    onChange = (_path: string) => {};
+    onChange = (_path: string) => {
+        this.path = _path;
+    };
 
     onTouched = () => {};
 

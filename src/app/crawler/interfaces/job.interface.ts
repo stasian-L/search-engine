@@ -1,6 +1,6 @@
 export type JobAPIResponse = Exclude<Job, 'crawlStatus'>;
 
-export type CrawlType = 'URL_WITH_DEPTH';
+export type CrawlType = 'URL_WITH_DEPTH' | 'WHOLE_DOMAIN';
 
 const CrawlStatus = {
     Crawling: 'crawling',

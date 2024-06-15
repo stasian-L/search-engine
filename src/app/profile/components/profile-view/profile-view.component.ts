@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, HostBinding, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, HostBinding, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,10 +36,13 @@ type UserFormGroup = ModelFormGroup<NonNullable<UpdateUserBodyRequest>>;
         MatDividerModule,
         ReactiveFormsModule,
         ImageUploadComponent
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileViewComponent implements OnInit {
     destroyRef = inject(DestroyRef);
+
+    cdr = inject(ChangeDetectorRef);
 
     readonly route = inject(ActivatedRoute);
 
@@ -70,6 +73,9 @@ export class ProfileViewComponent implements OnInit {
 
     ngOnInit(): void {
         this.createForm();
+        this.profileForm.controls.image.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+            this.cdr.detectChanges();
+        });
     }
 
     saveChanges(): void {
@@ -83,7 +89,8 @@ export class ProfileViewComponent implements OnInit {
 
     cancel(): void {
         this.editMode = false;
-        this.profileForm.patchValue(this.prevProfileForm.getRawValue());
+        this.profileForm = this.fb.group({ ...this.prevProfileForm.controls });
+        this.cdr.detectChanges();
     }
 
     createForm(): void {
@@ -105,7 +112,14 @@ export class ProfileViewComponent implements OnInit {
                     email: [user.email, Validators.required],
                     phone: [user.phone]
                 });
-                this.prevProfileForm = this.fb.group({ ...this.profileForm.controls });
+                this.prevProfileForm = this.fb.nonNullable.group({
+                    firstName: [user.firstName, Validators.required],
+                    lastName: [user.lastName, Validators.required],
+                    username: [user.username, Validators.required],
+                    image: [user.image],
+                    email: [user.email, Validators.required],
+                    phone: [user.phone]
+                });
             });
     }
 }
