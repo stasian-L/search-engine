@@ -1,3 +1,7 @@
+:host {
+    background-color: #f5faff;
+}
+
 form,
 .banner,
 .content {
@@ -47,12 +51,11 @@ form {
     box-shadow: 0px 4px 6px -2px #10182808;
     box-shadow: 0px 12px 16px -4px #10182814;
     overflow: hidden;
-    background-image: url('../../../../assets/images/empty-profile.png');
+    background-color: #f5faff;
 }
 
 img {
     object-fit: cover;
-    background-image: url('../../../../assets/images/empty-profile.png');
 }
 
 .container {

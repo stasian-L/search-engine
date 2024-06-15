@@ -14,6 +14,7 @@
             (keyup)="handleKeyUp($event)" />
         <button
             class="clear-btn"
+            type="button"
             mat-icon-button
             matSuffix
             [style.visibility]="searchControl.value ? 'visible' : 'hidden'"
@@ -23,6 +24,7 @@
     </mat-form-field>
     <button
         class="search-btn"
+        type="submit"
         mat-raised-button
         color="primary"
         (click)="search()">
