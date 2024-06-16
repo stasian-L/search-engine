@@ -24,8 +24,14 @@ export class CrawlerService {
         });
     }
 
-    getJob(jobId: number): Observable<JobAPIResponse[]> {
-        return this.http.get<JobAPIResponse[]>(`crawl-jobs/${jobId}`, {
+    getJob(jobId: number): Observable<JobAPIResponse> {
+        return this.http.get<JobAPIResponse>(`crawl-jobs/${jobId}`, {
+            context: new HttpContext().set(SkipLoading, true)
+        });
+    }
+
+    cancelJob(jobId: number): Observable<string> {
+        return this.http.get<string>(`crawl-jobs/${jobId}/cancel`, {
             context: new HttpContext().set(SkipLoading, true)
         });
     }

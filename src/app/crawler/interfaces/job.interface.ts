@@ -5,6 +5,7 @@ export type CrawlType = 'URL_WITH_DEPTH' | 'WHOLE_DOMAIN';
 const CrawlStatus = {
     Crawling: 'crawling',
     Completed: 'completed',
+    Canceled: 'cancelled',
     Error: 'error'
 } as const;
 
@@ -18,4 +19,5 @@ export interface Job {
     crawlType: CrawlType;
     seedUrls: string[];
     crawlStatus: CrawlStatusKeys;
+    status: string;
 }

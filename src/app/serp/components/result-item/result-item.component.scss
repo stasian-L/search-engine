@@ -18,6 +18,11 @@
 
 .title {
     position: relative;
+    overflow: hidden;
+    font-weight: inherit;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    white-space: nowrap;
 }
 
 .link {

@@ -1,5 +1,5 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
-import { AfterViewInit, Component, ViewChild, computed, input } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, computed, effect, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CircleProgressComponent, NgCircleProgressModule } from 'ng-circle-progress';
@@ -18,17 +18,26 @@ export class JobItemComponent implements AfterViewInit {
 
     job = input.required<Job | null>();
 
+    cancelJob = output<number>()
+
     progress = computed<number>(() => {
         if (!this.job()?.totalUrls || !this.job()?.processedUrls) {
             return 0;
         }
-
         return ((this.job()?.processedUrls ?? 0) / (this.job()?.totalUrls ?? 1)) * 100;
     });
+
+    constructor() {
+        effect(() => {
+            this.circleProgress.draw(this.progress());
+        });
+      }
 
     ngAfterViewInit(): void {
         this.circleProgress.draw(this.progress());
     }
 
-    cancelJob(): void {}
+    onCancelJob(): void {
+        this.cancelJob.emit(this.job()?.jobId ?? 0);
+    }
 }

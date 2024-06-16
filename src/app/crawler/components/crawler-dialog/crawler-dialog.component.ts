@@ -1,14 +1,14 @@
 import { NgStyle } from '@angular/common';
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { URL_REGEXP } from '../../../@core/constants/regex.const';
-import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
     selector: 'app-crawler-dialog',
@@ -40,7 +40,7 @@ export class CrawlerDialogComponent implements AfterViewInit {
         useDepth: this.fb.control(false),
         useSameDomain: this.fb.control(false),
         crawlDepth: this.fb.control({ value: 1, disabled: true }),
-        seedUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('', [Validators.required, Validators.pattern(URL_REGEXP)])])
+        seedUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('', [Validators.required, Validators.pattern(URL_REGEXP)])], this.ValidateDomainArray)
     });
 
     get urlControls() {
@@ -91,4 +91,27 @@ export class CrawlerDialogComponent implements AfterViewInit {
 
         this.dialogRef.close({ seedUrls: this.urlsForm.controls.seedUrls.value, crawlDepth: 2 });
     }
+
+    ValidateDomainArray() {
+        return (c: AbstractControl): { [key: string]: any } | null => {
+            if (this.getSameDomainUrls(c.value)) return null;
+
+            return { sameDomain: { valid: false } };
+        };
+    }
+
+    // private getSameDomainUrls(urls: string[]): boolean {
+    //     return urls
+    //         .filter(url => url.includes('://'))
+    //         .every(url => new URL(url).hostname === new URL(this.getSeedUrls()[0].value).hostname);
+    // }
+
+
+    private getSameDomainUrls(urls: string[]): boolean {
+        if (urls.length === 0) return false;
+
+        const firstUrl = new URL(urls[0]);
+        return urls.every(url => new URL(url).hostname === firstUrl.hostname);
+    }
+
 }

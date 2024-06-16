@@ -47,7 +47,7 @@ export class CrawlerState {
     }
 
     @Action(GetJob)
-    onGetJob({ getState, setState }: StateContext<CrawlerStateModel>, { payload }: GetJob): Observable<JobAPIResponse[]> {
+    onGetJob({ getState, setState }: StateContext<CrawlerStateModel>, { payload }: GetJob): Observable<JobAPIResponse> {
         return this.crawlerService.getJob(payload).pipe(
             tap(() => {
                 const state = getState();
@@ -56,8 +56,22 @@ export class CrawlerState {
         );
     }
 
+    @Action(GetJob)
+    onCancelJob({ dispatch }: StateContext<CrawlerStateModel>, { payload }: GetJob): Observable<string> {
+        return this.crawlerService.cancelJob(payload).pipe(
+            tap(() => {
+                dispatch(new GetAllJobs());
+            })
+        );
+    }
+
     private calculateStatus(job: Job): void {
         if (job) {
+            if (job.status === 'CANCELLED') {
+                job.crawlStatus = 'cancelled';
+                return;
+            }
+
             const percentage = ((job.processedUrls ?? 0) / (job.totalUrls ?? 1)) * 100;
             if (percentage === 100) {
                 job.crawlStatus = 'completed';

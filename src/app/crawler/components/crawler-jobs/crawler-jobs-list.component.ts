@@ -12,7 +12,7 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatestWith, filter, map } from 'rxjs';
 import { SearchBarRotateComponent } from '../../../@shared/components/search-bar-rotate/app-search-bar-rotate.component';
 import { SearchFilterPipe } from '../../../@shared/pipes/search-filter.pipe';
-import { CreateJob, GetAllJobs } from '../../store/state/crawler.actions';
+import { CancelJob, CreateJob, GetAllJobs } from '../../store/state/crawler.actions';
 import { CrawlerState } from '../../store/state/crawler.state';
 import { CrawlerDialogComponent } from '../crawler-dialog/crawler-dialog.component';
 import { JobItemComponent } from '../job-item/job-item.component';
@@ -83,5 +83,9 @@ export class CrawlerJobsListComponent {
         }
 
         this.filteredJobs$ = this.jobs$.pipe(map(jobs => jobs.filter(job => job.crawlStatus === selectedStatus)));
+    }
+
+    cancelJob(id: number): void {
+        this.store.dispatch(new CancelJob(id));
     }
 }

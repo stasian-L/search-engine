@@ -13,3 +13,8 @@ export class GetJob {
     static readonly type = '[Crawler] Get job';
     constructor(public payload: number) {}
 }
+
+export class CancelJob {
+    static readonly type = '[Crawler] Cancel job';
+    constructor(public payload: number) {}
+}

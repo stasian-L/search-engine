@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { AfterViewInit, Component, DestroyRef, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
@@ -14,7 +14,8 @@ import { SearchHeaderComponent } from '../serp-header/search-header.component';
     standalone: true,
     imports: [AsyncPipe, ResultListComponent, SearchHeaderComponent, MatProgressSpinnerModule],
     templateUrl: './serp.component.html',
-    styleUrl: './serp.component.scss'
+    styleUrl: './serp.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SerpComponent implements OnInit, AfterViewInit {
     destroyRef = inject(DestroyRef);
@@ -48,7 +49,6 @@ export class SerpComponent implements OnInit, AfterViewInit {
         this.initSubscriptions();
         this.actions$.pipe(ofActionDispatched(Search), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.initSubscriptions();
-            window.scrollTo(0, 0);
         });
     }
 
