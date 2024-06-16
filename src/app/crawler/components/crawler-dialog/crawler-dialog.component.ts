@@ -1,6 +1,6 @@
 import { NgStyle } from '@angular/common';
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
@@ -45,10 +45,7 @@ export class CrawlerDialogComponent implements AfterViewInit {
     });
 
     domainForm = this.fb.nonNullable.group({
-        seedUrls: this.fb.nonNullable.array(
-            [this.fb.nonNullable.control('', [Validators.required, Validators.pattern(URL_REGEXP)])],
-            validateDomainArray
-        )
+        seedUrls: this.fb.nonNullable.array([this.fb.nonNullable.control('', [Validators.required, Validators.pattern(URL_REGEXP)])])
     });
 
     get urlControls() {
@@ -109,4 +106,3 @@ export class CrawlerDialogComponent implements AfterViewInit {
     //     return urls.every(url => new URL(url).hostname === firstUrl.hostname);
     // }
 }
-
