@@ -9,71 +9,100 @@
         <mat-icon>cancel</mat-icon>
     </button>
 </div>
-<form
-    [formGroup]="urlsForm"
-    (ngSubmit)="onSubmit()">
-    <span class="label">Url seeds</span>
-    <mat-divider />
-    <div
-        formArrayName="seedUrls"
-        class="urls">
-        @for (urlControl of urlControls; track urlControl; let i = $index) {
-        <div class="url-field">
+<mat-tab-group>
+    <mat-tab label="Url">
+        <form
+            [formGroup]="urlForm"
+            (ngSubmit)="onUrlSubmit()">
+            <span class="label">Url</span>
             <mat-form-field
                 appearance="outline"
                 color="primary">
                 <input
                     matInput
                     placeholder="Enter url"
-                    [formControlName]="i" />
+                    formControlName="seedUrl" />
             </mat-form-field>
+            <mat-checkbox
+                formControlName="useDepth"
+                (change)="toggleFormControl('crawlDepth', $event.checked)">
+                <span class="subtitle">Use another crawler depth</span>
+            </mat-checkbox>
+            <div>
+                <span class="label">Crawler depth</span>
+                <mat-form-field appearance="outline">
+                    <input
+                        type="number"
+                        matInput
+                        placeholder="URL"
+                        formControlName="crawlDepth"
+                        min="1"
+                        [attr.disabled]="urlForm.get('useDepth')?.value === false" />
+                </mat-form-field>
+            </div>
+            <div class="actions">
+                <button
+                    color="accent"
+                    mat-raised-button
+                    cdkFocusInitial
+                    [disabled]="urlForm.invalid"
+                    type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </mat-tab>
+    <mat-tab label="Domain">
+        <form
+            [formGroup]="domainForm"
+            (ngSubmit)="onDomainSubmit()">
+            <span class="label">Url seeds</span>
+            <mat-divider />
+            <div
+                formArrayName="seedUrls"
+                class="urls">
+                @for (urlControl of urlControls; track urlControl; let i = $index) {
+                <div class="url-field">
+                    <mat-form-field
+                        appearance="outline"
+                        color="primary">
+                        <input
+                            matInput
+                            placeholder="Enter url"
+                            [formControlName]="i" />
+                    </mat-form-field>
+                    <button
+                        mat-icon-button
+                        type="button"
+                        [ngStyle]="{ visibility: urlControls.length > 1 ? 'visible' : 'hidden' }"
+                        (click)="removeUrl(i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+                } @if (domainForm.controls['seedUrls'].errors?.['sameDomain']) {
+                <div>Error</div>
+                }
+            </div>
+            <mat-divider />
             <button
-                mat-icon-button
-                [ngStyle]="{ visibility: urlControls.length > 1 ? 'visible' : 'hidden' }">
-                <mat-icon (click)="removeUrl(i)">delete</mat-icon>
+                class="add-button"
+                mat-raised-button
+                color="primary"
+                type="button"
+                (click)="addUrl()">
+                Add Url
+                <mat-icon>add</mat-icon>
             </button>
-        </div>
-        }
-    </div>
-    <mat-divider />
-    <button
-        class="add-button"
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="addUrl()">
-        Add Url
-        <mat-icon>add</mat-icon>
-    </button>
-    <mat-checkbox
-        formControlName="useDepth"
-        (change)="toggleFormControl('crawlDepth', $event.checked)">
-        <span class="subtitle">Use another crawler depth</span>
-    </mat-checkbox>
-    <div>
-        <mat-checkbox
-            class=""
-            formControlName="useSameDomain">
-            Crawl same domain
-        </mat-checkbox>
-        <span class="label">Crawler depth</span>
-        <mat-form-field appearance="outline">
-            <input
-                type="number"
-                matInput
-                placeholder="URL"
-                formControlName="crawlDepth"
-                min="1"
-                [attr.disabled]="urlsForm.get('useDepth')?.value === false" />
-        </mat-form-field>
-    </div>
-    <div class="actions">
-        <button
-            color="accent"
-            mat-raised-button
-            cdkFocusInitial
-            type="submit">
-            Submit
-        </button>
-    </div>
-</form>
+            <div class="actions">
+                <button
+                    color="accent"
+                    mat-raised-button
+                    cdkFocusInitial
+                    [disabled]="domainForm.invalid"
+                    type="submit">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </mat-tab>
+</mat-tab-group>
