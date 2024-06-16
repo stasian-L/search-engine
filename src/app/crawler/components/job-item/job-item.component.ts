@@ -1,5 +1,5 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
-import { AfterViewInit, Component, ViewChild, computed, effect, input } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild, computed, effect, inject, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CircleProgressComponent, NgCircleProgressModule } from 'ng-circle-progress';
@@ -16,25 +16,36 @@ import { Job } from '../../interfaces/job.interface';
 export class JobItemComponent implements AfterViewInit {
     @ViewChild(CircleProgressComponent) circleProgress!: CircleProgressComponent;
 
+    cdr = inject(ChangeDetectorRef);
     job = input.required<Job | null>();
 
-    cancelJob = output<number>()
+    cancelJob = output<number>();
+
+    progr = 0;
 
     progress = computed<number>(() => {
         if (!this.job()?.totalUrls || !this.job()?.processedUrls) {
             return 0;
         }
+        this.progr = ((this.job()?.processedUrls ?? 0) / (this.job()?.totalUrls ?? 1)) * 100;
         return ((this.job()?.processedUrls ?? 0) / (this.job()?.totalUrls ?? 1)) * 100;
     });
 
     constructor() {
         effect(() => {
-            this.circleProgress.draw(this.progress());
+            // this.progress = computed<number>(() => {
+            //     if (!this.job()?.totalUrls || !this.job()?.processedUrls) {
+            //         return 0;
+            //     }
+            //     return ((this.job()?.processedUrls ?? 0) / (this.job()?.totalUrls ?? 1)) * 100;
+            // });
+            this.circleProgress.draw(this.progr);
         });
-      }
+    }
 
     ngAfterViewInit(): void {
-        this.circleProgress.draw(this.progress());
+        this.circleProgress.draw(this.progr);
+        this.cdr.detectChanges();
     }
 
     onCancelJob(): void {
