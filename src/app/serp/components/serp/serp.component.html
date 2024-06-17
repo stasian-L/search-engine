@@ -7,7 +7,7 @@
             <div class="main-container">
                 <div class="content-left">
                     <app-result-list [results]="results$ | async" />
-                    @if (loadingIndicator$.value) {
+                    @if (loadingIndicator$ | async) {
                     <div class="loading">
                         <mat-spinner
                             [diameter]="50"
