@@ -45,6 +45,7 @@
     border-radius: 20px;
     font-size: 16px;
     font-weight: bold;
+    text-wrap: nowrap;
 
     &.pending {
         background-color: #b2adf1;
@@ -57,17 +58,21 @@
     }
 
     &.scraped {
-        background-color: #71c78b;
+        background-color: #a5ecba;
         color: #0e5a25;
     }
 
     &.canceled {
-        background-color: #a8a2a3;
+        background-color: #e5e5e5;
         color: rgb(70, 65, 65);
     }
 
     &.error {
-        background-color: #db4863;
+        background-color: #ee748a;
         color: rgb(131, 22, 22);
     }
+}
+
+.hidden {
+    visibility: hidden;
 }

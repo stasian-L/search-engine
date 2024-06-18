@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { SetSuccess } from '../../../@shared/store/state/toastr.actions';
 import { Job, JobAPIResponse } from '../../interfaces/job.interface';
 import { CrawlerService } from '../../services/crawler.service';
-import { CreateJob, GetAllJobs, GetJob } from './crawler.actions';
+import { CancelJob, CreateJob, GetAllJobs, GetJob } from './crawler.actions';
 
 export class CrawlerStateModel {
     public jobs: Job[] = [];
@@ -30,10 +30,10 @@ export class CrawlerState {
     }
 
     @Action(CreateJob)
-    onCreateJob({}: StateContext<CrawlerStateModel>, { payload }: CreateJob): Observable<any> {
+    onCreateJob({ dispatch }: StateContext<CrawlerStateModel>, { payload }: CreateJob): Observable<any> {
         return this.crawlerService
-            .createJob({ ...payload, crawlType: 'URL_WITH_DEPTH' })
-            .pipe(tap(() => this.store.dispatch(new SetSuccess('Job created successfully!'))));
+            .createJob({ ...payload })
+            .pipe(tap(() => dispatch(new SetSuccess('Job created successfully!'))));
     }
 
     @Action(GetAllJobs)
@@ -56,11 +56,11 @@ export class CrawlerState {
         );
     }
 
-    @Action(GetJob)
-    onCancelJob({ dispatch }: StateContext<CrawlerStateModel>, { payload }: GetJob): Observable<any> {
+    @Action(CancelJob)
+    onCancelJob({ dispatch }: StateContext<CrawlerStateModel>, { payload }: CancelJob): Observable<any> {
         return this.crawlerService.cancelJob(payload).pipe(
             tap(() => {
-                dispatch(new GetAllJobs());
+                dispatch([new GetAllJobs(), new SetSuccess('Job canceled successfully!')])
             })
         );
     }

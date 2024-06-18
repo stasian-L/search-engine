@@ -47,7 +47,7 @@ export class JobItemComponent implements AfterViewInit {
             //     }
             //     return ((this.job()?.processedUrls ?? 0) / (this.job()?.totalUrls ?? 1)) * 100;
             // });
-            this.circleProgress.draw(this.progr);
+            //this.circleProgress.draw(this.progr);
         });
     }
 

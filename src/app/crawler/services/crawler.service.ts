@@ -14,7 +14,10 @@ export class CrawlerService {
 
     createJob(job: CreateJobRequest): Observable<any> {
         return this.http.post<any>('crawl-jobs', job, {
-            context: new HttpContext().set(SkipLoading, true)
+            context: new HttpContext().set(SkipLoading, true),
+            headers: {
+                responseType: 'plain/texttext/plain;charset=UTF-8'
+            }
         });
     }
 
@@ -31,8 +34,9 @@ export class CrawlerService {
     }
 
     cancelJob(jobId: number): Observable<any> {
-        return this.http.get<any>(`crawl-jobs/${jobId}/cancel`, {
-            context: new HttpContext().set(SkipLoading, true)
+        return this.http.post<any>(`crawl-jobs/${jobId}/cancel`, null, {
+            context: new HttpContext().set(SkipLoading, true),
+            headers: { responseType: 'plain/texttext/plain;charset=UTF-8' }
         });
     }
 }

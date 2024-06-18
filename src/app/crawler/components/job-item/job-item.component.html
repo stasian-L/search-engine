@@ -25,7 +25,7 @@
                 pending: status === 'pending',
                 'in-progress': status === 'in_progress',
                 scraped: status === 'scraped',
-                canceled: status === 'canceled',
+                canceled: status === 'cancelled',
                 error: status === 'error'
             }">
             {{ job()?.status?.replace('_', ' ') | titlecase }}
@@ -33,13 +33,12 @@
         } @else { N/A }
     </div>
     <div class="action">
-        @if (job()?.status?.toLowerCase() !== 'canceled') {
         <button
+            [ngClass]="{ hidden: job()?.status?.toLowerCase() !== 'pending' && job()?.status?.toLowerCase() !== 'in_progress' }"
             mat-raised-button
             (click)="onCancelJob()">
             Cancel
             <mat-icon>cancel</mat-icon>
         </button>
-        }
     </div>
 </div>

@@ -8,7 +8,8 @@ form {
 
 .mat-mdc-form-field {
     height: $height;
-    width: 600px;
+    width: 55vw;
+    max-width: 600px;
 
     ::ng-deep {
         .mat-mdc-text-field-wrapper,
@@ -27,7 +28,9 @@ form {
 }
 
 .search-btn {
-    min-width: 80px;
+    width: 6vw;
+    min-width: unset;
+    max-width: 80px;
     height: $height;
 
     .mat-icon {
@@ -35,5 +38,6 @@ form {
         height: unset;
         margin: 0;
         font-size: 24px;
+        overflow: visible;
     }
 }

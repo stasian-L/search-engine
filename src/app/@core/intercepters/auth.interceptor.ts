@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest
 import { Injectable, inject } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, EMPTY, Observable, catchError, filter, finalize, switchMap, take } from 'rxjs';
+import { LoadingService } from '../../@shared/services/loading.service';
 import { Logout, RefreshToken } from '../../authorization/store/state/auth.actions';
 import { AuthState } from '../../authorization/store/state/auth.state';
 
@@ -11,6 +12,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
     store = inject(Store);
+
+    loader = inject(LoadingService);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = this.store.selectSnapshot(AuthState.token);
@@ -26,10 +29,10 @@ export class AuthInterceptor implements HttpInterceptor {
             catchError(error => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
                     return this.handleUnauthorized(req, next);
-                } else {
-                    console.log(error.error);
-                    return EMPTY;
                 }
+                this.loader.loadingOff();
+                console.log(error.error);
+                return EMPTY;
             })
         );
     }

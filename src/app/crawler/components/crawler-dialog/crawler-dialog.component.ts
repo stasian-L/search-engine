@@ -87,7 +87,7 @@ export class CrawlerDialogComponent implements AfterViewInit {
         }
         console.log({ urls: this.urlForm.controls.seedUrl.value, crawlDepth: depth });
 
-        this.dialogRef.close({ seedUrls: [this.urlForm.controls.seedUrl.value], crawlDepth: depth });
+        this.dialogRef.close({ seedUrls: [this.urlForm.controls.seedUrl.value], crawlDepth: depth, crawlType: 'URL_WITH_DEPTH' });
     }
 
     onDomainSubmit(): void {
@@ -96,7 +96,7 @@ export class CrawlerDialogComponent implements AfterViewInit {
             return;
         }
         console.log({ urls: this.domainForm.controls.seedUrls.value });
-        this.dialogRef.close({ seedUrls: this.domainForm.controls.seedUrls.value });
+        this.dialogRef.close({ seedUrls: this.domainForm.controls.seedUrls.value, crawlType: 'WHOLE_DOMAIN' });
     }
 
     // private getSameDomainUrls(urls: string[]): boolean {
