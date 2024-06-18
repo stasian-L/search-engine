@@ -11,7 +11,7 @@
 </div>
 <mat-tab-group>
     <mat-tab label="Url">
-    <form
+        <form
             [formGroup]="urlForm"
             (ngSubmit)="onUrlSubmit()">
             <span class="label">Url</span>
@@ -28,7 +28,7 @@
                 (change)="toggleFormControl('crawlDepth', $event.checked)">
                 <span class="subtitle">Use another crawler depth</span>
             </mat-checkbox>
-            <div>
+            <div class="depth">
                 <span class="label">Crawler depth</span>
                 <mat-form-field appearance="outline">
                     <input
@@ -40,7 +40,9 @@
                         [attr.disabled]="urlForm.get('useDepth')?.value === false" />
                 </mat-form-field>
             </div>
-            <div class="actions" [style.marginTop.px]="150">
+            <div
+                class="actions"
+                [style.marginTop.px]="150">
                 <button
                     color="accent"
                     mat-raised-button
@@ -79,8 +81,6 @@
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
-                } @if (domainForm.controls['seedUrls'].errors?.['sameDomain']) {
-                <div>Error</div>
                 }
             </div>
             <mat-divider />

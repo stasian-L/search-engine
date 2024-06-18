@@ -37,7 +37,7 @@
             [ngClass]="{ hidden: job()?.status?.toLowerCase() !== 'pending' && job()?.status?.toLowerCase() !== 'in_progress' }"
             mat-raised-button
             (click)="onCancelJob()">
-            Cancel
+            <span class="desctop-text">Cancel</span>
             <mat-icon>cancel</mat-icon>
         </button>
     </div>

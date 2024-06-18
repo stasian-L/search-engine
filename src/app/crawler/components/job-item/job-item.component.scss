@@ -16,6 +16,7 @@
 
 .info {
     flex: 3;
+    overflow: hidden;
 }
 
 .url {
@@ -25,6 +26,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    max-width: 700px;
 }
 
 .info-progress {
@@ -46,6 +48,7 @@
     font-size: 16px;
     font-weight: bold;
     text-wrap: nowrap;
+    margin: 0 4px;
 
     &.pending {
         background-color: #b2adf1;
@@ -75,4 +78,18 @@
 
 .hidden {
     visibility: hidden;
+}
+
+@media screen and (max-width: 720px) {
+    .url {
+        font-size: 18px;
+    }
+    .info-progress {
+        font-size: 12px;
+    }
+
+    .desctop-text {
+        display: none;
+    }
+
 }
