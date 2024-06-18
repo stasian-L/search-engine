@@ -43,7 +43,7 @@
 <div class="jobs-list-container">
     <div class="jobs-list">
         @if (filteredJobs$ | async; as jobs) { @for (job of jobs; track job) {
-        <app-job-item [job]="job" />
+        <app-job-item [job]="job" (cancelJob)="cancelJob($event)" />
         } @empty {
         <div class="empty-status">
             <p>There are no jobs</p>

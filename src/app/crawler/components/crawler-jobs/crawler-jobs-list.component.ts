@@ -82,7 +82,7 @@ export class CrawlerJobsListComponent {
             return;
         }
 
-        this.filteredJobs$ = this.jobs$.pipe(map(jobs => jobs.filter(job => job.status === selectedStatus)));
+        this.filteredJobs$ = this.jobs$.pipe(map(jobs => jobs.filter(job => job.status.replace('_', ' ').toLowerCase() === selectedStatus)));
     }
 
     cancelJob(id: number): void {

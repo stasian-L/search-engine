@@ -44,16 +44,30 @@
     padding: 6px;
     border-radius: 20px;
     font-size: 16px;
+    font-weight: bold;
 
-    &.crawling {
-        background-color: #744500;
+    &.pending {
+        background-color: #b2adf1;
+        color: #2e2ead;
     }
 
-    &.completed {
-        background-color: #055d20;
+    &.in-progress {
+        background-color: #c49b5f;
+        color: #6c4c0d;
+    }
+
+    &.scraped {
+        background-color: #71c78b;
+        color: #0e5a25;
+    }
+
+    &.canceled {
+        background-color: #a8a2a3;
+        color: rgb(70, 65, 65);
     }
 
     &.error {
-        background-color: #8a071e;
+        background-color: #db4863;
+        color: rgb(131, 22, 22);
     }
 }

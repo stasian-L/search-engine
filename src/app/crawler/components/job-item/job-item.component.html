@@ -18,24 +18,28 @@
         <span class="info-progress">Crawled: {{ job()?.processedUrls }} of {{ job()?.totalUrls }}</span>
     </div>
     <div class="status-wrapper">
-        @if (job()?.status) {
+        @if (job()?.status?.toLowerCase(); as status) {
         <span
             class="status"
             [ngClass]="{
-                crawling: job()?.crawlStatus === 'crawling',
-                completed: job()?.crawlStatus === 'completed',
-                error: job()?.crawlStatus === 'error'
+                pending: status === 'pending',
+                'in-progress': status === 'in_progress',
+                scraped: status === 'scraped',
+                canceled: status === 'canceled',
+                error: status === 'error'
             }">
             {{ job()?.status?.replace('_', ' ') | titlecase }}
         </span>
         } @else { N/A }
     </div>
     <div class="action">
+        @if (job()?.status?.toLowerCase() !== 'canceled') {
         <button
             mat-raised-button
             (click)="onCancelJob()">
             Cancel
             <mat-icon>cancel</mat-icon>
         </button>
+        }
     </div>
 </div>
