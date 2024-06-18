@@ -33,7 +33,7 @@
 }
 
 .content-left {
-    width: 568px;
+    max-width: 568px;
 }
 
 .content-right {
@@ -54,4 +54,10 @@
 .loading {
     display: flex;
     justify-content: center;
+}
+
+@media screen and (max-width: 720px) {
+    .main-container {
+        padding-left: 50px;
+    }
 }

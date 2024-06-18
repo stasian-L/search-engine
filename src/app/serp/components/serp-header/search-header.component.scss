@@ -4,7 +4,7 @@
     top: 0;
     right: 0;
     left: 0;
-    min-width: 600px;
+    //min-width: 600px;
     background-color: ghostwhite;
     box-shadow: 0 1px rgba(7, 28, 71, .12);
 }
@@ -52,4 +52,10 @@ nav {
 
 .spacer {
     flex-grow: 1;
+}
+
+@media screen and (max-width: 720px) {
+    header .header-logo {
+        margin-right: 10px;
+    }
 }

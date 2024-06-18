@@ -54,3 +54,9 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
+
+@media screen and (max-width: 720px) {
+    :host {
+        width: 80vw;
+    }
+}
