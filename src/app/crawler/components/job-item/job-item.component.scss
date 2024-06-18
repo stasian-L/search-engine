@@ -22,9 +22,9 @@
     font-size: 22px;
     line-height: 40px;
     font-weight: bold;
-    word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .info-progress {

@@ -51,11 +51,11 @@ export class RightMenuComponent {
             label: 'Profile',
             route: '/profile'
         },
-        {
-            icon: 'tune',
-            label: 'Appearance',
-            route: '/appearance'
-        }
+        // {
+        //     icon: 'tune',
+        //     label: 'Appearance',
+        //     route: '/appearance'
+        // }
     ];
 
     onOpenCrawlerDialog() {

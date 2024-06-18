@@ -11,6 +11,7 @@ export const routes: Routes = [
     {
         path: '',
         title: 'Home',
+        resolve: [userResolver],
         loadComponent: () => import('./home/components/home/home.component').then(c => c.HomeComponent)
     },
     {

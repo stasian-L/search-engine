@@ -16,7 +16,7 @@ export class CrawlerService {
         return this.http.post<any>('crawl-jobs', job, {
             context: new HttpContext().set(SkipLoading, true),
             headers: {
-                responseType: 'plain/texttext/plain;charset=UTF-8'
+                responseType: 'text/plain'
             }
         });
     }
@@ -36,7 +36,7 @@ export class CrawlerService {
     cancelJob(jobId: number): Observable<any> {
         return this.http.post<any>(`crawl-jobs/${jobId}/cancel`, null, {
             context: new HttpContext().set(SkipLoading, true),
-            headers: { responseType: 'plain/texttext/plain;charset=UTF-8' }
+            headers: { responseType: 'text/plain' }
         });
     }
 }
