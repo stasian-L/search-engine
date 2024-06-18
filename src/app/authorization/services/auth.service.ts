@@ -27,6 +27,7 @@ export class AuthService {
     login(user: LoginBodyRequest): Observable<UserAPIResponse> {
         const body = `grant_type=${user.grant_type}&username=${user.username}&password=${user.password}`;
         return this.http.post<UserAPIResponse>('oauth/token', body, {
+            context: new HttpContext().set(SkipLoading, true),
             headers: {
                 Authorization: 'Basic Z2lneTpzZWNyZXQ=',
                 'Content-Type': 'application/x-www-form-urlencoded'

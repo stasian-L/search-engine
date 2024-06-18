@@ -13,10 +13,13 @@
         <app-search-bar [query]="query$ | async" />
         <div class="spacer"></div>
         <div class="login-actions">
+            @if ({ user: currentUser$ | async }; as data) {
             <app-right-menu
                 [authenticated]="(authenticated$ | async) ?? false"
-                [user]="currentUser$ | async"
+                [user]="data.user"
+                [imageUrl]="data.user?.image"
                 (logout)="logout()" />
+            }
         </div>
     </header>
 </div>
