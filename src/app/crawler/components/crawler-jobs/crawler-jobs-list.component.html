@@ -1,3 +1,4 @@
+@if ({ isMobileView: isMobileView$ | async }; as data) {
 <div class="title-header">
     <div class="title">Jobs List</div>
     <div class="right-actions">
@@ -7,13 +8,22 @@
             <span class="desctop">Refresh</span>
             <mat-icon>refresh</mat-icon>
         </button>
-        <button
+        @if (data.isMobileView) {
+            <button
+            color="primary"
+            mat-mini-fab
+            (click)="createJob()">
+            <mat-icon>add</mat-icon>
+        </button>
+        } @else {
+            <button
             color="primary"
             mat-raised-button
             (click)="createJob()">
-            Create job
+            <span>Create Job</span>
             <mat-icon>add</mat-icon>
         </button>
+        }
     </div>
 </div>
 <div class="job-list-header">
@@ -30,6 +40,7 @@
         </mat-tab-group>
         <app-search-bar-rotate (searchChange)="searchTerm$.next($event)" />
     </div>
+    @if (!data.isMobileView) {
     <div class="column-header-names">
         <div class="header-column progress">Progress</div>
         <mat-divider vertical />
@@ -39,11 +50,15 @@
         <mat-divider vertical />
         <div class="header-column action">Action</div>
     </div>
+    }
 </div>
 <div class="jobs-list-container">
     <div class="jobs-list">
         @if (filteredJobs$ | async; as jobs) { @for (job of jobs; track job) {
-        <app-job-item [job]="job" (cancelJob)="cancelJob($event)" />
+        <app-job-item
+            [job]="job"
+            [isMobileView]="data.isMobileView || false"
+            (cancelJob)="cancelJob($event)" />
         } @empty {
         <div class="empty-status">
             <p>There are no jobs</p>
@@ -52,3 +67,5 @@
         } }
     </div>
 </div>
+
+}

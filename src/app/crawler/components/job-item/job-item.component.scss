@@ -92,4 +92,27 @@
         display: none;
     }
 
+    :host {
+        padding: 4px;
+    }
+
+    .progress-circle {
+        width: 80px;
+    }
+
+}
+
+@media screen and (max-width: 480px) {
+    .url {
+        font-size: 14px;
+    }
+
+    .info-progress {
+        font-size: 10px;
+    }
+
+    .status {
+        font-size: 10px;
+    }
+
 }

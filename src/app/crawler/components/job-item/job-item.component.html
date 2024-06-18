@@ -33,12 +33,21 @@
         } @else { N/A }
     </div>
     <div class="action">
+        @if (isMobileView()) {
         <button
+            [ngClass]="{ hidden: job()?.status?.toLowerCase() !== 'pending' && job()?.status?.toLowerCase() !== 'in_progress' }"
+            mat-icon-button
+            (click)="onCancelJob()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+        } @else {
+            <button
             [ngClass]="{ hidden: job()?.status?.toLowerCase() !== 'pending' && job()?.status?.toLowerCase() !== 'in_progress' }"
             mat-raised-button
             (click)="onCancelJob()">
-            <span class="desctop-text">Cancel</span>
+            <span>Cancel</span>
             <mat-icon>cancel</mat-icon>
         </button>
+        }
     </div>
 </div>

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoadingComponent } from './@shared/components/loading/loading.component';
 import { Store } from '@ngxs/store';
+import { LoadingComponent } from './@shared/components/loading/loading.component';
 import { GetCurrentUser } from './authorization/store/state/auth.actions';
+import { SetMobileView } from './home/store/state/home.actions';
 
 @Component({
     selector: 'app-root',
@@ -18,5 +19,15 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
         this.store.dispatch(new GetCurrentUser());
+        this.onResize();
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        if (window.innerWidth < 720) {
+            this.store.dispatch(new SetMobileView(true));
+        } else {
+            this.store.dispatch(new SetMobileView(false));
+        }
     }
 }

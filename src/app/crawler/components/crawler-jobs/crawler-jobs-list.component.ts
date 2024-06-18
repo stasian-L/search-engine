@@ -16,6 +16,7 @@ import { CancelJob, CreateJob, GetAllJobs } from '../../store/state/crawler.acti
 import { CrawlerState } from '../../store/state/crawler.state';
 import { CrawlerDialogComponent } from '../crawler-dialog/crawler-dialog.component';
 import { JobItemComponent } from '../job-item/job-item.component';
+import { HomeState } from '../../../home/store/state/home.state';
 
 @Component({
     selector: 'app-crawler-jobs-list',
@@ -49,6 +50,8 @@ export class CrawlerJobsListComponent {
     searchTerm$ = new BehaviorSubject<string | null>('');
 
     jobs$ = this.store.select(CrawlerState.jobs);
+
+    isMobileView$ = this.store.select(HomeState.isMobileView);
 
     filteredJobs$ = this.jobs$.pipe(
         combineLatestWith(this.searchTerm$),

@@ -125,3 +125,27 @@ img {
     display: flex;
     gap: 10px;
 }
+
+@media screen and (max-width: 720px) {
+    .full-name {
+      font-size: 18px;
+    }
+
+    .container {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .wrapper-name {
+        width: 60%;
+    }
+
+    :host {
+        margin: 0 10px;
+    }
+
+    .avatar {
+        margin-left: 0;
+    }
+}

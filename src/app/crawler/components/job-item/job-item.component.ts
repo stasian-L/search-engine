@@ -19,6 +19,8 @@ export class JobItemComponent implements AfterViewInit {
     cdr = inject(ChangeDetectorRef);
     job = input.required<Job | null>();
 
+    isMobileView  = input(false);
+
     cancelJob = output<number>();
 
     progr = 0;
