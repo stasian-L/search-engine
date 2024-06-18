@@ -65,7 +65,7 @@ export class CrawlerJobsListComponent {
         this.matDialog
             .open(CrawlerDialogComponent, {
                 width: '800px',
-                height: '850px'
+                height: '750px'
             })
             .afterClosed()
             .pipe(filter(x => !!x))
@@ -82,7 +82,7 @@ export class CrawlerJobsListComponent {
             return;
         }
 
-        this.filteredJobs$ = this.jobs$.pipe(map(jobs => jobs.filter(job => job.crawlStatus === selectedStatus)));
+        this.filteredJobs$ = this.jobs$.pipe(map(jobs => jobs.filter(job => job.status === selectedStatus)));
     }
 
     cancelJob(id: number): void {

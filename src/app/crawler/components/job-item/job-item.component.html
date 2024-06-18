@@ -14,11 +14,11 @@
             [lazy]="true"></circle-progress>
     </div>
     <div class="info">
-        <div class="url">{{ job()?.seedUrls ?? [] | join : ' · ' }}</div>
+        <div class="url">{{ jobUrl() }}</div>
         <span class="info-progress">Crawled: {{ job()?.processedUrls }} of {{ job()?.totalUrls }}</span>
     </div>
     <div class="status-wrapper">
-        @if (job()?.crawlStatus) {
+        @if (job()?.status) {
         <span
             class="status"
             [ngClass]="{
@@ -26,7 +26,7 @@
                 completed: job()?.crawlStatus === 'completed',
                 error: job()?.crawlStatus === 'error'
             }">
-            {{ job()?.crawlStatus | titlecase }}
+            {{ job()?.status?.replace('_', ' ') | titlecase }}
         </span>
         } @else { N/A }
     </div>

@@ -42,18 +42,18 @@
 .status {
     background-color: lavenderblush;
     padding: 6px;
-    border-radius: 4px;
+    border-radius: 20px;
     font-size: 16px;
 
     &.crawling {
-        background-color: cornflowerblue;
+        background-color: #744500;
     }
 
     &.completed {
-        background-color: limegreen;
+        background-color: #055d20;
     }
 
     &.error {
-        background-color: red;
+        background-color: #8a071e;
     }
 }

@@ -48,7 +48,7 @@ export class AuthState {
         return this.authService.login(user).pipe(
             tap(user => {
                 patchState({ accessToken: user.access_token, refreshToken: user.refresh_token });
-                this.store.dispatch(new Navigate(['']));
+                this.store.dispatch([new GetCurrentUser(), new Navigate([''])]);
             })
         );
     }

@@ -23,6 +23,14 @@ export class JobItemComponent implements AfterViewInit {
 
     progr = 0;
 
+    jobUrl = computed<string>(() => {
+        if (this.job()?.crawlType === 'URL_WITH_DEPTH') {
+          return this.job()?.seedUrls?.at(0) ?? '';
+        }
+
+        return new URL(this.job()?.seedUrls?.at(0) ?? '').hostname;
+    });
+
     progress = computed<number>(() => {
         if (!this.job()?.totalUrls || !this.job()?.processedUrls) {
             return 0;

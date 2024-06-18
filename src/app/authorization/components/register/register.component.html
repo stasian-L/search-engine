@@ -13,6 +13,7 @@
                 type="text"
                 matInput
                 placeholder="Enter your name"
+                autocomplete="on"
                 formControlName="firstName" />
             <mat-error *ngIf="form.controls['firstName'].errors?.['required']">First name is required</mat-error>
         </mat-form-field>
@@ -22,6 +23,7 @@
                 type="text"
                 matInput
                 placeholder="Enter your name"
+                autocomplete="on"
                 formControlName="lastName" />
             <mat-error *ngIf="form.controls['lastName'].errors?.['required']">Last name is required</mat-error>
         </mat-form-field>
@@ -31,6 +33,7 @@
                 type="text"
                 matInput
                 placeholder="Enter your email"
+                autocomplete="on"
                 formControlName="email" />
             <mat-error *ngIf="form.controls['email'].errors?.['required']">Email is required</mat-error>
             <mat-error *ngIf="form.controls['email'].errors?.['email']">Email is incorrect</mat-error>
@@ -41,6 +44,7 @@
                 [type]="passwordHide ? 'password' : 'text'"
                 matInput
                 placeholder="Enter your password"
+                autocomplete="off"
                 formControlName="password" />
             <mat-icon
                 matSuffix
@@ -59,6 +63,7 @@
                 [type]="passwordHide ? 'password' : 'text'"
                 matInput
                 placeholder="Confirm your password"
+                autocomplete="off"
                 [formControl]="confirmPassword" />
             <mat-icon
                 matSuffix

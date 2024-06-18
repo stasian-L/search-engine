@@ -12,8 +12,8 @@ export type CreateJobRequest = Pick<Job, 'crawlDepth' | 'crawlType' | 'seedUrls'
 export class CrawlerService {
     private readonly http = inject(HttpClient);
 
-    createJob(job: CreateJobRequest): Observable<void> {
-        return this.http.post<void>('crawl-jobs', job, {
+    createJob(job: CreateJobRequest): Observable<any> {
+        return this.http.post<any>('crawl-jobs', job, {
             context: new HttpContext().set(SkipLoading, true)
         });
     }
@@ -30,8 +30,8 @@ export class CrawlerService {
         });
     }
 
-    cancelJob(jobId: number): Observable<string> {
-        return this.http.get<string>(`crawl-jobs/${jobId}/cancel`, {
+    cancelJob(jobId: number): Observable<any> {
+        return this.http.get<any>(`crawl-jobs/${jobId}/cancel`, {
             context: new HttpContext().set(SkipLoading, true)
         });
     }

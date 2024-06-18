@@ -30,7 +30,7 @@ export class CrawlerState {
     }
 
     @Action(CreateJob)
-    onCreateJob({}: StateContext<CrawlerStateModel>, { payload }: CreateJob): Observable<void> {
+    onCreateJob({}: StateContext<CrawlerStateModel>, { payload }: CreateJob): Observable<any> {
         return this.crawlerService
             .createJob({ ...payload, crawlType: 'URL_WITH_DEPTH' })
             .pipe(tap(() => this.store.dispatch(new SetSuccess('Job created successfully!'))));
@@ -40,7 +40,7 @@ export class CrawlerState {
     onGetAllJobs({ patchState }: StateContext<CrawlerStateModel>): Observable<JobAPIResponse[]> {
         return this.crawlerService.getAllJobs().pipe(
             tap(jobs => {
-                jobs.forEach(job => this.calculateStatus(job));
+                //jobs.forEach(job => this.calculateStatus(job));
                 patchState({ jobs });
             })
         );
@@ -57,7 +57,7 @@ export class CrawlerState {
     }
 
     @Action(GetJob)
-    onCancelJob({ dispatch }: StateContext<CrawlerStateModel>, { payload }: GetJob): Observable<string> {
+    onCancelJob({ dispatch }: StateContext<CrawlerStateModel>, { payload }: GetJob): Observable<any> {
         return this.crawlerService.cancelJob(payload).pipe(
             tap(() => {
                 dispatch(new GetAllJobs());
@@ -65,21 +65,21 @@ export class CrawlerState {
         );
     }
 
-    private calculateStatus(job: Job): void {
-        if (job) {
-            if (job.status === 'CANCELLED') {
-                job.crawlStatus = 'cancelled';
-                return;
-            }
+    // private calculateStatus(job: Job): void {
+    //     if (job) {
+    //         if (job.status === 'CANCELLED') {
+    //             job.crawlStatus = 'cancelled';
+    //             return;
+    //         }
 
-            const percentage = ((job.processedUrls ?? 0) / (job.totalUrls ?? 1)) * 100;
-            if (percentage === 100) {
-                job.crawlStatus = 'completed';
-            } else if (percentage < 100) {
-                job.crawlStatus = 'crawling';
-            } else {
-                job.crawlStatus = 'error';
-            }
-        }
-    }
+    //         const percentage = ((job.processedUrls ?? 0) / (job.totalUrls ?? 1)) * 100;
+    //         if (percentage === 100) {
+    //             job.crawlStatus = 'completed';
+    //         } else if (percentage < 100) {
+    //             job.crawlStatus = 'crawling';
+    //         } else {
+    //             job.crawlStatus = 'error';
+    //         }
+    //     }
+    // }
 }
